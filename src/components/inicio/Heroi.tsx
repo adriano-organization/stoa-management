@@ -23,12 +23,12 @@ import { EntradaDoHeroi } from "./EntradaDoHeroi";
  *
  * **A entrada** (só na primeira visita à inicial em cada sessão, ~2,7 s, CSS):
  * sobre pedra, linhas de construção e a planta do edifício desenham-se (lidas
- * na fotografia, `plantaDe`); o envolvente liga o edifício à paisagem. A fotografia inteira revela-se
- * sob o desenho; marca e conteúdo entram durante essa passagem, sem uma
- * fase intermédia com a fotografia do prédio isolada.
+ * na fotografia, `plantaDe`), e o envolvente liga o edifício à paisagem. A
+ * fotografia inteira revela-se sob o desenho; a marca e o conteúdo entram
+ * durante essa passagem, sem uma fase com o prédio isolado.
  * Quem decide se há entrada, e a acaba se o visitante mexer, é
- * `EntradaDoHeroi.tsx`. As camadas da entrada (`__pedra`, `__planta`) só se veem com `html[data-intro]`; sem ele, o herói é o de
- * sempre.
+ * `EntradaDoHeroi.tsx`. As camadas da entrada (`__pedra`, `__planta`) só se
+ * veem com `html[data-intro]`; sem ele, o herói é o de sempre.
  *
  * **Em ecrã deitado** a secção tem ~1,9 alturas de ecrã e o palco fica preso:
  * ao rolar, a fotografia aproxima-se (as duas camadas juntas), a marca afunda
@@ -62,8 +62,6 @@ export async function Heroi({ locale }: { locale: Locale }) {
   const variaveis = {
     "--recorte-paisagem": poligono(paisagem),
     "--recorte-retrato": poligono(retrato),
-    "--silhueta-paisagem": poligono(paisagem, plantaDe(paisagem).silhueta),
-    "--silhueta-retrato": poligono(retrato, plantaDe(retrato).silhueta),
     "--foco-x-paisagem": paisagem.foco.x,
     "--foco-y-paisagem": paisagem.foco.y,
     "--foco-x-retrato": retrato.foco.x,
@@ -221,7 +219,7 @@ function Planta({ composicao, className }: { composicao: Composicao; className: 
       </g>
       <g className="heroi__vegetacao">
         {vegetacao.map((traco, i) => (
-          <path key={i} d={traco} pathLength={1} style={{ "--i": i } as CSSProperties} />
+          <path key={i} d={caminho([traco])} pathLength={1} style={{ "--i": i } as CSSProperties} />
         ))}
       </g>
       <g className="heroi__detalhes">

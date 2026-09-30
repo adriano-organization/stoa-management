@@ -33,8 +33,13 @@ import type { IdImagem } from "@/lib/medias";
  * 2×. Só entram arestas que se veem: o telhado, as verticais, o beirado e as
  * três lajes com o retorno nas loggias, a base da parede lateral. O rés-do-chão
  * da frente fica de fora (o que se vê é o terraço e as floreiras, não uma
- * aresta), e a silhueta usa aí uma aproximação — é só uma máscara, e a
- * fotografia inteira chega logo a seguir.
+ * aresta).
+ *
+ * O **envolvente** (horizonte, campos, rua, casas vizinhas, árvores) é mais
+ * leve e mais esparso, e também é da fotografia: os painéis solares e o perfil
+ * das coníferas foram extraídos da imagem (escuro sobre claro); o resto foi
+ * traçado sobre ela e verificado sobreposto. O que a fotografia não mostra
+ * com nitidez (a árvore despida do jardim, desfocada) fica de fora.
  *
  * No retrato não há desenho da fachada: a fotografia é de perto e só a aresta
  * contra o céu é segura. A entrada aí é mais simples (`plantaDe`).
@@ -50,15 +55,14 @@ export type Planta = {
   guias: Ponto[][];
   /* Contexto visível na fotografia, sem completar arquitetura escondida. */
   envolvente?: Ponto[][];
-  /* Vegetação pede curvas orgânicas; as arestas construídas mantêm segmentos. */
-  vegetacao?: string[];
+  /* O perfil das árvores que se recortam com nitidez. */
+  vegetacao?: Ponto[][];
+  /* Aberturas, painéis e muros: o traço mais leve. */
   detalhes?: Ponto[][];
   /* As arestas, pela ordem em que se desenham. */
   tracos: Ponto[][];
   /* As superfícies que dão corpo aos volumes; `tom` é o quanto escurecem. */
   superficies: { pontos: Ponto[]; tom: number }[];
-  /* O contorno do edifício, onde a fotografia se revela primeiro. */
-  silhueta: Ponto[];
 };
 
 export type Composicao = {
@@ -102,15 +106,20 @@ const LAJE1_FRENTE: Ponto[] = [
 
 const PLANTA_PAISAGEM: Planta = {
   vegetacao: [
-    // Copa da conífera à esquerda, incluindo as mudanças de largura visíveis.
-    "M175 399 Q186 389 181 380 Q178 374 187 368 Q181 359 189 351 Q182 344 195 334 Q188 328 199 320 Q193 312 202 305 Q196 297 207 291 Q202 284 212 279 L215 266 L222 279 Q232 279 229 289 Q240 288 236 300 Q246 300 242 311 Q254 316 247 325 Q259 328 252 339 Q264 345 257 352 Q270 362 261 371 Q273 381 268 391 L277 399",
-    // Ramos e estratos da copa seguem o eixo que se vê na fotografia.
-    "M214 291 Q220 326 222 356 L225 400 M207 310 Q217 316 229 306 M198 327 Q216 338 238 322 M191 346 Q216 356 248 340 M188 368 Q218 379 259 359 M185 387 Q221 399 265 380",
-    // Massas de árvores atrás da casa à direita.
-    "M1021 360 Q1017 348 1032 348 Q1031 335 1048 342 Q1053 326 1067 337 Q1078 316 1088 330 Q1101 322 1112 337 Q1126 332 1130 345 Q1141 333 1152 339 Q1166 332 1175 351 Q1195 348 1198 365 Q1211 369 1209 386",
-    "M1081 412 L1086 369 L1074 350 M1086 375 L1102 348 M1146 423 L1147 377 L1135 359 M1147 383 L1166 357",
-    // Arbre do jardim, ainda sem folhagem: ramificação em vez de um polígono.
-    "M1149 588 Q1141 568 1145 550 L1136 524 L1124 505 L1121 480 M1137 527 L1149 506 L1151 483 M1145 550 L1164 528 L1178 514 L1180 497 M1145 551 L1120 537 L1105 514 L1100 494 M1120 537 L1106 536 L1094 523 M1164 528 L1162 508 L1168 487 M1124 505 L1110 490 M1149 506 L1136 490 M1139 576 L1115 561 L1102 545 M1144 567 L1164 554 L1181 538",
+    // A conífera à esquerda: o perfil extraído da fotografia; a base some-se
+    // atrás da sebe, por isso fica aberta.
+    [
+      [192, 380], [191.3, 362.5], [193.8, 342.5], [197, 327.5], [202.5, 308.8], [205, 295],
+      [212.5, 292.5], [216.3, 273.8], [220.5, 270.5], [230.5, 275], [238, 277.5],
+      [247.5, 288.8], [251.3, 301.3], [255.5, 308], [263, 316.3], [271.3, 323], [275, 335],
+      [280.5, 350], [282.5, 367.5], [281.3, 385],
+    ],
+    // As duas coníferas escuras à direita: só o topo, que se recorta no fundo.
+    [
+      [1085, 406.3], [1096.3, 399.5], [1105, 401.3], [1115, 386.3], [1128, 377], [1130, 370],
+      [1137, 373], [1138.8, 384.5], [1148, 385.5], [1156.3, 378.8], [1160, 390], [1171.3, 398],
+      [1172.5, 406.3], [1178, 419.5],
+    ],
   ],
   detalhes: [
     // Panos e aberturas dos edifícios vizinhos, sem extrapolar os lados ocultos.
@@ -124,16 +133,22 @@ const PLANTA_PAISAGEM: Planta = {
     // Parcela e caminho, que dão escala à paisagem.
     [[170,529],[175,508],[188,504],[187,524]],
     [[187,504],[250,484],[286,490],[282,515]],
-    [[198,501],[198,521]],[[215,495],[215,517]],[[232,490],[232,516]],
     [[949,478],[967,484],[963,507],[944,500],[949,478]],
     [[0,389],[101,374],[165,371]],
-    [[33,384],[29,348]],[[75,378],[73,342]],[[115,374],[114,334]],
-    // Conjuntos fotovoltaicos visíveis no telhado: contornos discretos.
-    [[422,306],[478,296],[529,301],[477,313],[422,306]],
-    [[492,316],[550,304],[606,311],[550,324],[492,316]],
-    [[563,326],[617,312],[675,318],[623,334],[563,326]],
-    [[637,332],[688,316],[744,321],[694,339],[637,332]],
-    [[714,330],[753,317],[779,322],[744,334],[714,330]],
+    // Os painéis solares, extraídos da fotografia (escuros sobre a gravilha).
+    [
+      [540, 300], [491, 305], [481, 301], [467, 301], [435, 305], [427, 309], [435, 311],
+      [453, 311], [457, 309], [462, 313], [474, 315], [523, 308], [525, 306], [535, 307],
+      [539, 306], [540, 300],
+    ],
+    [
+      [510, 315], [510, 318], [525, 319], [526, 321], [540, 318], [541, 321], [548, 319],
+      [556, 324], [580, 323], [585, 325], [588, 323], [595, 327], [612, 330], [622, 327],
+      [623, 330], [637, 330], [646, 333], [657, 333], [658, 335], [669, 333], [672, 336],
+      [687, 335], [709, 339], [778, 324], [758, 318], [731, 322], [728, 319], [711, 314],
+      [685, 318], [683, 315], [666, 310], [642, 312], [625, 307], [603, 310], [587, 304],
+      [510, 315],
+    ],
   ],
   envolvente: [
     // Horizonte e limites dos campos, com menos detalhe do que o edifício.
@@ -149,7 +164,7 @@ const PLANTA_PAISAGEM: Planta = {
     [[868,720],[902,681],[967,632]],
     // Só as arestas visíveis dos edifícios vizinhos.
     [[0,438],[40,432],[125,483],[64,507],[0,494]],
-    [[125,483],[139,550],[169,569],[159,615],[109,646],[0,675]],
+    [[125,483],[131,560],[135,650]],
     [[934,338],[1009,344],[1020,413],[985,438],[931,427]],
     [[936,414],[983,419],[983,438]],
     [[821,308],[839,288],[869,309],[902,280],[941,306]],
@@ -158,7 +173,6 @@ const PLANTA_PAISAGEM: Planta = {
     [[976,278],[998,262],[1020,279],[1009,306]],
     [[1159,270],[1214,251],[1254,270],[1280,271]],
     [[1023,720],[979,669],[1041,625],[1280,711]],
-
   ],
   guias: [
     [[0, 273.9], [1280, 421.1]], // o rufo da frente
@@ -204,14 +218,6 @@ const PLANTA_PAISAGEM: Planta = {
       pontos: [...TELHADO_LADO, ...ARESTA_TRASEIRA.slice(1), [867, 585], [812, 619], [815, 566], [776, 588], ...CANTO.slice(1).reverse()],
     },
   ],
-  silhueta: [
-    ...PLATIBANDA_PAISAGEM,
-    ...ARESTA_TRASEIRA.slice(1),
-    [867, 585], [812, 619],
-    [733, 668], [306, 528], // o rés-do-chão: aproximado, só máscara
-    ...ESQUERDA.slice(1).reverse(),
-    [288, 307],
-  ],
 };
 
 export const HEROI: { paisagem: Composicao; retrato: Composicao } = {
@@ -253,8 +259,8 @@ export const caminho = (trocos: Ponto[][]) =>
 
 /**
  * O desenho da entrada. Sem planta medida (o retrato), é só a aresta do
- * edifício, com a fachada como superfície e o recorte como silhueta: a entrada
- * simples, sem desenho que a fotografia não confirme.
+ * edifício, com a fachada como superfície: a entrada simples, sem desenho que
+ * a fotografia não confirme.
  */
 export function plantaDe(composicao: Composicao): Planta {
   if (composicao.planta) return composicao.planta;
@@ -262,7 +268,6 @@ export function plantaDe(composicao: Composicao): Planta {
     guias: [],
     tracos: trocosDoContorno(composicao),
     superficies: [{ pontos: composicao.recorte, tom: 0.08 }],
-    silhueta: composicao.recorte,
   };
 }
 

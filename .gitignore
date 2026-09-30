@@ -37,3 +37,6 @@ yarn-debug.log*
 # verificação visual: capturas e scripts descartáveis. Dezenas de MB por
 # corrida, e refazem-se contra o site a correr.
 /lab
+
+# Capturas de ecrã soltas na raiz (não são do site)
+/Screenshot *.png

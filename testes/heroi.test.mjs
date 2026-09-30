@@ -68,7 +68,14 @@ const dentro = ([x, y], { largura, altura }) => x >= 0 && x <= largura && y >= 0
 for (const [nome, composicao] of Object.entries(HEROI)) {
   test(`planta (${nome}): todos os pontos dentro da fotografia`, () => {
     const p = plantaDe(composicao);
-    const todos = [...p.guias.flat(), ...p.tracos.flat(), ...p.superficies.flatMap((s) => s.pontos), ...p.silhueta];
+    const todos = [
+      ...p.guias.flat(),
+      ...p.tracos.flat(),
+      ...p.superficies.flatMap((s) => s.pontos),
+      ...(p.envolvente ?? []).flat(),
+      ...(p.detalhes ?? []).flat(),
+      ...(p.vegetacao ?? []).flat(),
+    ];
     assert.ok(todos.length > 0);
     for (const ponto of todos) assert.ok(dentro(ponto, composicao), `${ponto}`);
   });
@@ -80,18 +87,11 @@ for (const [nome, composicao] of Object.entries(HEROI)) {
     }
   });
 
-  test(`planta (${nome}): a silhueta começa na platibanda do recorte (sem costura com a marca)`, () => {
-    const { silhueta } = plantaDe(composicao);
-    const topo = composicao.recorte.filter(([, y]) => y < composicao.altura && y > 0).slice(0, 5);
-    assert.ok(topo.length > 0);
-    for (const ponto of topo) {
-      assert.ok(
-        silhueta.some(([x, y]) => x === ponto[0] && y === ponto[1]),
-        `${ponto} do recorte não está na silhueta`,
-      );
-    }
-  });
 }
+
+test("sem fase do prédio isolado: a planta já não tem silhueta", () => {
+  for (const composicao of Object.values(HEROI)) assert.ok(!("silhueta" in plantaDe(composicao)));
+});
 
 test("planta da paisagem: desenho completo (telhado, verticais, lajes) e três superfícies", () => {
   const p = plantaDe(HEROI.paisagem);
@@ -106,6 +106,6 @@ test("planta do retrato: só a aresta da fachada — nada do desenho da paisagem
   const p = plantaDe(HEROI.retrato);
   assert.equal(p.guias.length, 0);
   assert.equal(p.tracos.length, 1);
-  assert.deepEqual(p.silhueta, HEROI.retrato.recorte);
+  assert.equal((p.envolvente ?? []).length + (p.vegetacao ?? []).length + (p.detalhes ?? []).length, 0);
   assert.equal(`M${p.tracos[0].map(([x, y]) => `${x} ${y}`).join("L")}`, contorno(HEROI.retrato));
 });
