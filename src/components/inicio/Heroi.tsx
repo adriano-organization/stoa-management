@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
 import { HEROI, poligono, type Composicao } from "@/data/heroi";
+import { imagemPublicavel } from "@/data/validacoes";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { srcDe, srcsetDe } from "@/lib/medias";
@@ -22,15 +23,31 @@ import { ComProgresso } from "../movimento/ComProgresso";
  * **Em ecrã deitado** a secção tem ~1,9 alturas de ecrã e o palco fica preso:
  * ao rolar, a fotografia aproxima-se (as duas camadas juntas), a marca afunda
  * atrás da platibanda e o texto sobe e apaga-se. **Em ecrã de pé** (a
- * fotografia da fachada) não há palco preso — só a composição.
+ * fotografia da fachada) não há palco preso — só a composição. Sem
+ * JavaScript ou com menos movimento pedido também não: o herói tem a altura
+ * de um ecrã e fica parado, em vez de prender a fotografia sem razão.
+ *
+ * Em publicação, as fotografias só entram depois de validadas em
+ * `src/data/validacoes.ts`; até lá o herói fica no carvão, com a marca, o
+ * título e as ações.
+ *
+ * Quando o texto já se apagou, os botões deixam de receber o rato
+ * (`LIMIAR_DE_SAIDA`); se o teclado lá chegar, o texto volta a ver-se.
  *
  * As duas fotografias são uma só `<picture>` com direção de arte: o browser
  * descarrega apenas a do seu formato, e a segunda `<picture>` (o recorte)
  * reutiliza o mesmo ficheiro.
  */
+/**
+ * O texto apaga-se com `1 - 1,7·p` (`inicio.css`, `.heroi__conteudo`): a 0,53
+ * resta-lhe menos de um décimo da opacidade, e a 0,59 já não se vê.
+ */
+const LIMIAR_DE_SAIDA = 0.53;
+
 export async function Heroi({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: "heroi" });
   const { paisagem, retrato } = HEROI;
+  const comFotografia = imagemPublicavel(paisagem.imagem) && imagemPublicavel(retrato.imagem);
 
   const variaveis = {
     "--recorte-paisagem": poligono(paisagem),
@@ -47,6 +64,7 @@ export async function Heroi({ locale }: { locale: Locale }) {
     <ComProgresso
       as="section"
       modo="preso"
+      limiar={LIMIAR_DE_SAIDA}
       className="heroi escuro"
       aria-labelledby="heroi-titulo"
       data-sob-cabecalho=""
@@ -54,10 +72,10 @@ export async function Heroi({ locale }: { locale: Locale }) {
     >
       <div className="heroi__palco">
         <div className="heroi__caixa">
-          <FotoDoHeroi className="heroi__foto" prioridade />
+          {comFotografia && <FotoDoHeroi className="heroi__foto" prioridade />}
           <Marca composicao={paisagem} className="heroi__marca heroi__marca--paisagem" />
           <Marca composicao={retrato} className="heroi__marca heroi__marca--retrato" />
-          <FotoDoHeroi className="heroi__foto heroi__recorte" />
+          {comFotografia && <FotoDoHeroi className="heroi__foto heroi__recorte" />}
           <div className="heroi__aproximacao" aria-hidden="true" />
         </div>
 

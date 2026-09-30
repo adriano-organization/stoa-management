@@ -90,7 +90,11 @@ export default async function LayoutDoSite({
         <ScriptInline codigo={SCRIPT_DE_MOVIMENTO} />
       </head>
       <body>
-        <NextIntlClientProvider>
+        {/* `messages={null}`: sem isto, o provider serializa o catálogo inteiro
+            no HTML de cada página — e com ele, em publicação, o método por
+            validar e os títulos dos projetos provisórios. Nenhum componente
+            cliente lê mensagens: recebem os textos já traduzidos. */}
+        <NextIntlClientProvider messages={null}>
           <a href="#conteudo" className="saltar">
             {nav("saltar")}
           </a>

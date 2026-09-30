@@ -14,6 +14,7 @@ export function ComProgresso({
   as: Etiqueta = "div",
   modo,
   modoExtra,
+  limiar,
   className,
   style,
   id,
@@ -24,6 +25,8 @@ export function ComProgresso({
   modo: ModoDeProgresso;
   /* Uma segunda medida, escrita noutra variável (`--<modo>`). */
   modoExtra?: ModoDeProgresso;
+  /* A partir deste valor da medida principal, o elemento leva `data-passou`. */
+  limiar?: number;
   className?: string;
   style?: CSSProperties;
   id?: string;
@@ -33,7 +36,7 @@ export function ComProgresso({
   "data-sob-cabecalho"?: string;
 }) {
   const ref = useRef<HTMLElement>(null);
-  useProgresso(ref, modo, modoExtra ? `--${modo}` : "--p");
+  useProgresso(ref, modo, modoExtra ? `--${modo}` : "--p", true, limiar);
   useProgresso(ref, modoExtra ?? modo, `--${modoExtra}`, modoExtra !== undefined);
 
   return (

@@ -1,5 +1,7 @@
 import { redesConfirmadas, stoa } from "@/data/stoa";
+import { imagemPublicavel } from "@/data/validacoes";
 import { jsonParaScript } from "@/lib/json-em-script";
+import { PARTILHA_DO_SITE } from "@/lib/metadata";
 import { URL_SITE } from "@/lib/site";
 
 /**
@@ -27,7 +29,8 @@ export function DadosEstruturados({ descricao }: { descricao: string }) {
     description: descricao,
     url: URL_SITE,
     email: stoa.email,
-    image: `${URL_SITE}/medias/partilha-stoa.jpg`,
+    /* A mesma regra da imagem de partilha (`lib/metadata.ts`). */
+    ...(imagemPublicavel(PARTILHA_DO_SITE.de) ? { image: `${URL_SITE}${PARTILHA_DO_SITE.url}` } : {}),
     address: {
       "@type": "PostalAddress",
       streetAddress: stoa.morada.rua,

@@ -9,14 +9,16 @@
 
 /* ---------------------------------------------------------------- herói */
 
+/* Em repouso o herói tem a altura de um ecrã e não prende nada: é o que se vê
+   sem JavaScript, com menos movimento pedido e em ecrã de pé. O percurso
+   preso (a aproximação ao rolar) está logo abaixo, só para quem o vê mexer. */
 .heroi {
   position: relative;
-  height: 190svh;
   background: var(--color-carvao);
 }
 
 .heroi__palco {
-  position: sticky;
+  position: relative;
   top: 0;
   height: 100svh;
   min-height: 560px;
@@ -24,6 +26,18 @@
   /* As unidades `cq*` abaixo medem este palco — é o que deixa a caixa da
      imagem imitar o `object-fit: cover` sendo uma caixa a sério. */
   container-type: size;
+}
+
+/* `data-movimento` sai do `<html>` quando se pede menos movimento, mesmo com a
+   página aberta (`Revelacoes.tsx`), e o herói volta a um ecrã. */
+@media (orientation: landscape) and (height > 520px) {
+  [data-movimento] .heroi {
+    height: 190svh;
+  }
+
+  [data-movimento] .heroi__palco {
+    position: sticky;
+  }
 }
 
 /* A caixa tem exatamente as proporções da fotografia e cobre o palco como o
@@ -149,6 +163,21 @@
   opacity: calc(1 - var(--p, 0) * 1.7);
 }
 
+/* Apagado não é o mesmo que ausente: sem isto, os botões continuavam a
+   receber cliques por cima da fotografia. O `data-passou` vem do motor
+   (`LIMIAR_DE_SAIDA` em `Heroi.tsx`). */
+.heroi[data-passou] .heroi__conteudo:not(:focus-within) {
+  pointer-events: none;
+}
+
+/* E se o teclado lá chegar (Tab ou Shift+Tab a meio do percurso), o que tem o
+   foco nunca fica invisível: o texto volta inteiro, e clicável, enquanto o
+   foco lá estiver. */
+.heroi__conteudo:focus-within {
+  translate: none;
+  opacity: 1;
+}
+
 .heroi__conteudo .envelope {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -246,12 +275,7 @@
 /* De pé (telemóvel, tablet ao alto): a fotografia da fachada, sem palco
    preso. A marca espreita por trás da aresta do telhado. */
 @media (orientation: portrait) {
-  .heroi {
-    height: auto;
-  }
-
   .heroi__palco {
-    position: relative;
     height: 100svh;
     min-height: 620px;
   }
@@ -317,12 +341,7 @@
 /* Ecrã deitado mas baixo (um telemóvel de lado): sem palco preso, o texto
    mais pequeno. */
 @media (orientation: landscape) and (max-height: 520px) {
-  .heroi {
-    height: auto;
-  }
-
   .heroi__palco {
-    position: relative;
     min-height: 420px;
   }
 
@@ -685,6 +704,16 @@
   font-weight: 500;
   line-height: 1.05;
   letter-spacing: -0.03em;
+}
+
+/* O botão do título (ecrã largo) não se distingue do título: o que diz que se
+   pode escolher é o cursor, o traço verde do item ativo e o foco. */
+.especialidade__botao {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
 .especialidade__resumo {

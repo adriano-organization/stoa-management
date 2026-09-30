@@ -62,7 +62,9 @@ fictícios apresentados como obras reais.
 - **aperçu** (desenvolvimento, pré-visualizações): tudo visível, com o selo
   "Provisoire" no que não está confirmado, e o site inteiro com `noindex`;
 - **publicação** (`VERCEL_ENV=production` ou `STOA_PUBLICATION=1`): só o que
-  está `validado` em `src/data/projetos.ts`; a equipa só com perfis completos.
+  está `validado` em `src/data/projetos.ts`; a equipa só com perfis completos;
+  o método e as imagens institucionais (herói, apresentação, competências,
+  contacto, partilha) só com `validado` em `src/data/validacoes.ts`.
 
 Um projeto passa a `validado` com a STOA — nome, local, missão e direito de
 publicar as imagens —, não porque o site já parece pronto.

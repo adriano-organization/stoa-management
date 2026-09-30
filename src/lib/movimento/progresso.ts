@@ -1,4 +1,5 @@
 import { useEffect, type RefObject } from "react";
+import { useMenosMovimento } from "./preferencia";
 
 /**
  * # O motor de movimento, inteiro
@@ -31,7 +32,16 @@ import { useEffect, type RefObject } from "react";
  *
  * Com `prefers-reduced-motion: reduce` nada se regista e a variável nunca é
  * escrita: o CSS usa o valor de repouso (`var(--p, 0)` ou o que cada regra
- * disser). O mesmo acontece sem JavaScript.
+ * disser). O mesmo acontece sem JavaScript. A preferência é seguida em direto
+ * (`preferencia.ts`): ligá-la com a página aberta desregista tudo e apaga as
+ * variáveis, e o CSS volta ao repouso sem recarregar.
+ *
+ * ## O limiar
+ *
+ * O CSS consegue apagar um elemento com `--p`, mas não consegue tirar-lhe os
+ * cliques: um botão com opacidade 0 continua a receber o rato. Um registo com
+ * `limiar` põe `data-passou` no elemento enquanto `--p` estiver acima dele,
+ * e o CSS usa isso para desligar o que já não se vê.
  */
 export type ModoDeProgresso = "preso" | "fluxo" | "entrada" | "revelado" | "coberto";
 
@@ -40,6 +50,8 @@ type Registo = {
   modo: ModoDeProgresso;
   variavel: string;
   ultimo: number;
+  limiar: number | undefined;
+  passou: boolean;
 };
 
 const registos = new Set<Registo>();
@@ -79,6 +91,10 @@ function medir() {
       r.el.style.setProperty(r.variavel, p.toFixed(4));
       r.ultimo = p;
     }
+    if (r.limiar !== undefined && (p >= r.limiar) !== r.passou) {
+      r.passou = !r.passou;
+      r.el.toggleAttribute("data-passou", r.passou);
+    }
   }
 }
 
@@ -102,9 +118,6 @@ function desligarSeVazio() {
   pedido = 0;
 }
 
-export const querMenosMovimento = () =>
-  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
 /**
  * Liga um elemento ao motor. `variavel` permite mais do que uma medida no
  * mesmo elemento (ex.: `--entrada` e `--coberto` num cartão da pilha).
@@ -116,12 +129,15 @@ export function useProgresso(
   /* Os hooks não podem ser condicionais; um componente que só às vezes quer
      uma segunda medida passa `false` aqui. */
   ativo = true,
+  limiar?: number,
 ) {
+  const menosMovimento = useMenosMovimento();
+
   useEffect(() => {
     const el = ref.current;
-    if (!ativo || !el || querMenosMovimento()) return;
+    if (!ativo || !el || menosMovimento !== false) return;
 
-    const registo: Registo = { el, modo, variavel, ultimo: -1 };
+    const registo: Registo = { el, modo, variavel, ultimo: -1, limiar, passou: false };
     registos.add(registo);
     ligar();
     agendar();
@@ -129,7 +145,8 @@ export function useProgresso(
     return () => {
       registos.delete(registo);
       el.style.removeProperty(variavel);
+      if (registo.passou) el.removeAttribute("data-passou");
       desligarSeVazio();
     };
-  }, [ref, modo, variavel, ativo]);
+  }, [ref, modo, variavel, ativo, limiar, menosMovimento]);
 }

@@ -7,7 +7,8 @@
  * |---|---|---|
  * | projetos `provisorio` | visíveis, com o selo "Provisoire" | fora das listas, do sitemap e do build (404) |
  * | equipa por completar | placeholders identificados | secção escondida |
- * | textos por validar | marcados "à valider" | escritos como estão |
+ * | textos e imagens institucionais (`data/validacoes.ts`) | com o selo, quando o têm | só os `validado`; o resto não sai |
+ * | projeto sem imagem de partilha própria | sem imagem de partilha | sem imagem de partilha |
  * | indexação | `noindex` + robots a bloquear tudo | aberta |
  *
  * **Publicação** quando o deploy é o de produção da Vercel, ou quando

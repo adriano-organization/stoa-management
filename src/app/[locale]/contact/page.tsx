@@ -4,10 +4,10 @@ import { Formulario, type TextosDoFormulario } from "@/components/contacto/Formu
 import { Foto } from "@/components/Foto";
 import { SeloProvisorio } from "@/components/SeloProvisorio";
 import { hrefTelefone, redesConfirmadas, stoa } from "@/data/stoa";
+import { imagemPublicavel } from "@/data/validacoes";
 import type { Locale } from "@/i18n/routing";
 import { TIPOS_DE_PROJETO } from "@/lib/contacto/esquema";
 import { metadataDaPagina } from "@/lib/metadata";
-import { EM_PUBLICACAO } from "@/lib/publicacao";
 import "../../contact.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -158,7 +158,7 @@ export default async function Contacto({ params }: { params: Promise<{ locale: s
             )}
           </dl>
 
-          {!EM_PUBLICACAO && (
+          {imagemPublicavel("bureau-plateau") && (
             <figure className="contacto__foto">
               <Foto id="bureau-plateau" alt={medias("bureau-plateau")} sizes="(min-width: 900px) 30vw, 92vw" />
               <figcaption className="legenda suave">

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useMenosMovimento } from "@/lib/movimento/preferencia";
 
 /**
  * Revela, uma vez, cada elemento com `data-revelar` quando entra no ecrã.
@@ -15,15 +16,24 @@ import { usePathname } from "next/navigation";
  * O estado escondido só existe com `data-movimento` no `<html>` (ver
  * `globals.css`): sem JavaScript, ou com menos movimento pedido, não há nada
  * a revelar — o conteúdo já lá está.
+ *
+ * O atributo é posto antes da primeira pintura pelo script do layout, que só
+ * sabe a preferência desse instante. É aqui que ele passa a segui-la: pedir
+ * menos movimento com a página aberta tira-o (e tudo o que faltava revelar
+ * aparece), e voltar atrás repõe-no para o que ainda está por vir.
  */
 export function Revelacoes() {
   const caminho = usePathname();
+  const menosMovimento = useMenosMovimento();
 
   useEffect(() => {
+    if (menosMovimento === null) return;
     const raiz = document.documentElement;
     const revelar = (el: Element) => el.setAttribute("data-visivel", "");
 
-    if (!raiz.hasAttribute("data-movimento")) {
+    raiz.toggleAttribute("data-movimento", !menosMovimento);
+
+    if (menosMovimento) {
       document.querySelectorAll("[data-revelar]").forEach(revelar);
       return;
     }
@@ -61,7 +71,7 @@ export function Revelacoes() {
       observador.disconnect();
       mutacoes.disconnect();
     };
-  }, [caminho]);
+  }, [caminho, menosMovimento]);
 
   return null;
 }

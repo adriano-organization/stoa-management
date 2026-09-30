@@ -1,11 +1,14 @@
 import { getTranslations } from "next-intl/server";
+import { imagemPublicavel } from "@/data/validacoes";
 import type { Locale } from "@/i18n/routing";
 import { Foto } from "../Foto";
 
 /**
  * O que é a STOA, em três frases e três factos — todos tirados do site atual
  * (ver `docs/a-confirmer.md`). A imagem é a fachada em contra-picado: no
- * telemóvel essa fotografia já é o herói, por isso lá entra outra.
+ * telemóvel essa fotografia já é o herói, por isso lá entra outra. Em
+ * publicação, a figura só sai com as duas imagens validadas
+ * (`src/data/validacoes.ts`): cada uma serve um tamanho de ecrã.
  */
 export async function Apresentacao({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: "apresentacao" });
@@ -16,6 +19,7 @@ export async function Apresentacao({ locale }: { locale: Locale }) {
     [t("factos.dominiosRotulo"), t("factos.dominios")],
     [t("factos.experienciaRotulo"), t("factos.experiencia")],
   ];
+  const comFigura = imagemPublicavel("facade-panneaux") && imagemPublicavel("immeuble-j2-village");
 
   return (
     <section id="a-propos" className="apresentacao" aria-labelledby="apresentacao-titulo">
@@ -43,22 +47,24 @@ export async function Apresentacao({ locale }: { locale: Locale }) {
           ))}
         </dl>
 
-        <figure className="apresentacao__figura">
-          <Foto
-            id="facade-panneaux"
-            alt={medias("facade-panneaux")}
-            sizes="(min-width: 900px) 34vw, 100vw"
-            className="apresentacao__foto apresentacao__foto--largo"
-            foco="46% 30%"
-          />
-          <Foto
-            id="immeuble-j2-village"
-            alt={medias("immeuble-j2-village")}
-            sizes="100vw"
-            className="apresentacao__foto apresentacao__foto--estreito"
-          />
-          <figcaption className="legenda suave">{t("legenda")}</figcaption>
-        </figure>
+        {comFigura && (
+          <figure className="apresentacao__figura">
+            <Foto
+              id="facade-panneaux"
+              alt={medias("facade-panneaux")}
+              sizes="(min-width: 900px) 34vw, 100vw"
+              className="apresentacao__foto apresentacao__foto--largo"
+              foco="46% 30%"
+            />
+            <Foto
+              id="immeuble-j2-village"
+              alt={medias("immeuble-j2-village")}
+              sizes="100vw"
+              className="apresentacao__foto apresentacao__foto--estreito"
+            />
+            <figcaption className="legenda suave">{t("legenda")}</figcaption>
+          </figure>
+        )}
       </div>
     </section>
   );

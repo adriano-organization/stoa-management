@@ -42,9 +42,11 @@ export async function generateMetadata({ params }: Parametros): Promise<Metadata
     rota: `/realisations/${slug}`,
     titulo: t("titulo") + (projeto.local ? `, ${projeto.local}` : ""),
     descricao: t.has("resumo") ? t("resumo") : tm("descricao"),
+    /* Sem partilha própria, sem imagem: a do site é outro edifício, e uma
+       referência não pode parecer ilustrada por ele. */
     partilha: partilha
       ? { url: partilha.url, largura: partilha.largura, altura: partilha.altura, alt: medias(projeto.capa) }
-      : undefined,
+      : null,
   });
 }
 

@@ -1,6 +1,16 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 const base = process.argv[2] ?? 'http://localhost:3000';
 const publico = process.env.STOA_PUBLICATION === '1';
+/* Em publicação, o que não está validado não pode estar no HTML — nem
+   visível, nem no que vai para o browser (o catálogo de mensagens já foi
+   serializado inteiro por engano). */
+const mensagens = JSON.parse(readFileSync(new URL('../messages/fr-CH.json', import.meta.url), 'utf8'));
+const proibidosEmPublicacao = [
+  mensagens.metodo.intro,
+  ...Object.values(mensagens.metodo.etapas).map((e) => e.texto),
+  mensagens.projetos['immeuble-balcons-filants'].titulo,
+];
 const rotas = ['/', '/realisations', '/contact', '/realisations/transformation-arconciel'];
 for (const rota of rotas) {
   const resposta = await fetch(base + rota);
@@ -13,6 +23,7 @@ for (const rota of rotas) {
   assert.ok(!/<link\b[^>]*href=["'](?:https?:)?\/\/[^>]*rel=["'](?:stylesheet|preload|preconnect)/i.test(html));
   assert.ok(!/Café Preguiça|cafepreguica|preguica_sessao/i.test(html), `${rota}: conteúdo residual`);
   if (!publico) assert.match(html, /noindex/);
+  if (publico) for (const texto of proibidosEmPublicacao) assert.ok(!html.includes(texto), `${rota}: por validar no HTML: ${texto}`);
   console.log(`✓ ${rota}`);
 }
 for (const rota of ['/rota-inexistente', '/realisations/inexistente']) {

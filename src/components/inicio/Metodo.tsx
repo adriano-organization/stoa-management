@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { textoPublicavel } from "@/data/validacoes";
 import type { Locale } from "@/i18n/routing";
 import { SeloProvisorio } from "../SeloProvisorio";
 
@@ -10,9 +11,12 @@ const ETAPAS = ["compreender", "preparar", "coordenar", "acompanhar", "entregar"
  * ⚠️ **É uma proposta editorial**, não um procedimento confirmado: por isso não
  * há prazos, garantias nem números, e em aperçu leva o selo "à valider". O
  * texto vive em `messages/fr-CH.json` (`metodo.etapas`) e é para rever com a
- * STOA antes de publicar.
+ * STOA antes de publicar. Em publicação, a secção só sai depois de marcada
+ * `validado` em `src/data/validacoes.ts` — sem o selo, o texto passaria por
+ * definitivo.
  */
 export async function Metodo({ locale }: { locale: Locale }) {
+  if (!textoPublicavel("metodo")) return null;
   const t = await getTranslations({ locale, namespace: "metodo" });
 
   return (

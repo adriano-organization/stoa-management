@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { dadosDaImagem, dadosDoVideo, srcDe, type IdVideo } from "@/lib/medias";
+import { useMenosMovimento } from "@/lib/movimento/preferencia";
 
 export type TextosDoVideo = { pausa: string; ler: string; rever: string };
 
@@ -13,7 +14,8 @@ export type TextosDoVideo = { pausa: string; ler: string; rever: string };
  *   até ao fim e fica na última imagem; recomeça quando volta a entrar no ecrã.
  * - **A alternativa estática é o poster**, que é a primeira imagem do corte
  *   (sem salto quando arranca). Sem JavaScript, com menos movimento pedido ou
- *   com poupança de dados, o vídeo nunca carrega: fica o poster.
+ *   com poupança de dados, o vídeo nunca carrega: fica o poster. Pedir menos
+ *   movimento com a página aberta pára o vídeo e volta ao poster.
  * - **Botão de pausa** (WCAG 2.2.2): o corte dura mais de cinco segundos e
  *   arranca sozinho, por isso tem de se poder parar.
  * - `preload="none"`: nada é descarregado antes de o vídeo estar quase à vista.
@@ -31,7 +33,9 @@ export function VideoMudo({
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const pausadoPeloVisitante = useRef(false);
-  const [permitido, setPermitido] = useState(false);
+  const [poupaDados, setPoupaDados] = useState(true);
+  const menosMovimento = useMenosMovimento();
+  const permitido = !poupaDados && menosMovimento === false;
   const [estado, setEstado] = useState<"parado" | "a-tocar" | "fim">("parado");
 
   const video = dadosDoVideo(id);
@@ -39,14 +43,13 @@ export function VideoMudo({
   const temMovel = video.variantes.some((v) => v.largura < 1000);
 
   useEffect(() => {
-    const menosMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const poupaDados =
+    const poupa =
       (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
-    if (menosMovimento || poupaDados) return;
+    if (poupa) return;
     /* Decidido depois da hidratação, para o HTML do servidor ser o mesmo para
        toda a gente: é o poster, sem botão. */
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPermitido(true);
+    setPoupaDados(false);
   }, []);
 
   useEffect(() => {
@@ -72,7 +75,15 @@ export function VideoMudo({
       { threshold: [0, 0.5] },
     );
     observador.observe(el);
-    return () => observador.disconnect();
+    return () => {
+      observador.disconnect();
+      /* Deixou de ser permitido (menos movimento pedido a meio da visita) ou o
+         componente saiu: o vídeo pára, e volta à primeira imagem, que é a do
+         poster. */
+      el.pause();
+      if (el.currentTime > 0) el.currentTime = 0;
+      pausadoPeloVisitante.current = false;
+    };
   }, [permitido]);
 
   function alternar() {

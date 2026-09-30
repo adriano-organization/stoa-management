@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { imagemPublicavel } from "@/data/validacoes";
 import type { Locale } from "@/i18n/routing";
 import type { IdImagem } from "@/lib/medias";
 import { Foto } from "../Foto";
@@ -12,8 +13,10 @@ const ITENS: { chave: "preparacao" | "financas" | "direcao"; imagem: IdImagem; f
 
 /**
  * As três competências do site atual, numeradas. O texto está sempre todo à
- * vista; passar o rato (ou tocar) num item só troca a imagem ao lado — a
- * imagem ilustra, não informa, por isso ninguém perde nada sem ela.
+ * vista; passar o rato, tocar ou escolher com o teclado só troca a imagem ao
+ * lado — a imagem ilustra, não informa, por isso ninguém perde nada sem ela.
+ * Em publicação, uma imagem por validar (`src/data/validacoes.ts`) não entra;
+ * sem nenhuma, não há painel.
  */
 export async function Especialidades({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: "especialidades" });
@@ -25,7 +28,7 @@ export async function Especialidades({ locale }: { locale: Locale }) {
     titulo: t(`itens.${item.chave}.titulo`),
     resumo: t(`itens.${item.chave}.resumo`),
     detalhe: t(`itens.${item.chave}.detalhe`),
-    imagem: (
+    imagem: imagemPublicavel(item.imagem) ? (
       <Foto
         id={item.imagem}
         alt={medias(item.imagem)}
@@ -33,7 +36,7 @@ export async function Especialidades({ locale }: { locale: Locale }) {
         foco={item.foco}
         className="especialidade__foto"
       />
-    ),
+    ) : null,
   }));
 
   return (

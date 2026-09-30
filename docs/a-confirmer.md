@@ -11,4 +11,4 @@
 - Conta Resend, domínio remetente, destinatário, Redis e teste de receção real.
 - Validação do texto sobre dados pessoais, retenção e prestadores pela empresa.
 
-`STOA_PUBLICATION=1` exclui projetos provisórios e perfis incompletos; não substitui a aprovação editorial das restantes secções nem dos media partilhados pelo hero e metadados.
+`STOA_PUBLICATION=1` exclui projetos provisórios, perfis incompletos e o que está `provisorio` em `src/data/validacoes.ts` (texto do método; fotografias do herói, da apresentação, das competências e do contacto; imagem de partilha do site). Nesse modo o herói fica sem fotografia e a secção do método desaparece até à aprovação. Marcar `validado` só com a confirmação da STOA; o modo de publicação não substitui essa aprovação.

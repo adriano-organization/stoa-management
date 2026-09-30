@@ -119,6 +119,11 @@ jobs:
             verificar /realisations/immeuble-balcons-filants  200
           fi
 
+      # Estados, cookies, CSP, recursos de fora e, em publicação, nada por
+      # validar no HTML (nem no que vai para o browser).
+      - name: Verificação das rotas
+        run: node scripts/verificar-rotas.mjs http://localhost:3000
+
       - name: Indexação conforme o modo
         run: |
           set -euo pipefail
