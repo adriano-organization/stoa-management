@@ -131,10 +131,88 @@ html:has(.heroi:not([data-passou])) {
   font-size: 400px;
 }
 
-/* À chegada, a marca sobe por trás do edifício — uma vez, depressa, e sem
-   atrasar nada: o título e os botões já estão lá. */
+/* O contorno: só existe para a construção, por isso está escondido em
+   repouso (sem JavaScript, com menos movimento, depois de acabar). */
+.heroi__contorno {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  fill: none;
+  stroke: var(--color-calcario);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* A espessura está em píxeis do original (não há `vector-effect`, que no
+   Safari se dá mal com `pathLength`): ~1,5 px no ecrã em cada composição. */
+.heroi__contorno--paisagem {
+  stroke-width: 1.4;
+}
+
+.heroi__contorno--retrato {
+  display: none;
+  stroke-width: 7;
+}
+
+/* À chegada, o herói constrói-se: a linha do edifício como numa planta, a
+   obra a subir dentro dela, a envolvente à volta e, por fim, a marca por
+   trás. Sempre que a página abre — se a página abrir já a meio, corre fora
+   do ecrã e acaba sem ninguém a ver. As animações vão para os contentores:
+   o `scale` do `<img>` e o `translate` do texto da marca são do `--p`. */
+[data-movimento] .heroi__contorno {
+  animation: contorno-aparece 1100ms linear both;
+}
+
+[data-movimento] .heroi__contorno path {
+  stroke-dasharray: 1;
+  animation: contorno-desenha 600ms var(--curva-saida) both;
+}
+
+[data-movimento] .heroi__recorte {
+  animation: obra-sobe 700ms var(--curva-saida) 400ms both;
+}
+
+[data-movimento] .heroi__foto:not(.heroi__recorte) {
+  animation: envolvente-aparece 600ms ease 800ms both;
+}
+
 [data-movimento] .heroi__marca {
-  animation: marca-sobe 1300ms var(--curva-saida) 120ms both;
+  animation: marca-sobe 650ms var(--curva-saida) 1000ms both;
+}
+
+@keyframes contorno-aparece {
+  0%,
+  70% {
+    opacity: 1;
+  }
+}
+
+@keyframes contorno-desenha {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes obra-sobe {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes envolvente-aparece {
+  from {
+    opacity: 0;
+  }
 }
 
 @keyframes marca-sobe {
@@ -307,6 +385,14 @@ html:has(.heroi:not([data-passou])) {
   }
 
   .heroi__marca--retrato {
+    display: block;
+  }
+
+  .heroi__contorno--paisagem {
+    display: none;
+  }
+
+  .heroi__contorno--retrato {
     display: block;
   }
 

@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
-import { HEROI, poligono, type Composicao } from "@/data/heroi";
+import { HEROI, contorno, poligono, type Composicao } from "@/data/heroi";
 import { imagemPublicavel } from "@/data/validacoes";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
@@ -19,6 +19,11 @@ import { ComProgresso } from "../movimento/ComProgresso";
  *    marca fica atrás dele;
  * 4. o título, o subtítulo e as duas ações, legíveis e clicáveis desde o
  *    primeiro instante.
+ *
+ * **À chegada** o herói constrói-se (~1,6 s, só CSS, só com `data-movimento`):
+ * a linha do edifício desenha-se, o edifício enche-se de baixo para cima, a
+ * envolvente aparece e a marca sobe. O título e os botões estão lá desde o
+ * início.
  *
  * **Em ecrã deitado** a secção tem ~1,9 alturas de ecrã e o palco fica preso:
  * ao rolar, a fotografia aproxima-se (as duas camadas juntas), a marca afunda
@@ -76,6 +81,12 @@ export async function Heroi({ locale }: { locale: Locale }) {
           <Marca composicao={paisagem} className="heroi__marca heroi__marca--paisagem" />
           <Marca composicao={retrato} className="heroi__marca heroi__marca--retrato" />
           {comFotografia && <FotoDoHeroi className="heroi__foto heroi__recorte" />}
+          {comFotografia && (
+            <>
+              <Contorno composicao={paisagem} className="heroi__contorno heroi__contorno--paisagem" />
+              <Contorno composicao={retrato} className="heroi__contorno heroi__contorno--retrato" />
+            </>
+          )}
           <div className="heroi__aproximacao" aria-hidden="true" />
         </div>
 
@@ -171,6 +182,27 @@ function Marca({ composicao, className }: { composicao: Composicao; className: s
       <text x={marca.x} y={marca.linhaDeBase} textLength={marca.largura} lengthAdjust="spacing">
         STOA
       </text>
+    </svg>
+  );
+}
+
+/**
+ * A linha do edifício, como numa planta, desenhada à chegada antes de a obra
+ * (a fotografia) aparecer. Mesmo `viewBox` da fotografia, como a marca: fica
+ * presa ao edifício em qualquer ecrã. `pathLength="1"` deixa o CSS desenhá-la
+ * de 1 a 0 sem saber o comprimento real.
+ */
+function Contorno({ composicao, className }: { composicao: Composicao; className: string }) {
+  const { largura, altura } = composicao;
+  return (
+    <svg
+      className={className}
+      viewBox={`0 0 ${largura} ${altura}`}
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d={contorno(composicao)} pathLength={1} />
     </svg>
   );
 }
