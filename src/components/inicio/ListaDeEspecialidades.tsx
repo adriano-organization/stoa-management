@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useConsultaDeMedia } from "@/lib/movimento/preferencia";
 
 type Item = {
@@ -15,8 +15,10 @@ type Item = {
 /**
  * A lista das competências e o painel de imagem ao lado.
  *
- * No ecrã largo, o painel mostra a imagem do item ativo — o que tem o rato
- * por cima, o último tocado ou escolhido, ou o primeiro. No telemóvel não há
+ * No ecrã largo, o painel mostra a imagem do item ativo — o que passa a meio
+ * do ecrã ao rolar, o que tem o rato por cima, o último tocado ou escolhido,
+ * ou o primeiro. A rolagem conta porque quem só lê, sem mexer o rato, também
+ * tem de ver as três imagens. No telemóvel não há
  * painel: cada item leva a sua imagem por baixo do texto. O texto nunca se
  * esconde.
  *
@@ -31,10 +33,29 @@ export function ListaDeEspecialidades({ itens }: { itens: Item[] }) {
   const ecraLargo = useConsultaDeMedia("(min-width: 900px)") === true;
   const temImagens = itens.some((item) => item.imagem !== null);
   const comPainel = temImagens && ecraLargo;
+  const lista = useRef<HTMLOListElement>(null);
+
+  /* Uma faixa fina a meio do ecrã: o item que a atravessa fica ativo. Não é um
+     motor de movimento, só escolhe qual imagem está à vista — com menos
+     movimento pedido a imagem troca na mesma, sem transição. */
+  useEffect(() => {
+    if (!comPainel || !lista.current) return;
+    const filhos = Array.from(lista.current.children);
+    const observador = new IntersectionObserver(
+      (entradas) => {
+        for (const entrada of entradas) {
+          if (entrada.isIntersecting) setAtivo(filhos.indexOf(entrada.target));
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px" },
+    );
+    filhos.forEach((filho) => observador.observe(filho));
+    return () => observador.disconnect();
+  }, [comPainel]);
 
   return (
     <div className="especialidades__corpo">
-      <ol className="especialidades__lista">
+      <ol ref={lista} className="especialidades__lista">
         {itens.map((item, i) => (
           <li
             key={item.chave}
@@ -82,6 +103,20 @@ export function ListaDeEspecialidades({ itens }: { itens: Item[] }) {
               {item.imagem}
             </div>
           ))}
+          {/* Repete o que a lista já diz, por isso fica fora da leitura. */}
+          <div className="especialidades__legenda" aria-hidden="true">
+            <p className="legenda">
+              <span>{itens[ativo].numero}</span> / {String(itens.length).padStart(2, "0")}
+            </p>
+            <p key={ativo} className="especialidades__legenda-titulo">
+              {itens[ativo].titulo}
+            </p>
+            <div className="especialidades__marcas">
+              {itens.map((item, i) => (
+                <span key={item.chave} data-ativo={ativo === i ? "" : undefined} />
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
