@@ -1,0 +1,39 @@
+# dependências
+/node_modules
+/.pnp
+.pnp.*
+
+# next
+/.next/
+/out/
+next-env.d.ts
+
+# produção
+/build
+
+# ambiente — os segredos nunca entram no repositório. `.env*` inteiro, e não
+# só os `.local`: um `.env.production` criado à mão também tem de ficar de fora.
+# A lista de variáveis vive no `.env.example`.
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# macOS
+.DS_Store
+
+# registos
+npm-debug.log*
+yarn-debug.log*
+
+# intermédios do `npm run medias` (HEIC convertidos, posters em bruto):
+# refazem-se a qualquer momento a partir de `Photo pour site /`.
+/.cache
+
+# verificação visual: capturas e scripts descartáveis. Dezenas de MB por
+# corrida, e refazem-se contra o site a correr.
+/lab

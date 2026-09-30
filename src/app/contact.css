@@ -1,0 +1,298 @@
+/* ===========================================================================
+   CONTACTO — a página e o formulário
+   =========================================================================== */
+
+.contacto {
+  padding-top: calc(var(--altura-cabecalho) + clamp(3.5rem, 8vw, 7rem));
+  padding-bottom: clamp(5rem, 10vw, 9rem);
+}
+
+.contacto__topo {
+  display: grid;
+  gap: 1.5rem;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.contacto__topo h1 {
+  max-width: 12ch;
+}
+
+.contacto__intro {
+  max-width: 44ch;
+}
+
+.contacto__grelha {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: 4rem;
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--linha);
+}
+
+.contacto__formulario {
+  grid-column: 1 / span 7;
+  display: grid;
+  gap: 1.75rem;
+  align-content: start;
+}
+
+.contacto__direto {
+  grid-column: 9 / span 4;
+  display: grid;
+  gap: 1.75rem;
+  align-content: start;
+}
+
+.contacto__lista {
+  display: grid;
+}
+
+.contacto__lista > div {
+  display: grid;
+  gap: 0.4rem;
+  padding-block: 1rem;
+  border-top: 1px solid var(--linha);
+}
+
+.contacto__lista dd ul {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.contacto__lista address {
+  font-style: normal;
+  margin-bottom: 0.35rem;
+}
+
+.contacto__redes {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem !important;
+}
+
+.contacto__foto img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.contacto__foto figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 899px) {
+  .contacto__formulario,
+  .contacto__direto {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ------------------------------------------------------------ formulário */
+
+.formulario {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.formulario__grelha {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem var(--intervalo);
+}
+
+.campo {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.campo--largo {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .formulario__grelha {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.campo__etiqueta {
+  font-weight: 500;
+}
+
+.campo__estatuto {
+  margin-left: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-mineral);
+}
+
+/* Campos de canto vivo, com fio em baixo e fundo claro: legíveis, e com
+   altura de toque (48 px). O foco muda o fio para verde e engrossa-o. */
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid color-mix(in oklab, var(--color-grafite) 30%, transparent);
+  border-radius: 0;
+  background: color-mix(in oklab, #fff 55%, var(--color-calcario));
+  color: var(--color-grafite);
+  font: inherit;
+  line-height: 1.4;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.campo textarea {
+  resize: vertical;
+  min-height: 11rem;
+}
+
+.campo input:hover,
+.campo select:hover,
+.campo textarea:hover {
+  border-color: color-mix(in oklab, var(--color-grafite) 55%, transparent);
+}
+
+.campo input:focus-visible,
+.campo select:focus-visible,
+.campo textarea:focus-visible {
+  outline: none;
+  border-color: var(--color-verde);
+  box-shadow: 0 0 0 1px var(--color-verde);
+}
+
+.campo [aria-invalid="true"] {
+  border-color: #a8321f;
+  box-shadow: 0 0 0 1px #a8321f;
+}
+
+.campo__seletor {
+  position: relative;
+}
+
+.campo__seletor select {
+  appearance: none;
+  padding-right: 2.5rem;
+}
+
+.campo__seletor::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  translate: 0 -70%;
+  rotate: 45deg;
+  pointer-events: none;
+}
+
+.campo__ajuda {
+  font-size: 0.875rem;
+  color: var(--color-mineral);
+}
+
+/* O vermelho dos erros: 6,4:1 sobre o calcário. Nunca só a cor — o texto diz
+   o que está mal, e o campo leva `aria-invalid`. */
+.campo__erro {
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: #a8321f;
+}
+
+/* O sinal é decorativo: o `/ ""` tira-o do que o leitor de ecrã lê. */
+.campo__erro::before {
+  content: "× " / "";
+}
+
+.campo--isco {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.formulario__resumo {
+  padding: 1.1rem 1.25rem;
+  border-left: 3px solid #a8321f;
+  background: color-mix(in oklab, #a8321f 7%, var(--color-calcario));
+}
+
+.formulario__resumo[hidden] {
+  display: none;
+}
+
+.formulario__resumo p {
+  font-weight: 500;
+}
+
+.formulario__resumo ul {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.formulario__resumo a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.formulario__falha {
+  padding: 1.1rem 1.25rem;
+  border-left: 3px solid var(--color-grafite);
+  background: var(--color-pedra);
+  font-weight: 500;
+}
+
+.formulario__envio {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+
+.formulario__envio .botao[disabled] {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.formulario__dados {
+  max-width: 60ch;
+  font-size: 0.875rem;
+}
+
+.formulario__sucesso {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-top: 2px solid var(--color-verde-marca);
+  background: var(--color-pedra);
+}
+
+.formulario__sucesso:focus {
+  outline: none;
+}
+
+.formulario__sinal {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--color-verde);
+  color: var(--color-verde);
+  font-size: 1rem;
+}

@@ -1,0 +1,397 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   STOA — os tokens
+
+   Tons de pedra, branco quente, carvão e cinzentos minerais, e um só acento:
+   o verde do logótipo oficial (#629641), escurecido até o texto ler bem. Os
+   contrastes estão medidos (WCAG, texto normal ≥ 4,5:1):
+
+     grafite  #2a2a27 sobre calcário  12,4:1
+     mineral  #5f5c56 sobre calcário   5,8:1   sobre pedra 5,0:1
+     verde    #476b2f sobre calcário   5,3:1   sobre pedra 4,6:1
+     verde-claro #a9c697 sobre carvão  9,7:1
+     mineral-claro #a8a39a sobre carvão 7,2:1
+
+   O verde original (#629641) só aparece em traços e pontos, nunca em texto:
+   dá 3,0:1 sobre o calcário, o mínimo para um elemento gráfico.
+   =========================================================================== */
+@theme {
+  --color-calcario: #f2eee7;
+  --color-pedra: #e4ded3;
+  --color-molassa: #c9c1b3;
+  --color-mineral: #5f5c56;
+  --color-mineral-claro: #a8a39a;
+  --color-grafite: #2a2a27;
+  --color-carvao: #161615;
+  --color-verde: #476b2f;
+  --color-verde-marca: #629641;
+  --color-verde-claro: #a9c697;
+
+  --font-sans: var(--fonte-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--fonte-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+:root {
+  --margem: clamp(20px, 5vw, 96px);
+  --intervalo: clamp(16px, 2.2vw, 36px);
+  --largura-max: 1680px;
+  --altura-cabecalho: 72px;
+
+  --linha: color-mix(in oklab, var(--color-grafite) 16%, transparent);
+  --linha-escura: color-mix(in oklab, var(--color-calcario) 18%, transparent);
+
+  --t-display: clamp(2.6rem, 1.1rem + 5.4vw, 7.25rem);
+  --t-titulo: clamp(2.1rem, 1.1rem + 3.2vw, 4.6rem);
+  --t-grande: clamp(1.45rem, 0.95rem + 1.7vw, 2.75rem);
+  --t-medio: clamp(1.15rem, 1rem + 0.5vw, 1.45rem);
+  --t-corpo: clamp(1rem, 0.96rem + 0.15vw, 1.0625rem);
+
+  --curva-saida: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --curva-suave: cubic-bezier(0.45, 0, 0.2, 1);
+
+  color-scheme: light;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --altura-cabecalho: 60px;
+  }
+}
+
+/* ------------------------------------------------------------------ base */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* As âncoras (`/#expertises`) param abaixo do cabeçalho fixo, e não por
+     baixo dele. */
+  scroll-padding-top: var(--altura-cabecalho);
+}
+
+body {
+  background: var(--color-calcario);
+  color: var(--color-grafite);
+  font-family: var(--font-sans);
+  font-size: var(--t-corpo);
+  line-height: 1.55;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Nenhuma secção pode empurrar a página para o lado: as composições que
+     saem da grelha (a marca, as imagens a sangrar) são cortadas aqui. */
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-verde-claro);
+  color: var(--color-carvao);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-verde);
+  outline-offset: 3px;
+}
+
+.escuro :focus-visible,
+.escuro:focus-visible {
+  outline-color: var(--color-verde-claro);
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* ------------------------------------------------------------ utilitários */
+
+/* A caixa de conteúdo: margens generosas e um teto de largura para os ecrãs
+   muito grandes. */
+.envelope {
+  width: 100%;
+  max-width: var(--largura-max);
+  margin-inline: auto;
+  padding-inline: var(--margem);
+}
+
+.grelha {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+}
+
+/* A legenda em mono: numeração, etiquetas, fichas. Sempre pequena e sempre
+   com espaço entre letras — é o registo das cotas numa planta. */
+.legenda {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.titulo-display {
+  font-size: var(--t-display);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.titulo-seccao {
+  font-size: var(--t-titulo);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.texto-grande {
+  font-size: var(--t-grande);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+
+.texto-medio {
+  font-size: var(--t-medio);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+
+.texto-corrido {
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+.texto-corrido p + p {
+  margin-top: 1em;
+}
+
+.fio {
+  border-top: 1px solid var(--linha);
+}
+
+.escuro {
+  background: var(--color-carvao);
+  color: var(--color-calcario);
+  --linha: var(--linha-escura);
+}
+
+.escuro .suave {
+  color: var(--color-mineral-claro);
+}
+
+.suave {
+  color: var(--color-mineral);
+}
+
+.sr-only-focavel:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- ligações */
+
+/* O link de texto: sublinhado fino que engrossa ao passar, sem mudar de cor.
+   A cor fica para o que é interativo a sério (os botões). */
+.ligacao {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in oklab, currentColor 45%, transparent);
+  transition: text-decoration-color 200ms ease, text-decoration-thickness 200ms ease;
+}
+
+.ligacao:hover {
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+}
+
+/* Os botões: retângulos de canto vivo, uma linha, uma seta. O primário é
+   cheio; o secundário é um contorno. Mínimo de 48 px de altura (toque). */
+.botao {
+  --botao-fundo: var(--color-grafite);
+  --botao-texto: var(--color-calcario);
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  min-height: 48px;
+  padding: 0.8rem 1.1rem 0.8rem 1.25rem;
+  background: var(--botao-fundo);
+  color: var(--botao-texto);
+  border: 1px solid var(--botao-fundo);
+  font-size: 0.975rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease;
+}
+
+.botao:hover {
+  --botao-fundo: var(--color-verde);
+}
+
+.botao--contorno {
+  --botao-fundo: transparent;
+  --botao-texto: currentColor;
+  border-color: currentColor;
+}
+
+.botao--contorno:hover {
+  --botao-fundo: transparent;
+  border-color: var(--color-verde-marca);
+}
+
+.botao--claro {
+  --botao-fundo: var(--color-calcario);
+  --botao-texto: var(--color-carvao);
+}
+
+.botao--claro:hover {
+  --botao-fundo: var(--color-verde-claro);
+}
+
+.botao__seta {
+  display: inline-block;
+  transition: translate 260ms var(--curva-saida);
+}
+
+.botao:hover .botao__seta,
+.ligacao-seta:hover .botao__seta {
+  translate: 4px 0;
+}
+
+/* --------------------------------------------------------------- selo -- */
+
+/* O selo do modo aperçu: diz, com todas as letras, o que ainda não está
+   confirmado. Nunca aparece em publicação — ver `lib/publicacao.ts`. */
+.selo-provisorio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.35em 0.6em;
+  border: 1px dashed currentColor;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a5a00;
+  background: color-mix(in oklab, #f5c451 22%, transparent);
+}
+
+.escuro .selo-provisorio {
+  color: #f5d489;
+  background: color-mix(in oklab, #f5c451 14%, transparent);
+}
+
+/* ------------------------------------------------------------- revelar -- */
+
+/* Revelar ao entrar no ecrã, uma vez. O estado escondido só existe quando o
+   `<html>` tem `data-movimento` — posto por um script no `<head>` só a quem não
+   pediu menos movimento. Sem JavaScript, ou com a preferência ligada, o
+   conteúdo está simplesmente lá. */
+[data-movimento] [data-revelar]:not([data-visivel]) {
+  opacity: 0;
+  translate: 0 16px;
+}
+
+[data-movimento] [data-revelar] {
+  transition:
+    opacity 700ms var(--curva-saida),
+    translate 900ms var(--curva-saida);
+  transition-delay: var(--atraso, 0ms);
+}
+
+/* --------------------------------------------------------- transições -- */
+
+/* A navegação entre páginas: um cruzamento curto, e o cabeçalho quieto. O
+   morph das imagens de projeto (cartão → abertura) tem classe própria. */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(cabecalho) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(cabecalho) {
+  display: none;
+}
+
+::view-transition-new(cabecalho) {
+  animation: none;
+}
+
+::view-transition-group(.morph) {
+  animation-duration: 520ms;
+  animation-timing-function: var(--curva-suave);
+}
+
+::view-transition-image-pair(.morph) {
+  animation-name: via-desfoque;
+}
+
+@keyframes via-desfoque {
+  35% {
+    filter: blur(2px);
+  }
+}
+
+::view-transition-old(root) {
+  animation: 180ms ease-in both desvanecer;
+}
+
+::view-transition-new(root) {
+  animation: 260ms ease-out 120ms both aparecer;
+}
+
+@keyframes desvanecer {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------ menos movimento -- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+@media print {
+  .cabecalho,
+  .heroi__defilar {
+    display: none;
+  }
+}

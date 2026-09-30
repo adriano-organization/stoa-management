@@ -1,0 +1,979 @@
+/* ===========================================================================
+   A PÁGINA INICIAL
+
+   Os valores que o movimento lê (`--p`, `--entrada`, `--coberto`) são
+   escritos por `lib/movimento/progresso.ts`. Todas as regras têm um valor de
+   repouso (`var(--p, 0)`), que é o que se vê sem JavaScript e com menos
+   movimento pedido: a composição está completa nesse estado.
+   =========================================================================== */
+
+/* ---------------------------------------------------------------- herói */
+
+.heroi {
+  position: relative;
+  height: 190svh;
+  background: var(--color-carvao);
+}
+
+.heroi__palco {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  /* As unidades `cq*` abaixo medem este palco — é o que deixa a caixa da
+     imagem imitar o `object-fit: cover` sendo uma caixa a sério. */
+  container-type: size;
+}
+
+/* A caixa tem exatamente as proporções da fotografia e cobre o palco como o
+   `cover` faria, centrada no ponto de foco. Por ser uma caixa real, o recorte
+   e a marca podem ser escritos em percentagens dela — e ficam presos ao
+   edifício em qualquer ecrã.
+
+   ⚠️ O teto de largura (`--w-max`) existe porque o original do herói tem
+   1280 px: acima de 1920 px de caixa (1,5×) a fotografia deixaria de ser
+   nítida. Em ecrãs maiores do que isso, a caixa fica centrada no carvão, como
+   uma prova impressa, em vez de ampliar mais. Subir o teto quando chegarem os
+   originais do drone. */
+.heroi__caixa {
+  --ar: calc(1280 / 720);
+  --fx: var(--foco-x-paisagem, 0.5);
+  --fy: var(--foco-y-paisagem, 0.5);
+  --w-max: 1920px;
+  --w: min(max(100cqw, 100cqh * var(--ar)), var(--w-max));
+  --h: calc(var(--w) / var(--ar));
+  position: absolute;
+  width: var(--w);
+  height: var(--h);
+  left: clamp(
+    min(100cqw - var(--w), (100cqw - var(--w)) / 2),
+    50cqw - var(--fx) * var(--w),
+    max(0px, (100cqw - var(--w)) / 2)
+  );
+  top: clamp(
+    min(100cqh - var(--h), (100cqh - var(--h)) / 2),
+    50cqh - var(--fy) * var(--h),
+    max(0px, (100cqh - var(--h)) / 2)
+  );
+}
+
+.heroi__foto {
+  position: absolute;
+  inset: 0;
+}
+
+.heroi__foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* A aproximação: as duas camadas com a mesma escala e a mesma origem, para
+     o recorte nunca se descolar da fotografia. */
+  transform-origin: var(--zoom-paisagem, 50% 50%);
+  scale: calc(1 + var(--p, 0) * 0.1);
+}
+
+.heroi__recorte img {
+  clip-path: var(--recorte-paisagem);
+}
+
+.heroi__marca {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.heroi__marca text {
+  font-family: var(--font-sans);
+  font-weight: 620;
+  font-stretch: 125%;
+  letter-spacing: 0;
+  fill: var(--color-calcario);
+  /* A marca afunda atrás da platibanda à medida que a vista se aproxima. */
+  translate: 0 calc(var(--p, 0) * 9%);
+}
+
+.heroi__marca--paisagem text {
+  /* "STOA" mede 3,53 em nesta fonte: 180 × 3,53 ≈ 635, perto dos 614 do
+     `textLength` — o espaçamento aperta um pouco, as letras não se tocam. */
+  font-size: 180px;
+}
+
+.heroi__marca--retrato {
+  display: none;
+}
+
+.heroi__marca--retrato text {
+  font-size: 400px;
+}
+
+/* À chegada, a marca sobe por trás do edifício — uma vez, depressa, e sem
+   atrasar nada: o título e os botões já estão lá. */
+[data-movimento] .heroi__marca {
+  animation: marca-sobe 1300ms var(--curva-saida) 120ms both;
+}
+
+@keyframes marca-sobe {
+  from {
+    translate: 0 7%;
+    opacity: 0;
+  }
+}
+
+.heroi__aproximacao {
+  position: absolute;
+  inset: 0;
+  background: var(--color-carvao);
+  opacity: calc(var(--p, 0) * 0.28);
+  pointer-events: none;
+}
+
+/* O véu só onde o texto assenta: em baixo e à esquerda. A fotografia fica
+   limpa no resto. */
+.heroi__veu {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, rgb(14 14 13 / 0.82) 0%, rgb(14 14 13 / 0.5) 26%, rgb(14 14 13 / 0) 52%),
+    linear-gradient(to right, rgb(14 14 13 / 0.4) 0%, rgb(14 14 13 / 0) 42%);
+}
+
+.heroi__conteudo {
+  position: absolute;
+  inset: auto 0 clamp(2.75rem, 8svh, 5.5rem);
+  translate: 0 calc(var(--p, 0) * -9svh);
+  opacity: calc(1 - var(--p, 0) * 1.7);
+}
+
+.heroi__conteudo .envelope {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  align-items: end;
+}
+
+.heroi__titulo {
+  grid-column: 1 / span 8;
+  font-size: clamp(2.5rem, 1rem + 4.2vw, 5.6rem);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+
+.heroi__titulo span {
+  display: block;
+}
+
+.heroi__subtitulo {
+  grid-column: 9 / span 4;
+  grid-row: 1;
+  align-self: end;
+  font-size: var(--t-medio);
+  line-height: 1.35;
+  max-width: 28ch;
+  color: rgb(242 238 231 / 0.9);
+  padding-bottom: 0.35rem;
+}
+
+.heroi__acoes {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: clamp(1.5rem, 3.5svh, 2.5rem);
+}
+
+.heroi__defilar {
+  position: absolute;
+  right: var(--margem);
+  bottom: clamp(2.75rem, 8svh, 5.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgb(242 238 231 / 0.85);
+  opacity: calc(1 - var(--p, 0) * 5);
+}
+
+.heroi__defilar span:first-child {
+  writing-mode: vertical-rl;
+}
+
+.heroi__defilar-fio {
+  position: relative;
+  width: 1px;
+  height: 56px;
+  background: rgb(242 238 231 / 0.3);
+  overflow: hidden;
+}
+
+.heroi__defilar-fio::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-calcario);
+  translate: 0 -100%;
+  animation: fio-desce 2.4s var(--curva-suave) 1.4s infinite;
+}
+
+@keyframes fio-desce {
+  0% {
+    translate: 0 -100%;
+  }
+  55%,
+  100% {
+    translate: 0 100%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .heroi__titulo,
+  .heroi__subtitulo {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .heroi__subtitulo {
+    margin-top: 1rem;
+    padding: 0;
+  }
+}
+
+/* De pé (telemóvel, tablet ao alto): a fotografia da fachada, sem palco
+   preso. A marca espreita por trás da aresta do telhado. */
+@media (orientation: portrait) {
+  .heroi {
+    height: auto;
+  }
+
+  .heroi__palco {
+    position: relative;
+    height: 100svh;
+    min-height: 620px;
+  }
+
+  .heroi__caixa {
+    --ar: calc(3024 / 4032);
+    --fx: var(--foco-x-retrato, 0.5);
+    --fy: var(--foco-y-retrato, 0.5);
+    --w-max: 100000px;
+  }
+
+  .heroi__foto img {
+    transform-origin: var(--zoom-retrato, 50% 50%);
+    scale: 1;
+  }
+
+  .heroi__recorte img {
+    clip-path: var(--recorte-retrato);
+  }
+
+  .heroi__marca--paisagem {
+    display: none;
+  }
+
+  .heroi__marca--retrato {
+    display: block;
+  }
+
+  .heroi__marca text {
+    translate: none;
+  }
+
+  .heroi__veu {
+    background: linear-gradient(
+      to top,
+      rgb(14 14 13 / 0.88) 0%,
+      rgb(14 14 13 / 0.62) 30%,
+      rgb(14 14 13 / 0) 58%
+    );
+  }
+
+  .heroi__conteudo {
+    translate: none;
+    opacity: 1;
+    bottom: 2rem;
+  }
+
+  .heroi__defilar {
+    display: none;
+  }
+
+  .heroi__aproximacao {
+    display: none;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 520px) {
+  .heroi__acoes .botao {
+    width: 100%;
+  }
+}
+
+/* Ecrã deitado mas baixo (um telemóvel de lado): sem palco preso, o texto
+   mais pequeno. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .heroi {
+    height: auto;
+  }
+
+  .heroi__palco {
+    position: relative;
+    min-height: 420px;
+  }
+
+  .heroi__titulo {
+    font-size: clamp(2rem, 1rem + 3vw, 3rem);
+  }
+}
+
+/* ---------------------------------------------------------- apresentação */
+
+.apresentacao {
+  padding-block: clamp(5rem, 11vw, 10rem) clamp(5rem, 10vw, 9rem);
+}
+
+.apresentacao__grelha {
+  grid-template-rows: auto auto auto 1fr;
+  row-gap: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+.apresentacao__etiqueta {
+  grid-column: 1 / span 6;
+}
+
+.legenda > span:first-child {
+  display: inline-block;
+  margin-right: 0.6em;
+  color: var(--color-verde);
+}
+
+.escuro .legenda > span:first-child {
+  color: var(--color-verde-claro);
+}
+
+.apresentacao__titulo {
+  grid-column: 1 / span 8;
+  grid-row: 2;
+  max-width: 24ch;
+}
+
+.apresentacao__texto {
+  grid-column: 3 / span 5;
+  grid-row: 3;
+  font-size: var(--t-medio);
+  line-height: 1.5;
+}
+
+.apresentacao__factos {
+  grid-column: 3 / span 6;
+  grid-row: 4;
+  align-self: end;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--intervalo);
+  margin-top: 1rem;
+}
+
+.apresentacao__factos > div {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--linha);
+}
+
+.apresentacao__factos dd {
+  margin-top: 0.35rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.apresentacao__figura {
+  grid-column: 9 / span 4;
+  grid-row: 1 / span 4;
+  align-self: start;
+  margin-top: clamp(0rem, 4vw, 4rem);
+}
+
+.apresentacao__foto img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.apresentacao__foto--estreito {
+  display: none;
+}
+
+.apresentacao__figura figcaption {
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 899px) {
+  .apresentacao__etiqueta,
+  .apresentacao__titulo,
+  .apresentacao__texto,
+  .apresentacao__factos,
+  .apresentacao__figura {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .apresentacao__figura {
+    margin-top: 0.5rem;
+  }
+
+  .apresentacao__foto--largo,
+  .apresentacao__figura figcaption {
+    display: none;
+  }
+
+  .apresentacao__foto--estreito {
+    display: block;
+  }
+
+  .apresentacao__foto--estreito img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .apresentacao__factos {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .apresentacao__factos > div {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    align-items: baseline;
+    padding-block: 0.8rem;
+  }
+
+  .apresentacao__factos dd {
+    margin-top: 0;
+  }
+}
+
+/* -------------------------------------------------- projetos em destaque */
+
+.destaque {
+  padding-top: clamp(5rem, 10vw, 9rem);
+}
+
+.destaque__topo {
+  display: grid;
+  gap: 1.5rem;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.destaque__topo h2 {
+  max-width: 18ch;
+}
+
+.destaque__todos {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-self: start;
+  min-height: 44px;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+}
+
+.destaque__pilha {
+  position: relative;
+}
+
+/* Cada projeto é um ecrã preso ao topo; o seguinte sobe e tapa-o. */
+.destaque__cartao {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 600px;
+  background: var(--color-carvao);
+  border-top: 1px solid var(--linha-escura);
+  overflow: hidden;
+}
+
+.destaque__interior {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  align-items: center;
+  height: 100%;
+  padding-block: clamp(2rem, 6svh, 4rem);
+  /* O que fica para trás recua e escurece enquanto o seguinte sobe. */
+  transform-origin: 50% 0;
+  scale: calc(1 - var(--coberto, 0) * 0.06);
+  opacity: calc(1 - var(--coberto, 0) * 0.6);
+}
+
+.destaque__media {
+  grid-column: 1 / span 7;
+  grid-row: 1;
+}
+
+.destaque__cartao:nth-child(even) .destaque__media {
+  grid-column: 6 / span 7;
+}
+
+.destaque__moldura {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  max-height: 72svh;
+  overflow: hidden;
+  /* O que chega abre de baixo para cima e assenta. */
+  clip-path: inset(calc((1 - var(--entrada, 1)) * 22%) 0 0 0);
+}
+
+.destaque__moldura img,
+.destaque__moldura video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scale: calc(1.12 - var(--entrada, 1) * 0.12);
+}
+
+.destaque__texto {
+  grid-column: 9 / span 4;
+  grid-row: 1;
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  translate: 0 calc((1 - var(--entrada, 1)) * 40px);
+}
+
+.destaque__cartao:nth-child(even) .destaque__texto {
+  grid-column: 1 / span 4;
+}
+
+.destaque__titulo {
+  font-size: clamp(1.9rem, 1rem + 2.2vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.destaque__resumo {
+  max-width: 36ch;
+}
+
+.destaque__meta {
+  color: var(--color-verde-claro);
+}
+
+.destaque__botao {
+  margin-top: 0.75rem;
+}
+
+/* O link cobre o cartão inteiro: a imagem também leva ao projeto. O botão de
+   pausa do vídeo fica por cima e continua a funcionar. */
+.destaque__botao::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.destaque__moldura .video-mudo__botao {
+  z-index: 2;
+}
+
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+  .destaque__cartao {
+    position: relative;
+    height: auto;
+    min-height: 0;
+  }
+
+  .destaque__interior {
+    row-gap: 1.5rem;
+    padding-block: 2.5rem 3.5rem;
+    scale: 1;
+    opacity: 1;
+  }
+
+  .destaque__media,
+  .destaque__cartao:nth-child(even) .destaque__media,
+  .destaque__texto,
+  .destaque__cartao:nth-child(even) .destaque__texto {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    translate: none;
+  }
+
+  .destaque__moldura {
+    clip-path: none;
+  }
+
+  .destaque__moldura img,
+  .destaque__moldura video {
+    scale: 1;
+  }
+}
+
+/* -------------------------------------------------------- especialidades */
+
+.especialidades {
+  padding-block: clamp(5rem, 11vw, 10rem);
+}
+
+.especialidades__topo {
+  display: grid;
+  gap: 1.5rem;
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.especialidades__topo h2 {
+  max-width: 16ch;
+}
+
+.especialidades__corpo {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  align-items: start;
+}
+
+.especialidades__lista {
+  grid-column: 1 / span 7;
+  border-bottom: 1px solid var(--linha);
+}
+
+.especialidade {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 0 var(--intervalo);
+  padding-block: clamp(1.75rem, 3vw, 2.75rem);
+  border-top: 1px solid var(--linha);
+  cursor: default;
+}
+
+/* O item ativo leva o traço verde da marca à esquerda e o número em verde. */
+.especialidade::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  height: 2px;
+  width: 100%;
+  background: var(--color-verde-marca);
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale 600ms var(--curva-saida);
+}
+
+.especialidade[data-ativo]::before {
+  scale: 1 1;
+}
+
+.especialidade__numero {
+  padding-top: 0.55em;
+  color: var(--color-mineral);
+  transition: color 300ms ease;
+}
+
+.especialidade[data-ativo] .especialidade__numero {
+  color: var(--color-verde);
+}
+
+.especialidade__titulo {
+  font-size: clamp(1.7rem, 1rem + 2vw, 2.9rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.especialidade__resumo {
+  margin-top: 0.9rem;
+  font-size: var(--t-medio);
+  line-height: 1.4;
+  max-width: 40ch;
+}
+
+.especialidade__detalhe {
+  margin-top: 0.75rem;
+  max-width: 52ch;
+}
+
+.especialidade__imagem-estreito {
+  display: none;
+}
+
+.especialidades__painel {
+  grid-column: 9 / span 4;
+  position: sticky;
+  top: calc(var(--altura-cabecalho) + 2rem);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-pedra);
+}
+
+.especialidades__imagem {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+.especialidades__imagem[data-ativo] {
+  opacity: 1;
+}
+
+.especialidades__imagem img,
+.especialidade__foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.especialidades__imagem img {
+  scale: 1.06;
+  transition: scale 1400ms var(--curva-saida);
+}
+
+.especialidades__imagem[data-ativo] img {
+  scale: 1;
+}
+
+@media (max-width: 899px) {
+  .especialidades__lista {
+    grid-column: 1 / -1;
+  }
+
+  .especialidades__painel {
+    display: none;
+  }
+
+  .especialidade {
+    grid-template-columns: 3rem minmax(0, 1fr);
+  }
+
+  .especialidade::before {
+    display: none;
+  }
+
+  .especialidade__imagem-estreito {
+    display: block;
+    grid-column: 1 / -1;
+    margin-top: 1.5rem;
+  }
+
+  .especialidade__imagem-estreito img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ---------------------------------------------------------------- método */
+
+.metodo {
+  padding-block: clamp(5rem, 10vw, 9rem);
+  background: var(--color-pedra);
+  --linha: color-mix(in oklab, var(--color-grafite) 22%, transparent);
+}
+
+.metodo__topo {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.metodo__topo h2 {
+  max-width: 18ch;
+}
+
+.metodo__etapas {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--intervalo);
+}
+
+.metodo__etapa {
+  position: relative;
+  padding-top: 1.5rem;
+}
+
+/* O fio de cada etapa desenha-se da esquerda para a direita, uma a seguir à
+   outra, quando a lista entra no ecrã. */
+.metodo__etapa::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: var(--color-grafite);
+  transform-origin: left;
+}
+
+[data-movimento] .metodo__etapas:not([data-visivel]) .metodo__etapa::before {
+  scale: 0 1;
+}
+
+[data-movimento] .metodo__etapa::before {
+  transition: scale 900ms var(--curva-saida) calc(var(--i) * 160ms);
+}
+
+/* Sem o fade da regra geral: aqui quem entra são os fios. */
+[data-movimento] .metodo__etapas[data-revelar]:not([data-visivel]) {
+  opacity: 1;
+  translate: none;
+}
+
+.metodo__numero {
+  color: var(--color-verde);
+}
+
+.metodo__titulo {
+  margin-top: 1.25rem;
+  font-size: clamp(1.35rem, 1rem + 0.9vw, 1.9rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.metodo__texto {
+  margin-top: 0.6rem;
+  max-width: 26ch;
+}
+
+@media (max-width: 899px) {
+  .metodo__etapas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .metodo__etapa {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    padding-block: 1.25rem 1.5rem;
+  }
+
+  .metodo__titulo {
+    margin-top: 0;
+  }
+
+  .metodo__texto {
+    grid-column: 2;
+  }
+}
+
+/* ---------------------------------------------------------------- equipa */
+
+.equipa {
+  padding-block: clamp(5rem, 10vw, 9rem);
+}
+
+.equipa__topo {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+  padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.equipa__lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 4rem) var(--intervalo);
+}
+
+/* O retrato é grande de propósito — 4:5, a largura inteira da coluna. */
+.equipa__retrato {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-pedra);
+}
+
+.equipa__retrato img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.equipa__retrato[data-vazio] {
+  display: grid;
+  place-items: center;
+  background:
+    repeating-linear-gradient(-45deg, transparent 0 14px, rgb(42 42 39 / 0.05) 14px 15px),
+    var(--color-pedra);
+  outline: 1px dashed var(--color-molassa);
+  outline-offset: -1px;
+}
+
+[data-movimento] .equipa__perfil .equipa__retrato {
+  transition: clip-path 1100ms var(--curva-saida) var(--atraso, 0ms);
+}
+
+[data-movimento] .equipa__perfil:not([data-visivel]) .equipa__retrato {
+  clip-path: inset(100% 0 0 0);
+}
+
+.equipa__nome {
+  margin-top: 1.25rem;
+  font-size: clamp(1.4rem, 1rem + 1vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.equipa__funcao {
+  margin-top: 0.35rem;
+}
+
+.equipa__apresentacao {
+  margin-top: 0.9rem;
+  max-width: 38ch;
+}
+
+@media (max-width: 899px) {
+  .equipa__lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .equipa__retrato {
+    width: min(100%, 26rem);
+  }
+}
+
+/* --------------------------------------------------------------- chamada */
+
+.chamada {
+  padding-block: clamp(6rem, 12vw, 11rem) clamp(4rem, 8vw, 7rem);
+}
+
+.chamada__grelha {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: 3rem;
+  align-items: end;
+}
+
+.chamada__titulo {
+  grid-column: 1 / span 8;
+  max-width: 11ch;
+}
+
+.chamada__lado {
+  grid-column: 9 / span 4;
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+}
+
+.chamada__direto {
+  display: grid;
+  gap: 0.4rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--linha);
+  width: 100%;
+}
+
+@media (max-width: 899px) {
+  .chamada__titulo,
+  .chamada__lado {
+    grid-column: 1 / -1;
+  }
+}

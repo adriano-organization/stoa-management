@@ -1,0 +1,45 @@
+{
+  "name": "stoa-management",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Site da STOA Management — direção de obras, Farvagny-le-Grand (FR)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "tipos": "tsc --noEmit",
+    "mensagens": "node scripts/verificar-mensagens.mjs",
+    "testes": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./testes/apoio/carregador.mjs --test \"testes/*.test.mjs\"",
+    "segredos": "node scripts/verificar-segredos.mjs",
+    "medias": "node scripts/preparar-medias.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.7",
+    "next-intl": "^4.14.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^26",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.7",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "_comentario_allowScripts": "Um pacote pode correr código arbitrário na máquina de quem faz npm install, e é o vetor de ataque mais usado contra cadeias de dependências de JavaScript. O npm bloqueia esses scripts por omissão; esta lista é a decisão explícita de os manter bloqueados. Os três estão a false porque o build e os testes passam sem eles. Se um dia algo deixar de funcionar, o que se põe a true é só o pacote que falhou, depois de se perceber o que o script dele faz.",
+  "allowScripts": {
+    "unrs-resolver@1.12.2": false,
+    "@parcel/watcher@2.6.0": false,
+    "@swc/core@1.16.2": false
+  }
+}

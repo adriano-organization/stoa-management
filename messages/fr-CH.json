@@ -1,0 +1,375 @@
+{
+  "marca": {
+    "nome": "STOA Management",
+    "curto": "STOA",
+    "segundo": "Management",
+    "actividade": "Direction de travaux"
+  },
+  "nav": {
+    "saltar": "Aller au contenu",
+    "principal": "Navigation principale",
+    "inicio": "STOA Management, accueil",
+    "realisations": "Réalisations",
+    "expertises": "Expertises",
+    "aPropos": "À propos",
+    "contact": "Contact",
+    "menu": "Menu",
+    "fechar": "Fermer le menu"
+  },
+  "metadata": {
+    "inicio": {
+      "titulo": "STOA Management · Direction de travaux",
+      "descricao": "Préparation de projet, gestion financière et direction des travaux pour des rénovations, des maisons et des immeubles. STOA Management, Farvagny-le-Grand, canton de Fribourg."
+    },
+    "realisations": {
+      "titulo": "Réalisations",
+      "descricao": "Les projets et références de STOA Management, bureau de direction de travaux à Farvagny-le-Grand."
+    },
+    "contact": {
+      "titulo": "Contact",
+      "descricao": "Un projet de rénovation, de maison ou d’immeuble ? Écrivez à STOA Management ou appelez-nous."
+    },
+    "naoEncontrada": {
+      "titulo": "Page introuvable"
+    }
+  },
+  "heroi": {
+    "linha1": "Votre projet.",
+    "linha2": "Une direction claire.",
+    "subtitulo": "Préparation, coordination et suivi de vos travaux.",
+    "ctaRealisations": "Découvrir nos réalisations",
+    "ctaContacto": "Parlons de votre projet",
+    "defilar": "Défiler"
+  },
+  "apresentacao": {
+    "etiqueta": "Le bureau",
+    "titulo": "Rénovations, maisons, immeubles. Nous préparons le projet, suivons les coûts et dirigeons le chantier.",
+    "paragrafo1": "STOA Management est un bureau de direction de travaux installé à Farvagny-le-Grand, dans le canton de Fribourg.",
+    "paragrafo2": "Du gros œuvre au second œuvre, nous coordonnons le déroulement du projet et intervenons là où il le faut.",
+    "paragrafo3": "Plus de dix ans dans ce domaine nous ont donné des connaissances solides et le sens des priorités.",
+    "factos": {
+      "baseRotulo": "Bureau",
+      "base": "Farvagny-le-Grand (FR)",
+      "dominiosRotulo": "Domaines",
+      "dominios": "Rénovations, maisons, immeubles",
+      "experienciaRotulo": "Expérience",
+      "experiencia": "Plus de dix ans"
+    },
+    "legenda": "Détail de façade"
+  },
+  "destaque": {
+    "titulo": "Réalisations",
+    "intro": "Une sélection de projets, de la fouille à la façade.",
+    "verTodos": "Toutes les réalisations",
+    "verProjeto": "Voir le projet"
+  },
+  "especialidades": {
+    "titulo": "Expertises",
+    "intro": "Trois compétences, du projet au chantier.",
+    "itens": {
+      "preparacao": {
+        "titulo": "Préparation de projet",
+        "resumo": "Avant-projet, mise à l’enquête, plans d’exécution, coûts de construction, soumissions.",
+        "detalhe": "Tout ce qui se décide avant l’ouverture du chantier : le projet prend forme, les autorisations sont demandées, les coûts sont estimés et les entreprises consultées."
+      },
+      "financas": {
+        "titulo": "Gestion financière",
+        "resumo": "Suivi et contrôle des coûts de la construction.",
+        "detalhe": "Les coûts sont suivis pendant toute la construction, pour que chaque décision soit prise en connaissant son effet sur le budget."
+      },
+      "direcao": {
+        "titulo": "Direction des travaux",
+        "resumo": "Coordination et intervention sur le déroulement du projet.",
+        "detalhe": "Sur le chantier, la direction des travaux organise les interventions des entreprises, suit l’avancement et intervient lorsqu’une décision s’impose."
+      }
+    },
+    "mostrar": "Afficher le détail"
+  },
+  "metodo": {
+    "titulo": "Méthode",
+    "intro": "Une direction de travaux se construit dans l’ordre.",
+    "aviso": "Proposition de texte, à valider avec STOA.",
+    "etapas": {
+      "compreender": {
+        "titulo": "Comprendre",
+        "texto": "Le projet, le terrain, le budget et vos attentes."
+      },
+      "preparar": {
+        "titulo": "Préparer",
+        "texto": "Plans, autorisations, estimation des coûts, soumissions."
+      },
+      "coordenar": {
+        "titulo": "Coordonner",
+        "texto": "Les entreprises, le planning et les décisions à prendre."
+      },
+      "acompanhar": {
+        "titulo": "Suivre",
+        "texto": "L’avancement, l’exécution et les coûts, sur le chantier."
+      },
+      "entregar": {
+        "titulo": "Remettre",
+        "texto": "La réception de l’ouvrage et la clôture du chantier."
+      }
+    }
+  },
+  "equipa": {
+    "titulo": "L’équipe",
+    "intro": "Les personnes qui suivent vos travaux.",
+    "aviso": "Profils en attente : photos et informations à fournir par STOA.",
+    "vazio": {
+      "nome": "Nom à compléter",
+      "funcao": "Fonction à compléter",
+      "apresentacao": "Présentation à venir.",
+      "retrato": "Portrait à venir"
+    },
+    "perfis": {}
+  },
+  "chamada": {
+    "titulo": "Parlons de votre projet.",
+    "texto": "Rénovation, maison ou immeuble : décrivez-nous votre projet, nous vous répondons.",
+    "cta": "Décrire votre projet",
+    "ouDireto": "Ou directement"
+  },
+  "rodape": {
+    "navegacao": "Navigation",
+    "contacto": "Contact",
+    "redes": "Réseaux",
+    "morada": "Adresse",
+    "verMapa": "Voir sur la carte",
+    "direitos": "© {ano} STOA Management",
+    "credito": "Site : DevPlus",
+    "topo": "Haut de page"
+  },
+  "realisations": {
+    "titulo": "Réalisations",
+    "intro": "Chaque projet a sa page, avec ses images et les informations confirmées.",
+    "introReferencias": "Les références de STOA Management et de ses collaborateurs.",
+    "projetos": "Projets",
+    "referencias": {
+      "titulo": "Références",
+      "intro": "Missions menées par des collaborateurs de STOA, en collaboration avec les entreprises mentionnées.",
+      "colunas": {
+        "periodo": "Année",
+        "projeto": "Projet",
+        "local": "Lieu",
+        "missao": "Mission",
+        "colaboracao": "En collaboration avec"
+      }
+    }
+  },
+  "projeto": {
+    "rotulos": {
+      "local": "Lieu",
+      "missao": "Mission",
+      "estado": "État",
+      "periodo": "Période",
+      "colaboracao": "En collaboration avec",
+      "pessoa": "Mission assurée par"
+    },
+    "estados": {
+      "termine": "Terminé",
+      "en-cours": "En cours"
+    },
+    "missoes": {
+      "direction-des-travaux": "Direction des travaux",
+      "assistant-direction-des-travaux": "Assistant direction des travaux"
+    },
+    "ficha": "Fiche du projet",
+    "intervencaoTitulo": "L’intervention de STOA",
+    "missaoTitulo": "La mission",
+    "intervencaoEmFalta": "Texte à rédiger avec STOA : rôle, étendue de la mission, déroulement.",
+    "referenciaNota": "Référence : mission menée par un collaborateur de STOA, en collaboration avec {empresa} ({cidade}).",
+    "etapas": "Suivi de chantier",
+    "etapasNota": "Vues aériennes prises à différents moments.",
+    "etapa": "Étape {n}",
+    "galeria": "Images",
+    "seguinte": "Projet suivant",
+    "voltar": "Toutes les réalisations",
+    "provisorio": "Provisoire, à valider",
+    "provisorioNota": "Projet provisoire : regroupement d’images à confirmer par STOA (nom, lieu, mission, droits). Non publié.",
+    "video": {
+      "pausa": "Mettre la vidéo en pause",
+      "ler": "Lire la vidéo",
+      "rever": "Revoir la vidéo"
+    }
+  },
+  "projetos": {
+    "immeuble-balcons-filants": {
+      "titulo": "Immeuble à balcons filants",
+      "resumo": "Vues aériennes d’un immeuble de quatre niveaux à balcons filants, en bordure de village."
+    },
+    "immeuble-village": {
+      "titulo": "Immeuble de trois niveaux",
+      "resumo": "Vue aérienne d’un immeuble de trois niveaux, entre maisons et terrains de sport."
+    },
+    "chantier-immeuble": {
+      "titulo": "Chantier d’immeuble",
+      "resumo": "Vues aériennes d’un chantier en milieu résidentiel, des fondations à la structure."
+    },
+    "villas-mitoyennes": {
+      "titulo": "Villas mitoyennes",
+      "resumo": "Un ensemble de villas mitoyennes entre prairie et forêt, vu du ciel."
+    },
+    "immeuble-facades-panneaux": {
+      "titulo": "Immeuble aux façades en panneaux",
+      "resumo": "Un immeuble de trois niveaux : la toiture photovoltaïque vue du ciel, la façade vue du sol."
+    },
+    "terrassement-fondations": {
+      "titulo": "Terrassement et fondations",
+      "resumo": "Une parcelle vue du ciel, du terrassement aux premières fondations."
+    },
+    "immeuble-facades-rosees": {
+      "titulo": "Immeuble aux façades rosées",
+      "resumo": "Un immeuble de cinq niveaux et ses abords en travaux."
+    },
+    "immeuble-toiture-vegetalisee": {
+      "titulo": "Immeuble à toiture végétalisée",
+      "resumo": "Un immeuble à toiture végétalisée et panneaux solaires, dans un quartier résidentiel."
+    },
+    "maison-toiture-tuiles": {
+      "titulo": "Maison à toiture en tuiles",
+      "resumo": "Une maison de trois niveaux, toiture en tuiles et balcons en façade."
+    },
+    "batiment-activites": {
+      "titulo": "Bâtiment d’activités",
+      "resumo": "Un bâtiment d’activités à toiture photovoltaïque, dans une zone artisanale."
+    },
+    "transformation-arconciel": {
+      "titulo": "Transformation",
+      "resumo": "Transformation d’un appartement à Arconciel, dont Leandro Lopes a dirigé les travaux."
+    },
+    "quartier-villas-chesopelloz": {
+      "titulo": "Quartier de villas",
+      "resumo": "Direction des travaux d’un quartier de villas à Chésopelloz."
+    },
+    "immeuble-ppe-noreaz": {
+      "titulo": "Immeuble en PPE",
+      "resumo": "Gestion du chantier et direction des travaux d’un immeuble à Noréaz."
+    },
+    "quartier-villas-corminboeuf": {
+      "titulo": "Quartier de villas",
+      "resumo": "Quartier de villas à Corminboeuf, où Leandro Lopes a assisté la direction des travaux."
+    }
+  },
+  "contacto": {
+    "titulo": "Parlons de votre projet.",
+    "intro": "Décrivez-nous votre projet en quelques lignes. Nous vous répondons par e-mail ou par téléphone.",
+    "formulario": {
+      "titulo": "Votre demande",
+      "obrigatorio": "obligatoire",
+      "facultativo": "facultatif",
+      "nome": "Nom",
+      "email": "E-mail",
+      "telefone": "Téléphone",
+      "tipo": "Type de projet",
+      "tipoEscolher": "Choisir…",
+      "tipos": {
+        "renovation": "Rénovation ou transformation",
+        "maison": "Maison individuelle",
+        "immeuble": "Immeuble",
+        "autre": "Autre"
+      },
+      "local": "Localisation du chantier",
+      "localAjuda": "Commune ou région, si vous la connaissez.",
+      "mensagem": "Votre message",
+      "mensagemAjuda": "Le projet, son état d’avancement, vos questions.",
+      "isco": "Ne pas remplir ce champ",
+      "enviar": "Envoyer la demande",
+      "aEnviar": "Envoi en cours…",
+      "erros": {
+        "nome": "Indiquez votre nom.",
+        "email": "Indiquez une adresse e-mail valide.",
+        "telefone": "Ce numéro de téléphone ne semble pas valide.",
+        "tipo": "Choisissez un type de projet.",
+        "mensagem": "Décrivez votre projet en quelques mots (10 caractères au moins).",
+        "longo": "Ce texte est trop long.",
+        "resumoUm": "Un champ est à corriger :",
+        "resumoVarios": "{n} champs sont à corriger :"
+      },
+      "sucesso": {
+        "titulo": "Merci, votre message est parti.",
+        "texto": "Nous l’avons bien reçu et vous répondrons dès que possible."
+      },
+      "falhas": {
+        "limite": "Trop de messages envoyés depuis cette connexion. Réessayez dans une heure ou écrivez-nous directement à {email}.",
+        "servico": "Le message n’a pas pu être envoyé. Écrivez-nous directement à {email} ou appelez-nous.",
+        "configuracao": "Le formulaire n’est pas encore relié à notre messagerie : votre message n’a pas été envoyé. Écrivez-nous directement à {email}.",
+        "rapido": "Le formulaire a été envoyé trop vite. Vérifiez vos informations et envoyez-le à nouveau.",
+        "ligacoes": "Votre message contient trop de liens. Retirez-en quelques-uns et envoyez-le à nouveau."
+      },
+      "dados": "Vos données servent uniquement à répondre à votre demande. Elles ne sont ni cédées ni utilisées à des fins publicitaires. Le message nous parvient par l’intermédiaire de notre prestataire d’envoi d’e-mails.",
+      "novo": "Envoyer une autre demande",
+      "ouDireto": "Vous pouvez aussi nous écrire directement à {email}."
+    },
+    "direto": {
+      "titulo": "Nous joindre directement",
+      "email": "E-mail",
+      "telefones": "Téléphone",
+      "morada": "Adresse",
+      "mapa": "Voir sur la carte",
+      "redes": "Réseaux"
+    },
+    "legendaBureau": "Le bureau, à Farvagny-le-Grand"
+  },
+  "naoEncontrada": {
+    "etiqueta": "Erreur 404",
+    "titulo": "Page introuvable.",
+    "texto": "Cette page n’existe pas ou a changé d’adresse.",
+    "inicio": "Retour à l’accueil",
+    "realisations": "Voir les réalisations"
+  },
+  "comum": {
+    "cantao": "canton de Fribourg",
+    "pais": "Suisse"
+  },
+  "medias": {
+    "partilha": "Vue aérienne d’un immeuble de quatre niveaux dans la campagne fribourgeoise, STOA Management.",
+    "heroi-immeuble": "Vue aérienne d’un immeuble blanc de quatre niveaux à balcons filants, entre prés et villages.",
+    "facade-panneaux": "Façade en panneaux clairs et fenêtres sombres, vue en contre-plongée sous un ciel bleu.",
+    "immeuble-e-balcons": "Immeuble de quatre niveaux à balcons filants, vu du ciel, la campagne en arrière-plan.",
+    "immeuble-e-grue": "Immeuble blanc à toiture photovoltaïque, une grue de chantier à proximité.",
+    "immeuble-a-facade": "Immeuble aux façades rosées, vu depuis le terrain voisin en travaux.",
+    "immeuble-a-aerien": "Vue aérienne d’un immeuble aux façades rosées et de ses abords en travaux.",
+    "immeuble-b-toiture": "Vue aérienne d’un immeuble blanc à toiture végétalisée, dans un quartier résidentiel.",
+    "immeuble-b-terrasses": "Terrasses et toiture végétalisée d’un immeuble blanc, vues du ciel.",
+    "villas-d-prairie": "Villas mitoyennes blanches au toit gris, entre prairie et forêt.",
+    "villas-d-lisiere": "Les villas mitoyennes vues de côté, la campagne à l’horizon.",
+    "maison-f-facade": "Maison blanche à toiture en tuiles, vue depuis le jardin.",
+    "maison-f-toiture": "Vue aérienne d’une maison à toiture en tuiles et balcons.",
+    "chantier-g-etape1-a": "Vue zénithale d’un chantier : murs de fondation, grue et silo.",
+    "chantier-g-etape1-b": "Vue zénithale du chantier au stade des fondations.",
+    "chantier-g-etape1-c": "Chantier vu d’en haut : coffrages, grue et silo jaune.",
+    "chantier-g-etape2-a": "Vue zénithale du chantier : dalle en cours de coffrage.",
+    "chantier-g-etape2-b": "Le chantier en milieu résidentiel : dalle, coffrages et silo jaune.",
+    "chantier-g-etape2-c": "Structure en cours, entourée de maisons à toitures solaires.",
+    "chantier-g-etape3-a": "Immeuble en construction sous échafaudages, avec grue et silo jaune.",
+    "chantier-g-etape3-b": "Structure de l’immeuble sous échafaudages, vue du ciel.",
+    "chantier-g-etape3-c": "Vue zénithale de la structure de l’immeuble.",
+    "batiment-h-toiture": "Bâtiment d’activités sombre à toiture photovoltaïque, dans une zone artisanale.",
+    "batiment-h-installation": "Installation de chantier au pied de bâtiments d’activités.",
+    "batiment-h-zone": "Zone artisanale et bâtiment à toiture photovoltaïque, vue aérienne.",
+    "terrain-i-etape1-a": "Parcelle en terrassement vue d’en haut, entre champs et maisons.",
+    "terrain-i-etape1-b": "Terrassement d’une parcelle : pelles mécaniques et premières tranchées.",
+    "terrain-i-etape1-c": "La parcelle en terrassement, en vue oblique.",
+    "terrain-i-etape2-a": "Fouilles et pelles mécaniques sur la parcelle, en bordure de champ.",
+    "terrain-i-etape2-b": "Parcelle terrassée et engins de chantier, vue aérienne.",
+    "terrain-i-etape3-a": "Fondations en cours : ferraillage, coffrages et grue.",
+    "terrain-i-etape3-b": "Vue zénithale des fondations et de la grue.",
+    "immeuble-j1-toiture": "Immeuble à toiture photovoltaïque et façade claire, vu du ciel.",
+    "immeuble-j2-village": "Vue aérienne d’un immeuble de trois niveaux entre maisons et terrains de sport.",
+    "immeuble-j2-arbre": "Immeuble de trois niveaux derrière la couronne d’un grand arbre.",
+    "plan-annote": "Plan de rez-de-chaussée annoté à la main, posé sur une table.",
+    "bureau-poste": "Poste de travail avec plans et classeurs.",
+    "bureau-plateau": "Plateau de bureau ouvert, poutres métalliques et plantes.",
+    "ref-arconciel": "Appartement transformé sous une charpente en bois, avec escalier et suspensions.",
+    "ref-chesopelloz": "Villas contemporaines le long d’une rue, à Chésopelloz.",
+    "ref-noreaz": "Vue aérienne d’un immeuble blanc au toit sombre, à Noréaz.",
+    "ref-corminboeuf": "Vue aérienne du quartier de villas en construction, à Corminboeuf.",
+    "videos": {
+      "approche-immeuble": "Approche en drone d’un immeuble à balcons filants.",
+      "orbite-immeuble": "Vol circulaire en drone autour d’un immeuble à balcons filants.",
+      "approche-villas": "Approche en drone de villas mitoyennes entre prairie et forêt.",
+      "recul-immeuble-panneaux": "Vue en drone qui recule depuis la toiture photovoltaïque d’un immeuble et le révèle en entier."
+    }
+  }
+}

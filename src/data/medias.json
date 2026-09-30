@@ -1,0 +1,74 @@
+{
+  "_comentario": "Manifesto do `npm run medias` (scripts/preparar-medias.mjs). Cada entrada diz de onde vem uma imagem ou um vídeo e como sai para public/medias/. Os originais nunca são alterados. `recorte` é em píxeis do original já orientado; `larguras` nunca passam da largura do original (o script corta as que passarem). Os textos alternativos vivem em messages/fr-CH.json (medias.<id>), porque mudam com a língua. O `grupo` é o agrupamento PROVISÓRIO de docs/inventaire-medias.md: semelhança visual, não identidade confirmada da obra.",
+  "pastas": {
+    "photos": "Photo pour site ",
+    "site-actuel": "sources/site-actuel"
+  },
+  "imagens": [
+    { "id": "heroi-immeuble", "fonte": "photos/2026-03-24-11-03-13-263.PNG", "grupo": "E", "larguras": [640, 960, 1280] },
+    { "id": "facade-panneaux", "fonte": "photos/IMG_2860.HEIC", "grupo": "J", "larguras": [720, 1080, 1600, 2200] },
+
+    { "id": "immeuble-e-balcons", "fonte": "photos/2026-03-24-11-01-34-000.PNG", "grupo": "E", "larguras": [640, 960, 1280] },
+    { "id": "immeuble-e-grue", "fonte": "photos/2026-03-24-11-03-45-354.PNG", "grupo": "E", "larguras": [640, 960, 1280] },
+
+    { "id": "immeuble-a-facade", "fonte": "photos/2026-03-24-09-15-01-666.PNG", "grupo": "A", "larguras": [640, 960, 1280] },
+    { "id": "immeuble-a-aerien", "fonte": "photos/2026-03-24-09-15-44-844.PNG", "grupo": "A", "larguras": [640, 960, 1280] },
+
+    { "id": "immeuble-b-toiture", "fonte": "photos/2026-03-24-09-38-19-932.PNG", "grupo": "B", "larguras": [640, 960, 1280] },
+    { "id": "immeuble-b-terrasses", "fonte": "photos/2026-03-24-09-40-31-273.PNG", "grupo": "B", "larguras": [640, 960, 1280] },
+
+    { "id": "villas-d-prairie", "fonte": "photos/2026-03-24-10-34-24-692.PNG", "grupo": "D", "larguras": [640, 960, 1280] },
+    { "id": "villas-d-lisiere", "fonte": "photos/2026-03-24-10-35-38-346.PNG", "grupo": "D", "larguras": [640, 960, 1280] },
+
+    { "id": "maison-f-facade", "fonte": "photos/2026-03-24-11-26-54-043.PNG", "grupo": "F", "larguras": [640, 960, 1280] },
+    { "id": "maison-f-toiture", "fonte": "photos/2026-03-24-11-27-28-466.PNG", "grupo": "F", "larguras": [640, 960, 1280] },
+
+    { "id": "chantier-g-etape1-a", "fonte": "photos/2026-06-11-16-50-11-485.PNG", "grupo": "G", "larguras": [640, 960, 1280] },
+    { "id": "chantier-g-etape1-b", "fonte": "photos/2026-06-11-16-50-21-812.PNG", "grupo": "G", "larguras": [640, 960, 1280] },
+    { "id": "chantier-g-etape1-c", "fonte": "photos/2026-06-11-16-51-15-168.PNG", "grupo": "G", "larguras": [640, 960] },
+    { "id": "chantier-g-etape2-a", "fonte": "photos/2026-07-06-15-07-59-790.PNG", "grupo": "G", "larguras": [640, 960, 1280] },
+    { "id": "chantier-g-etape2-b", "fonte": "photos/2026-07-06-15-11-10-636.PNG", "grupo": "G", "larguras": [640, 960, 1280] },
+    { "id": "chantier-g-etape2-c", "fonte": "photos/2026-07-06-15-11-24-885.PNG", "grupo": "G", "larguras": [640, 960, 1280] },
+    { "id": "chantier-g-etape3-a", "fonte": "photos/2026-09-15-10-53-55-528.PNG", "grupo": "G", "larguras": [640, 960, 1280] },
+    { "id": "chantier-g-etape3-b", "fonte": "photos/2026-09-15-10-54-10-952.PNG", "grupo": "G", "larguras": [640, 960, 1280] },
+    { "id": "chantier-g-etape3-c", "fonte": "photos/2026-09-15-10-54-52-609.PNG", "grupo": "G", "larguras": [640, 960, 1280] },
+
+    { "id": "batiment-h-toiture", "fonte": "photos/2026-06-17-09-49-47-624.PNG", "grupo": "H", "larguras": [640, 960, 1280] },
+    { "id": "batiment-h-installation", "fonte": "photos/2026-06-17-09-50-02-397.PNG", "grupo": "H", "larguras": [640, 960, 1280] },
+    { "id": "batiment-h-zone", "fonte": "photos/2026-06-17-09-50-38-780.PNG", "grupo": "H", "larguras": [640, 960, 1280] },
+
+    { "id": "terrain-i-etape1-a", "fonte": "photos/2026-06-23-13-23-37-432.PNG", "grupo": "I", "larguras": [640, 960, 1280] },
+    { "id": "terrain-i-etape1-b", "fonte": "photos/2026-06-23-13-23-43-935.PNG", "grupo": "I", "larguras": [640, 960, 1280] },
+    { "id": "terrain-i-etape1-c", "fonte": "photos/2026-06-23-13-24-41-091.PNG", "grupo": "I", "larguras": [640, 960, 1280] },
+    { "id": "terrain-i-etape2-a", "fonte": "photos/2026-07-06-15-53-49-290.PNG", "grupo": "I", "larguras": [640, 960, 1280] },
+    { "id": "terrain-i-etape2-b", "fonte": "photos/2026-07-06-15-58-35-184.PNG", "grupo": "I", "larguras": [640, 960, 1280] },
+    { "id": "terrain-i-etape3-a", "fonte": "photos/2026-09-28-15-07-46-793.PNG", "grupo": "I", "larguras": [640, 960, 1280] },
+    { "id": "terrain-i-etape3-b", "fonte": "photos/2026-09-28-15-08-09-913.PNG", "grupo": "I", "larguras": [640, 960, 1280] },
+
+    { "id": "immeuble-j1-toiture", "fonte": "photos/2026-09-14-10-18-30-090.PNG", "grupo": "J", "larguras": [640, 960, 1280] },
+    { "id": "immeuble-j2-village", "fonte": "photos/2026-09-25-13-07-29-887.PNG", "grupo": "J", "larguras": [640, 960, 1280] },
+    { "id": "immeuble-j2-arbre", "fonte": "photos/2026-09-25-13-07-37-528.PNG", "grupo": "J", "larguras": [640, 960, 1280] },
+
+    { "id": "plan-annote", "fonte": "photos/IMG_1341.HEIC", "recorte": { "x": 1571, "y": 893, "largura": 2356, "altura": 3570 }, "larguras": [600, 900, 1400] },
+    { "id": "bureau-poste", "fonte": "photos/IMG_2141.HEIC", "larguras": [600, 900, 1400] },
+    { "id": "bureau-plateau", "fonte": "photos/IMG_2284.HEIC", "larguras": [700, 1100, 1600] },
+
+    { "id": "ref-arconciel", "fonte": "site-actuel/Arconciel.png", "larguras": [640, 812] },
+    { "id": "ref-chesopelloz", "fonte": "site-actuel/Chesopelloz.png", "larguras": [552] },
+    { "id": "ref-noreaz", "fonte": "site-actuel/Noreaz.png", "larguras": [640, 827] },
+    { "id": "ref-corminboeuf", "fonte": "site-actuel/Enetz.png", "larguras": [640, 825] }
+  ],
+  "videos": [
+    { "id": "approche-immeuble", "fonte": "photos/2026-03-24-11-04-33-639.MP4", "grupo": "E", "inicio": 0.4, "duracao": 9.6 },
+    { "id": "orbite-immeuble", "fonte": "photos/2026-03-24-11-03-48-374.MOV", "grupo": "E", "inicio": 1, "duracao": 12 },
+    { "id": "approche-villas", "fonte": "photos/2026-03-24-10-35-01-274.MOV", "grupo": "D", "inicio": 0, "duracao": 7.4 },
+    { "id": "recul-immeuble-panneaux", "fonte": "photos/2026-09-14-10-19-04-396.MP4", "grupo": "J", "inicio": 0, "duracao": 12.5 }
+  ],
+  "partilhas": [
+    { "id": "partilha-stoa", "de": "heroi-immeuble", "recorte": { "x": 40, "y": 45, "largura": 1200, "altura": 630 } },
+    { "id": "partilha-immeuble-e", "de": "immeuble-e-balcons", "recorte": { "x": 40, "y": 45, "largura": 1200, "altura": 630 } },
+    { "id": "partilha-immeuble-j2", "de": "immeuble-j2-village", "recorte": { "x": 40, "y": 45, "largura": 1200, "altura": 630 } },
+    { "id": "partilha-chantier-g", "de": "chantier-g-etape3-a", "recorte": { "x": 40, "y": 45, "largura": 1200, "altura": 630 } },
+    { "id": "partilha-villas-d", "de": "villas-d-prairie", "recorte": { "x": 40, "y": 45, "largura": 1200, "altura": 630 } }
+  ]
+}

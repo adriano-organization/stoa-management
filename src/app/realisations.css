@@ -1,0 +1,516 @@
+/* ===========================================================================
+   PORTEFÓLIO — o índice, as referências e a página de cada projeto
+   =========================================================================== */
+
+/* ---------------------------------------------------------------- índice */
+
+.indice {
+  padding-top: calc(var(--altura-cabecalho) + clamp(3.5rem, 8vw, 7rem));
+  padding-bottom: clamp(5rem, 10vw, 9rem);
+}
+
+.indice__topo {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  align-items: end;
+  row-gap: 1.5rem;
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+  border-bottom: 1px solid var(--linha);
+}
+
+.indice__topo h1 {
+  grid-column: 1 / span 7;
+}
+
+.indice__intro {
+  grid-column: 9 / span 4;
+  max-width: 32ch;
+}
+
+/* A grelha assimétrica: um padrão de seis que se repete — grande à esquerda,
+   pequeno descido à direita, médio recuado, largo à direita... Nunca duas
+   linhas iguais seguidas. */
+.indice__grelha {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: clamp(3.5rem, 8vw, 7rem);
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+
+.cartao-projeto:nth-child(6n + 2) {
+  grid-column: 1 / span 7;
+}
+
+.cartao-projeto:nth-child(6n + 3) {
+  grid-column: 9 / span 4;
+  margin-top: clamp(4rem, 14vw, 14rem);
+}
+
+.cartao-projeto:nth-child(6n + 4) {
+  grid-column: 2 / span 5;
+}
+
+.cartao-projeto:nth-child(6n + 5) {
+  grid-column: 7 / span 6;
+  margin-top: clamp(3rem, 9vw, 9rem);
+}
+
+.cartao-projeto:nth-child(6n + 6) {
+  grid-column: 1 / span 5;
+}
+
+.cartao-projeto:nth-child(6n + 7) {
+  grid-column: 6 / span 7;
+  margin-top: clamp(3rem, 10vw, 10rem);
+}
+
+.cartao-projeto {
+  position: relative;
+}
+
+.cartao-projeto__ligacao {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.cartao-projeto__moldura {
+  overflow: hidden;
+  background: var(--color-pedra);
+}
+
+.cartao-projeto__moldura img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: scale 900ms var(--curva-saida);
+}
+
+.cartao-projeto:nth-child(6n + 3) .cartao-projeto__moldura img,
+.cartao-projeto:nth-child(6n + 6) .cartao-projeto__moldura img {
+  aspect-ratio: 4 / 3;
+}
+
+.cartao-projeto__ligacao:hover .cartao-projeto__moldura img {
+  scale: 1.035;
+}
+
+.cartao-projeto__texto {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  column-gap: 0.75rem;
+  row-gap: 0.35rem;
+  align-items: baseline;
+}
+
+.cartao-projeto__titulo {
+  font-size: clamp(1.35rem, 1rem + 1vw, 2rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 250ms ease;
+}
+
+.cartao-projeto__ligacao:hover .cartao-projeto__titulo {
+  text-decoration-color: currentColor;
+}
+
+.cartao-projeto__meta {
+  grid-column: 2;
+  color: var(--color-verde);
+}
+
+.cartao-projeto__selo {
+  margin-top: 0.75rem;
+  margin-left: 3.75rem;
+}
+
+@media (max-width: 899px) {
+  .indice__topo h1,
+  .indice__intro {
+    grid-column: 1 / -1;
+  }
+
+  .cartao-projeto:nth-child(n) {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+
+  .cartao-projeto__moldura img,
+  .cartao-projeto:nth-child(n) .cartao-projeto__moldura img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ------------------------------------------------------------ referências */
+
+.referencias {
+  padding-top: clamp(4rem, 8vw, 7rem);
+}
+
+.referencias__topo {
+  display: grid;
+  gap: 1rem;
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.referencias__topo p {
+  max-width: 48ch;
+}
+
+.referencias__cabecalho,
+.referencia__ligacao {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 3fr) minmax(0, 2.5fr) minmax(0, 2.5fr) 160px;
+  column-gap: var(--intervalo);
+  align-items: center;
+}
+
+.referencias__cabecalho {
+  padding-bottom: 0.75rem;
+}
+
+.referencias__cabecalho span:last-child {
+  display: none;
+}
+
+.referencias__lista {
+  border-bottom: 1px solid var(--linha);
+}
+
+.referencia {
+  border-top: 1px solid var(--linha);
+}
+
+.referencia__ligacao {
+  padding-block: 1.1rem;
+  transition: background-color 250ms ease;
+}
+
+.referencia__ligacao:hover {
+  background: color-mix(in oklab, var(--color-pedra) 55%, transparent);
+}
+
+.referencia__projeto,
+.referencia__missao {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.referencia__titulo {
+  font-size: clamp(1.2rem, 1rem + 0.6vw, 1.55rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.referencia__pessoa,
+.referencia__local {
+  font-size: 0.925rem;
+}
+
+.referencia__imagem {
+  grid-column: 5;
+  grid-row: 1 / span 2;
+}
+
+.referencia__imagem img {
+  width: 160px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+@media (max-width: 899px) {
+  .referencias__cabecalho {
+    display: none;
+  }
+
+  .referencia__ligacao {
+    grid-template-columns: minmax(0, 1fr) 96px;
+    row-gap: 0.5rem;
+    align-items: start;
+  }
+
+  .referencia__ligacao > span {
+    grid-column: 1;
+  }
+
+  .referencia__imagem {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+  }
+
+  .referencia__imagem img {
+    width: 96px;
+  }
+}
+
+/* -------------------------------------------------------------- projeto */
+
+.projeto__cabeca {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+  padding-top: calc(var(--altura-cabecalho) + clamp(2.5rem, 6vw, 5rem));
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.projeto__voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  color: var(--color-mineral);
+  transition: color 200ms ease;
+}
+
+.projeto__voltar:hover {
+  color: var(--color-grafite);
+}
+
+.projeto__titulo {
+  max-width: 16ch;
+}
+
+.projeto__abertura-moldura {
+  overflow: hidden;
+  background: var(--color-pedra);
+}
+
+.projeto__abertura-moldura img {
+  width: 100%;
+  max-height: 82svh;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* A capa pequena fica no seu tamanho, encostada à grelha, em vez de ser
+   ampliada até à largura toda. */
+.projeto__abertura--pequena .projeto__abertura-moldura {
+  width: min(100%, 812px);
+}
+
+.projeto__abertura--pequena .projeto__abertura-moldura img {
+  aspect-ratio: auto;
+  max-height: none;
+}
+
+.projeto__intro {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: 2.5rem;
+  padding-block: clamp(3rem, 7vw, 6rem);
+}
+
+.ficha {
+  grid-column: 1 / span 4;
+  align-self: start;
+  border-bottom: 1px solid var(--linha);
+}
+
+.ficha__linha {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding-block: 0.8rem;
+  border-top: 1px solid var(--linha);
+}
+
+.ficha dd {
+  font-weight: 500;
+}
+
+.projeto__resumo {
+  grid-column: 6 / span 7;
+  max-width: 28ch;
+}
+
+.ficha + .projeto__resumo {
+  grid-column: 6 / span 7;
+}
+
+.projeto__intro > .projeto__resumo:first-child {
+  grid-column: 1 / span 9;
+}
+
+.projeto__intervencao {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: 1rem;
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.projeto__intervencao h2 {
+  grid-column: 1 / span 4;
+  padding-top: 0.4rem;
+}
+
+.projeto__intervencao > :not(h2) {
+  grid-column: 6 / span 7;
+  justify-self: start;
+  max-width: 52ch;
+}
+
+@media (max-width: 899px) {
+  .ficha,
+  .projeto__resumo,
+  .ficha + .projeto__resumo,
+  .projeto__intro > .projeto__resumo:first-child,
+  .projeto__intervencao h2,
+  .projeto__intervencao > :not(h2) {
+    grid-column: 1 / -1;
+  }
+
+  .ficha__linha {
+    grid-template-columns: 8rem minmax(0, 1fr);
+  }
+}
+
+/* -------------------------------------------------------------- galeria */
+
+.galeria {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  padding-bottom: clamp(4rem, 9vw, 8rem);
+}
+
+.galeria figure img,
+.galeria figure video {
+  width: 100%;
+}
+
+.galeria__largo img,
+.galeria__video .video-mudo {
+  max-width: 1280px;
+}
+
+.galeria__video .video-mudo video {
+  aspect-ratio: 16 / 9;
+}
+
+.galeria__par {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  align-items: start;
+}
+
+/* O par não é simétrico: uma imagem mais larga, a outra descida. */
+.galeria__par figure:first-child {
+  grid-column: 1 / span 7;
+}
+
+.galeria__par figure:last-child {
+  grid-column: 8 / span 5;
+  margin-top: clamp(3rem, 12vw, 10rem);
+}
+
+.galeria__etapas {
+  padding-block: clamp(2rem, 5vw, 4rem);
+}
+
+.galeria__etapas-topo {
+  display: grid;
+  gap: 0.6rem;
+  padding-bottom: 1.75rem;
+}
+
+.galeria__etapas-lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--intervalo);
+  counter-reset: etapa;
+}
+
+.galeria__etapas-lista li {
+  display: grid;
+  gap: 0.75rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--linha);
+}
+
+.galeria__etapas-lista img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+@media (max-width: 899px) {
+  .galeria__par figure:first-child,
+  .galeria__par figure:last-child {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+
+  .galeria__par {
+    row-gap: 1.25rem;
+  }
+
+  .galeria__etapas-lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ------------------------------------------------------ projeto seguinte */
+
+.seguinte__ligacao {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: 1rem;
+  align-items: end;
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.seguinte__ligacao > .legenda {
+  grid-column: 1 / -1;
+}
+
+.seguinte__titulo {
+  grid-column: 1 / span 6;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: var(--t-titulo);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.seguinte__ligacao:hover .botao__seta {
+  translate: 6px 0;
+}
+
+.seguinte__imagem {
+  grid-column: 8 / span 5;
+}
+
+.seguinte__moldura {
+  display: block;
+  overflow: hidden;
+}
+
+.seguinte__moldura img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: scale 900ms var(--curva-saida);
+}
+
+.seguinte__ligacao:hover .seguinte__moldura img {
+  scale: 1.04;
+}
+
+@media (max-width: 899px) {
+  .seguinte__titulo,
+  .seguinte__imagem {
+    grid-column: 1 / -1;
+  }
+}
