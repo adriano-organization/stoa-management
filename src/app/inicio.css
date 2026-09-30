@@ -184,6 +184,16 @@ html:has(.heroi:not([data-passou])) {
   animation: marca-sobe 650ms var(--curva-saida) 1000ms both;
 }
 
+/* Chegar à inicial pela cortina: a construção fica parada por baixo e começa
+   quando a cortina começa a sair — senão acabava tapada. */
+html[data-cortina="entrar"] .heroi__contorno,
+html[data-cortina="entrar"] .heroi__contorno path,
+html[data-cortina="entrar"] .heroi__recorte,
+html[data-cortina="entrar"] .heroi__foto,
+html[data-cortina="entrar"] .heroi__marca {
+  animation-play-state: paused;
+}
+
 @keyframes contorno-aparece {
   0%,
   70% {

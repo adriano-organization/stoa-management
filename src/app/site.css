@@ -312,6 +312,136 @@ main:focus {
   color: var(--color-verde-claro);
 }
 
+/* -------------------------------------------------------------- cortina */
+
+/* A cortina entre páginas (`CortinaDeNavegacao.tsx`). Só existe enquanto o
+   `<html>` tem `data-cortina`; sem JavaScript ou com menos movimento nunca o
+   tem. Fica por cima do cabeçalho (50) e por baixo do "saltar para o
+   conteúdo" (200). O nome de View Transition, com a animação desligada, tira-a
+   da fotografia da página antiga: a View Transition que corre por baixo não a
+   congela a meio do desenho. */
+.cortina {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  place-items: center;
+  background: var(--color-calcario);
+  view-transition-name: cortina;
+}
+
+html[data-cortina] .cortina {
+  display: grid;
+}
+
+/* `--cortina-decorrido` só existe quando a cortina é remontada a meio (mudar
+   de língua troca o layout): um atraso negativo retoma a animação onde ia. */
+html[data-cortina="entrar"] .cortina {
+  animation: cortina-entra 200ms var(--curva-suave) calc(0ms - var(--cortina-decorrido, 0ms)) both;
+}
+
+html[data-cortina="sair"] .cortina {
+  animation: cortina-sai 300ms var(--curva-suave) both;
+}
+
+::view-transition-group(cortina) {
+  animation: none;
+  z-index: 150;
+}
+
+::view-transition-old(cortina) {
+  display: none;
+}
+
+::view-transition-new(cortina) {
+  animation: none;
+}
+
+@keyframes cortina-entra {
+  from {
+    translate: 0 100%;
+  }
+}
+
+@keyframes cortina-sai {
+  to {
+    translate: 0 -100%;
+  }
+}
+
+.folha-da-marca {
+  width: min(22rem, 72vw);
+  height: auto;
+  overflow: visible;
+}
+
+.folha-da-marca__folha path {
+  fill: none;
+  stroke: var(--color-verde-marca);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+/* A ordem: o contorno (0) a partir da ponta, a nervura (1), as oito riscas
+   (2–9) de cima para baixo, a aba (10). */
+html[data-cortina] .folha-da-marca__folha path {
+  animation: traco-desenha 300ms var(--curva-saida)
+    calc(150ms + var(--i) * 45ms - var(--cortina-decorrido, 0ms)) forwards;
+}
+
+html[data-cortina] .folha-da-marca__folha path:first-child {
+  animation-duration: 450ms;
+}
+
+.folha-da-marca__nome {
+  font-family: var(--font-sans);
+  font-size: 30px;
+  font-weight: 620;
+  font-stretch: 125%;
+  fill: none;
+  stroke: var(--color-grafite);
+  stroke-width: 0.7;
+  clip-path: inset(0 100% 0 0);
+}
+
+.folha-da-marca__segundo {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 500;
+  fill: var(--color-grafite);
+  opacity: 0;
+}
+
+html[data-cortina] .folha-da-marca__nome {
+  animation: nome-revela 300ms var(--curva-saida) calc(550ms - var(--cortina-decorrido, 0ms))
+    forwards;
+}
+
+html[data-cortina] .folha-da-marca__segundo {
+  animation: segundo-aparece 250ms ease calc(650ms - var(--cortina-decorrido, 0ms)) forwards;
+}
+
+@keyframes traco-desenha {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes nome-revela {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes segundo-aparece {
+  to {
+    opacity: 1;
+  }
+}
+
 /* ---------------------------------------------------------------- rodapé */
 
 .rodape {

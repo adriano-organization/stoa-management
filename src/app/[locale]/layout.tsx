@@ -4,9 +4,11 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Cabecalho, type TextosDoCabecalho } from "@/components/Cabecalho";
 import { DadosEstruturados } from "@/components/DadosEstruturados";
+import { CortinaDeNavegacao } from "@/components/movimento/CortinaDeNavegacao";
 import { Revelacoes } from "@/components/movimento/Revelacoes";
 import { Rodape } from "@/components/Rodape";
 import { ScriptInline } from "@/components/ScriptInline";
+import { marcaPublicavel } from "@/data/validacoes";
 import { routing, type Locale } from "@/i18n/routing";
 import { metadataDaPagina } from "@/lib/metadata";
 import { fontes } from "../fontes";
@@ -105,6 +107,7 @@ export default async function LayoutDoSite({
           </main>
           <Rodape locale={locale} />
           <Revelacoes />
+          <CortinaDeNavegacao comFolha={marcaPublicavel("folha")} />
         </NextIntlClientProvider>
         <DadosEstruturados descricao={t("descricao")} />
       </body>

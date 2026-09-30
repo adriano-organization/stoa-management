@@ -121,7 +121,9 @@ async function Cartao({
   ].filter(Boolean);
 
   return (
-    <div className="destaque__interior">
+    <div className="destaque__interior" data-sem-cortina="">
+      {/* Sem cortina (`data-sem-cortina`): a fotografia do cartão faz o morph
+          até à abertura do projeto, e a cortina escondia-o. */}
       <div className="destaque__media">
         <ViewTransition
           name={`projeto-${projeto.slug}`}

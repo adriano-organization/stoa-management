@@ -34,7 +34,9 @@ export async function CartaoDeProjeto({
   ].filter(Boolean);
 
   return (
-    <article className="cartao-projeto" data-revelar="">
+    <article className="cartao-projeto" data-revelar="" data-sem-cortina="">
+      {/* Sem cortina (`data-sem-cortina`): a fotografia do cartão faz o morph
+          até à abertura do projeto, e a cortina escondia-o. */}
       <Link href={`/realisations/${projeto.slug}`} className="cartao-projeto__ligacao">
         <ViewTransition name={`projeto-${projeto.slug}`} share="morph" default="none">
           <div className="cartao-projeto__moldura">
