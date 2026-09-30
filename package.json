@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "tipos": "tsc --noEmit",
-    "mensagens": "node scripts/verificar-mensagens.mjs",
+    "mensagens": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./testes/apoio/carregador.mjs scripts/verificar-mensagens.mjs",
     "testes": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./testes/apoio/carregador.mjs --test \"testes/*.test.mjs\"",
     "segredos": "node scripts/verificar-segredos.mjs",
     "medias": "node scripts/preparar-medias.mjs"

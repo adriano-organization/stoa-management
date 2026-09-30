@@ -31,7 +31,7 @@ export type CodigoDeErro = "nome" | "email" | "telefone" | "tipo" | "mensagem" |
 /* Um telefone suíço ou estrangeiro, escrito como as pessoas o escrevem:
    algarismos, espaços, `+`, parênteses, pontos, barras e hífenes. Não se tenta
    validar o plano de numeração — só apanhar o que claramente não é um número. */
-const TELEFONE = /^\+?[0-9][0-9 ().\-/]{5,}$/;
+const TELEFONE = /^\+?\(?[0-9][0-9 ().\-/]{5,}$/;
 
 export const EsquemaDoPedido = z.object({
   nome: z.string().trim().min(1, { error: "nome" }).max(LIMITES.nome, { error: "longo" }),

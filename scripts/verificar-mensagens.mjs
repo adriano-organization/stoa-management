@@ -1,39 +1,39 @@
 /**
- * Duas verificações sobre as traduções, e a segunda existe por causa de um erro
- * a sério que a primeira deixou passar.
+ * As verificações sobre o texto, que o `build` não faz.
  *
- * ## 1. As duas línguas têm as mesmas chaves
+ * Uma chave em falta no `next-intl` **não parte o build**: a página sai com o
+ * nome da chave à vista — `projetos.immeuble-village.titulo` no lugar de um
+ * título — e quem costuma descobrir é o cliente.
  *
- * Uma chave em falta no `next-intl` **não parte o build**: em produção a página
- * renderiza com o nome da chave à vista — `ementa.categorias.tostas-e-snacks` no
- * meio da carta — e só se descobre quando alguém abre o site na outra língua,
- * que costuma ser o cliente.
+ * 1. **As línguas têm as mesmas chaves.** Hoje só há `fr-CH`; no dia em que
+ *    entrar o alemão, é isto que diz o que ficou por traduzir.
+ * 2. **Os dados têm texto.** Cada projeto tem título; cada imagem do
+ *    manifesto e cada vídeo têm texto alternativo; cada missão e estado usados
+ *    têm rótulo. Lido dos dados, e não de uma lista escrita à mão que ficaria
+ *    para trás.
+ * 3. **A tipografia francesa.** Nada de travessão (—) no texto público, e o
+ *    espaço antes de `; ! ? :` tem de ser o fino/inseparável, não um espaço
+ *    normal — senão o sinal fica sozinho no início da linha seguinte.
  *
- * ## 2. Os dados têm tradução
- *
- * ⚠️ **A verificação 1 não chega, e isto não é teoria.** Quando as categorias da
- * ementa mudaram de um café de pequenos-almoços para um bar de cocktails, os
- * ficheiros de mensagens ficaram para trás — e o teste passou, porque as chaves
- * antigas estavam igualmente presentes nas duas línguas. **Ambas estavam
- * igualmente erradas.** A carta foi para o ar a escrever
- * `ementa.categorias.tostas-e-snacks` por cima da secção.
- *
- * Por isso a segunda verificação não compara as línguas uma com a outra:
- * compara-as com os **dados**. Cada categoria que existe em `ementa.json` tem de
- * ter nome nas duas línguas.
+ * Corre com o carregador dos testes (ver `package.json`), para poder ler os
+ * dados em TypeScript tal como estão.
  */
 import { readFileSync } from "node:fs";
 
-const linguas = ["pt", "en"];
-const msgs = Object.fromEntries(
-  linguas.map((l) => [l, JSON.parse(readFileSync(`messages/${l}.json`, "utf8"))]),
-);
+const RAIZ = new URL("..", import.meta.url).pathname;
+const ler = (caminho) => readFileSync(`${RAIZ}${caminho}`, "utf8");
+
+const routing = ler("src/i18n/routing.ts");
+const linguas = JSON.parse(routing.match(/locales:\s*(\[[^\]]*\])/)[1].replace(/'/g, '"'));
+const msgs = Object.fromEntries(linguas.map((l) => [l, JSON.parse(ler(`messages/${l}.json`))]));
+
+const { TODOS_OS_PROJETOS } = await import("../src/data/projetos.ts");
+const manifesto = JSON.parse(ler("src/data/medias.json"));
 
 const problemas = [];
 
 /* ---------------------------------------------------------- 1. paridade -- */
 
-/** Achata o objeto em `a.b.c`, para comparar folhas e não ramos. */
 function chaves(objeto, prefixo = "") {
   return Object.entries(objeto).flatMap(([chave, valor]) =>
     valor && typeof valor === "object" && !Array.isArray(valor)
@@ -42,47 +42,60 @@ function chaves(objeto, prefixo = "") {
   );
 }
 
-const pt = chaves(msgs.pt).sort();
-const en = chaves(msgs.en).sort();
-for (const c of pt.filter((c) => !en.includes(c))) problemas.push(`falta em en.json: ${c}`);
-for (const c of en.filter((c) => !pt.includes(c))) problemas.push(`falta em pt.json: ${c}`);
+const [principal, ...outras] = linguas;
+const base = chaves(msgs[principal]);
+for (const l of outras) {
+  const destas = chaves(msgs[l]);
+  for (const c of base.filter((c) => !destas.includes(c))) problemas.push(`falta em ${l}.json: ${c}`);
+  for (const c of destas.filter((c) => !base.includes(c))) problemas.push(`falta em ${principal}.json: ${c}`);
+}
 
-/* ------------------------------------------------- 2. os dados traduzidos -- */
+/* ------------------------------------------------------ 2. os dados -- */
 
-/** Segue o caminho `a.b.c` dentro de um objeto; devolve `undefined` se faltar. */
-const ler = (obj, caminho) =>
-  caminho.split(".").reduce((o, k) => (o == null ? undefined : o[k]), obj);
+const seguir = (obj, caminho) => caminho.split(".").reduce((o, k) => (o == null ? undefined : o[k]), obj);
 
 function exigir(caminho, contexto) {
   for (const l of linguas) {
-    const v = ler(msgs[l], caminho);
+    const v = seguir(msgs[l], caminho);
+    if (typeof v !== "string" || v.trim() === "") problemas.push(`${l}.json não tem ${contexto} (${caminho})`);
+  }
+}
+
+for (const p of TODOS_OS_PROJETOS) {
+  exigir(`projetos.${p.slug}.titulo`, `o título do projeto "${p.slug}"`);
+  if (p.missao) exigir(`projeto.missoes.${p.missao}`, `o rótulo da missão "${p.missao}"`);
+  if (p.estado) exigir(`projeto.estados.${p.estado}`, `o rótulo do estado "${p.estado}"`);
+}
+
+/* As chaves de `medias` levam hífenes (`chantier-g-etape1-a`): lê-se o objeto
+   diretamente, e não pelo caminho com pontos. */
+for (const l of linguas) {
+  for (const imagem of manifesto.imagens) {
+    const v = msgs[l].medias?.[imagem.id];
     if (typeof v !== "string" || v.trim() === "") {
-      problemas.push(`${l}.json não traduz ${contexto}: falta ${caminho}`);
+      problemas.push(`${l}.json não tem texto alternativo para a imagem "${imagem.id}" (medias.${imagem.id})`);
+    }
+  }
+  for (const video of manifesto.videos) {
+    const v = msgs[l].medias?.videos?.[video.id];
+    if (typeof v !== "string" || v.trim() === "") {
+      problemas.push(`${l}.json não tem descrição para o vídeo "${video.id}" (medias.videos.${video.id})`);
     }
   }
 }
 
-/* As categorias que a carta usa mesmo — lidas do JSON dos dados, não de uma
-   lista escrita à mão que voltaria a ficar para trás pela mesma razão. */
-const ementa = JSON.parse(readFileSync("src/data/ementa.json", "utf8"));
-const categorias = [...new Set(ementa.artigos.map((a) => a.categoria))];
-for (const c of categorias) exigir(`ementa.categorias.${c}`, `a categoria "${c}"`);
+/* ------------------------------------------------- 3. tipografia -- */
 
-/* Os sabores já não passam por aqui: vivem no `ementa.json` com o nome nas duas
-   línguas, como os artigos, e é o `EsquemaEmenta` que recusa um sem tradução. */
-
-/* As secções com duas colunas de preço (`METADADOS` em `ementa.ts`) precisam
-   do nome de cada coluna — a página pede-o por categoria, e uma secção nova com
-   colunas e sem nomes escrevia a chave por cima dos preços. */
-const fonteDaEmenta = readFileSync("src/data/ementa.ts", "utf8");
-const metadados = fonteDaEmenta.match(/export const METADADOS[\s\S]*?\n\};/);
-if (!metadados) {
-  problemas.push("não encontrei o METADADOS em src/data/ementa.ts — o padrão mudou?");
-} else {
-  const comColunas = [...metadados[0].matchAll(/"?([a-z-]+)"?:\s*\{[^}]*colunas:/g)].map((m) => m[1]);
-  for (const c of comColunas) {
-    exigir(`ementa.colunas.${c}.a`, `a primeira coluna de preço de "${c}"`);
-    exigir(`ementa.colunas.${c}.b`, `a segunda coluna de preço de "${c}"`);
+for (const l of linguas.filter((l) => l.startsWith("fr"))) {
+  for (const caminho of chaves(msgs[l])) {
+    const texto = seguir(msgs[l], caminho);
+    if (typeof texto !== "string") continue;
+    if (texto.includes("—")) problemas.push(`${l}.json: travessão (—) em ${caminho} — usar ponto, vírgula ou dois pontos`);
+    /* Espaço normal antes de ; ! ? : (fora de um URL ou de uma hora). */
+    if (/ [;!?:](\s|$)/.test(texto)) {
+      problemas.push(`${l}.json: espaço normal antes de ; ! ? : em ${caminho} — usar o espaço fino (U+202F) ou inseparável (U+00A0)`);
+    }
+    if (texto.includes("'")) problemas.push(`${l}.json: apóstrofo reto (') em ${caminho} — usar ’`);
   }
 }
 
@@ -90,8 +103,8 @@ if (!metadados) {
 
 if (problemas.length === 0) {
   console.log(
-    `✓ ${pt.length} chaves iguais nas duas línguas · ` +
-      `${categorias.length} categorias traduzidas`,
+    `✓ ${base.length} chaves em ${linguas.join(", ")} · ${TODOS_OS_PROJETOS.length} projetos com título · ` +
+      `${manifesto.imagens.length} imagens e ${manifesto.videos.length} vídeos com texto alternativo · tipografia francesa em ordem`,
   );
   process.exit(0);
 }

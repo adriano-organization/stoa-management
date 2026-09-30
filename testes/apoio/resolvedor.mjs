@@ -13,7 +13,7 @@ function ficheiro(url) {
   return existsSync(caminho) && statSync(caminho).isFile();
 }
 
-export async function resolve(especificador, contexto, seguinte) {
+export function resolve(especificador, contexto, seguinte) {
   if (SUBSTITUTOS[especificador]) {
     return { url: SUBSTITUTOS[especificador], shortCircuit: true };
   }
@@ -28,7 +28,13 @@ export async function resolve(especificador, contexto, seguinte) {
   if (alvo) {
     for (const extensao of ["", ".ts", ".tsx"]) {
       const candidato = new URL(alvo.href + extensao);
-      if (ficheiro(candidato)) return { url: candidato.href, shortCircuit: true };
+      if (!ficheiro(candidato)) continue;
+      /* O bundler do Next importa JSON sem atributos; o Node exige
+         `with { type: "json" }`. É aqui que se acrescenta. */
+      if (candidato.pathname.endsWith(".json")) {
+        return { url: candidato.href, shortCircuit: true, importAttributes: { type: "json" } };
+      }
+      return { url: candidato.href, shortCircuit: true };
     }
   }
 

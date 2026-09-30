@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import {
   enviarPedidoDeContacto,
   type EstadoDoFormulario,
@@ -79,15 +79,22 @@ export function Formulario({ textos, lingua }: { textos: TextosDoFormulario; lin
     if (estado.estado === "invalido") resumo.current?.focus();
   }, [estado]);
 
+  /* Com JavaScript, o envio é despachado aqui, numa transição, e não pelo
+     `action` do `<form>`: quando é o React a despachar o `action`, repõe o
+     formulário no fim — e o `<select>` voltava a "Choisir…" depois de cada
+     resposta do servidor, obrigando a escolher outra vez. Sem JavaScript, o
+     `action` continua a fazer o POST normal. */
   function aoSubmeter(evento: React.FormEvent<HTMLFormElement>) {
-    const verificado = validar(lerValores(new FormData(evento.currentTarget)));
+    evento.preventDefault();
+    const dados = new FormData(evento.currentTarget);
+    const verificado = validar(lerValores(dados));
     if (!verificado.ok) {
-      evento.preventDefault();
       setErrosDoCliente(verificado.erros);
       requestAnimationFrame(() => resumo.current?.focus());
       return;
     }
     setErrosDoCliente({});
+    startTransition(() => accao(dados));
   }
 
   /* Ao corrigir um campo, o erro dele desaparece logo — não se espera pelo

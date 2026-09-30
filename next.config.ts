@@ -17,6 +17,16 @@ const nextConfig: NextConfig = {
      versão de framework está do outro lado. */
   poweredByHeader: false,
 
+  experimental: {
+    serverActions: {
+      /* O formulário de contacto é a única server action: nome, email,
+         telefone, local e uma mensagem de 4000 caracteres, no máximo. O
+         valor por omissão (1 MB) deixava um desconhecido mandar mil vezes
+         isso antes de o esquema recusar. */
+      bodySizeLimit: "32kb",
+    },
+  },
+
   async headers() {
     return [
       { source: "/:caminho*", headers: cabecalhosDoSite },

@@ -6,6 +6,7 @@ import { Cabecalho, type TextosDoCabecalho } from "@/components/Cabecalho";
 import { DadosEstruturados } from "@/components/DadosEstruturados";
 import { Revelacoes } from "@/components/movimento/Revelacoes";
 import { Rodape } from "@/components/Rodape";
+import { ScriptInline } from "@/components/ScriptInline";
 import { routing, type Locale } from "@/i18n/routing";
 import { metadataDaPagina } from "@/lib/metadata";
 import { fontes } from "../fontes";
@@ -86,7 +87,7 @@ export default async function LayoutDoSite({
   return (
     <html lang={locale} className={fontes} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: SCRIPT_DE_MOVIMENTO }} />
+        <ScriptInline codigo={SCRIPT_DE_MOVIMENTO} />
       </head>
       <body>
         <NextIntlClientProvider>
