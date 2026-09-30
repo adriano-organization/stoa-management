@@ -1,11 +1,12 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
-import { HEROI, contorno, poligono, type Composicao } from "@/data/heroi";
+import { HEROI, caminho, plantaDe, poligono, type Composicao } from "@/data/heroi";
 import { imagemPublicavel } from "@/data/validacoes";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { srcDe, srcsetDe } from "@/lib/medias";
 import { ComProgresso } from "../movimento/ComProgresso";
+import { EntradaDoHeroi } from "./EntradaDoHeroi";
 
 /**
  * # O herói — "STOA derrière l'ouvrage"
@@ -20,10 +21,15 @@ import { ComProgresso } from "../movimento/ComProgresso";
  * 4. o título, o subtítulo e as duas ações, legíveis e clicáveis desde o
  *    primeiro instante.
  *
- * **À chegada** o herói constrói-se (~1,6 s, só CSS, só com `data-movimento`):
- * a linha do edifício desenha-se, o edifício enche-se de baixo para cima, a
- * envolvente aparece e a marca sobe. O título e os botões estão lá desde o
- * início.
+ * **A entrada** (só na primeira visita à inicial em cada sessão, ~2,85 s, CSS):
+ * sobre pedra, linhas de construção e a planta do edifício desenham-se (lidas
+ * na fotografia, `plantaDe`); os volumes ganham corpo; a fotografia sobe
+ * dentro da silhueta; o contexto entra, as linhas apagam-se e fica a
+ * composição de sempre — a marca sobe por trás, o título e os botões chegam.
+ * Quem decide se há entrada, e a acaba se o visitante mexer, é
+ * `EntradaDoHeroi.tsx`. As camadas da entrada (`__pedra`, `__obra`,
+ * `__planta`) só se veem com `html[data-intro]`; sem ele, o herói é o de
+ * sempre.
  *
  * **Em ecrã deitado** a secção tem ~1,9 alturas de ecrã e o palco fica preso:
  * ao rolar, a fotografia aproxima-se (as duas camadas juntas), a marca afunda
@@ -57,6 +63,8 @@ export async function Heroi({ locale }: { locale: Locale }) {
   const variaveis = {
     "--recorte-paisagem": poligono(paisagem),
     "--recorte-retrato": poligono(retrato),
+    "--silhueta-paisagem": poligono(paisagem, plantaDe(paisagem).silhueta),
+    "--silhueta-retrato": poligono(retrato, plantaDe(retrato).silhueta),
     "--foco-x-paisagem": paisagem.foco.x,
     "--foco-y-paisagem": paisagem.foco.y,
     "--foco-x-retrato": retrato.foco.x,
@@ -75,16 +83,21 @@ export async function Heroi({ locale }: { locale: Locale }) {
       data-sob-cabecalho=""
       style={variaveis}
     >
-      <div className="heroi__palco">
+      {/* `data-com-foto`: a entrada só existe com fotografia (em publicação,
+          antes de validada, o herói é o carvão com a marca). */}
+      <div className="heroi__palco" data-com-foto={comFotografia ? "" : undefined}>
+        {comFotografia && <EntradaDoHeroi />}
         <div className="heroi__caixa">
           {comFotografia && <FotoDoHeroi className="heroi__foto" prioridade />}
+          {comFotografia && <div className="heroi__pedra" aria-hidden="true" />}
           <Marca composicao={paisagem} className="heroi__marca heroi__marca--paisagem" />
           <Marca composicao={retrato} className="heroi__marca heroi__marca--retrato" />
           {comFotografia && <FotoDoHeroi className="heroi__foto heroi__recorte" />}
           {comFotografia && (
             <>
-              <Contorno composicao={paisagem} className="heroi__contorno heroi__contorno--paisagem" />
-              <Contorno composicao={retrato} className="heroi__contorno heroi__contorno--retrato" />
+              <FotoDoHeroi className="heroi__foto heroi__obra" />
+              <Planta composicao={paisagem} className="heroi__planta heroi__planta--paisagem" />
+              <Planta composicao={retrato} className="heroi__planta heroi__planta--retrato" />
             </>
           )}
           <div className="heroi__aproximacao" aria-hidden="true" />
@@ -187,13 +200,14 @@ function Marca({ composicao, className }: { composicao: Composicao; className: s
 }
 
 /**
- * A linha do edifício, como numa planta, desenhada à chegada antes de a obra
- * (a fotografia) aparecer. Mesmo `viewBox` da fotografia, como a marca: fica
- * presa ao edifício em qualquer ecrã. `pathLength="1"` deixa o CSS desenhá-la
- * de 1 a 0 sem saber o comprimento real.
+ * A planta da entrada: linhas de construção, superfícies e arestas, no mesmo
+ * `viewBox` da fotografia — ficam presas ao edifício em qualquer ecrã, como a
+ * marca e o recorte. `pathLength="1"` deixa o CSS desenhar cada traço de 1 a 0
+ * sem saber o comprimento real; `--i` é a ordem em que se desenham.
  */
-function Contorno({ composicao, className }: { composicao: Composicao; className: string }) {
+function Planta({ composicao, className }: { composicao: Composicao; className: string }) {
   const { largura, altura } = composicao;
+  const { guias, tracos, superficies } = plantaDe(composicao);
   return (
     <svg
       className={className}
@@ -202,7 +216,21 @@ function Contorno({ composicao, className }: { composicao: Composicao; className
       aria-hidden="true"
       focusable="false"
     >
-      <path d={contorno(composicao)} pathLength={1} />
+      <g className="heroi__guias">
+        {guias.map((guia, i) => (
+          <path key={i} d={caminho([guia])} pathLength={1} style={{ "--i": i } as CSSProperties} />
+        ))}
+      </g>
+      <g className="heroi__superficies">
+        {superficies.map(({ pontos, tom }, i) => (
+          <path key={i} d={`${caminho([pontos])}Z`} style={{ "--tom": tom } as CSSProperties} />
+        ))}
+      </g>
+      <g className="heroi__tracos">
+        {tracos.map((traco, i) => (
+          <path key={i} d={caminho([traco])} pathLength={1} style={{ "--i": i } as CSSProperties} />
+        ))}
+      </g>
     </svg>
   );
 }

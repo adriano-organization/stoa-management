@@ -9,8 +9,9 @@ import { Revelacoes } from "@/components/movimento/Revelacoes";
 import { Rodape } from "@/components/Rodape";
 import { ScriptInline } from "@/components/ScriptInline";
 import { marcaPublicavel } from "@/data/validacoes";
-import { routing, type Locale } from "@/i18n/routing";
+import { caminhoLocalizado, routing, type Locale } from "@/i18n/routing";
 import { metadataDaPagina } from "@/lib/metadata";
+import { scriptDeArranque } from "@/lib/movimento/entrada";
 import { fontes } from "../fontes";
 import "../globals.css";
 import "../site.css";
@@ -48,12 +49,12 @@ export const viewport: Viewport = {
 };
 
 /**
- * Marca o `<html>` com `data-movimento` **antes da primeira pintura**, a quem
- * não pediu menos movimento. É isso que permite ao CSS esconder o que vai ser
- * revelado sem nunca esconder nada a quem não tem JavaScript ou não quer
- * animações. Texto fixo, sem dados de fora — ver `src/lib/cabecalhos.ts`.
+ * O script do `<head>` (`data-movimento` e a decisão da entrada do herói),
+ * com a inicial de cada língua sem a barra final: "", "/pt", "/en".
  */
-const SCRIPT_DE_MOVIMENTO = `try{if(matchMedia("(prefers-reduced-motion: no-preference)").matches)document.documentElement.setAttribute("data-movimento","")}catch(e){}`;
+const SCRIPT_DE_MOVIMENTO = scriptDeArranque(
+  routing.locales.map((l) => caminhoLocalizado("/", l).replace(/\/$/, "")),
+);
 
 export default async function LayoutDoSite({
   children,
