@@ -62,3 +62,37 @@ test("um projeto (data-sem-cortina) não cobre: fica o morph", () => {
 test("um href que não é URL não cobre e não rebenta", () => {
   assert.equal(deveCobrir(CLIQUE, { ...LIGACAO, href: "http://[" }, LOCAL), false);
 });
+
+/* O morph dos projetos (a fotografia que voa do cartão para a abertura, e de
+   volta) só se vê sem cortina. Qualquer link que abre um projeto tem esse
+   morph — os cartões, os destaques, o "projeto seguinte" — e o regresso de um
+   projeto à lista tem o inverso. */
+test("abrir um projeto não cobre (fica o morph), em qualquer língua", () => {
+  assert.equal(deveCobrir(CLIQUE, { ...LIGACAO, href: "/realisations/immeuble-a" }, LOCAL), false);
+  assert.equal(
+    deveCobrir(CLIQUE, { ...LIGACAO, href: "/pt/realisations/immeuble-a" }, { ...LOCAL, href: "https://stoa.ch/pt" }),
+    false,
+  );
+});
+
+test("de um projeto para o seguinte não cobre", () => {
+  const noProjeto = { ...LOCAL, href: "https://stoa.ch/en/realisations/immeuble-a" };
+  assert.equal(deveCobrir(CLIQUE, { ...LIGACAO, href: "/en/realisations/immeuble-b" }, noProjeto), false);
+});
+
+test("de um projeto de volta à lista não cobre (o morph inverso)", () => {
+  const noProjeto = { ...LOCAL, href: "https://stoa.ch/realisations/immeuble-a" };
+  assert.equal(deveCobrir(CLIQUE, { ...LIGACAO, href: "/realisations" }, noProjeto), false);
+});
+
+test("da inicial para a lista de projetos cobre (não há morph)", () => {
+  assert.equal(
+    deveCobrir(CLIQUE, { ...LIGACAO, href: "/realisations" }, { ...LOCAL, href: "https://stoa.ch/" }),
+    true,
+  );
+});
+
+test("de um projeto para outra secção cobre", () => {
+  const noProjeto = { ...LOCAL, href: "https://stoa.ch/realisations/immeuble-a" };
+  assert.equal(deveCobrir(CLIQUE, { ...LIGACAO, href: "/contact" }, noProjeto), true);
+});

@@ -381,7 +381,9 @@ html[data-cortina="sair"] .cortina {
   stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-dasharray: 1;
+  /* O intervalo maior do que o caminho: com `dasharray: 1` e pontas
+     redondas sobrava um ponto no fim de cada traço antes de ele se desenhar. */
+  stroke-dasharray: 1 2;
   stroke-dashoffset: 1;
 }
 

@@ -4,8 +4,11 @@
  * A cortina tapa a página e só sai quando o caminho muda. Por isso só pode
  * cobrir uma navegação que vai mesmo acontecer **nesta aba** e **para outra
  * página do site** — senão fica a tapar uma página que não mudou até ao
- * limite de segurança. Os projetos ficam de fora (`data-sem-cortina`): o
- * cartão já tem o morph da fotografia, e a cortina escondia-o.
+ * limite de segurança. Os projetos ficam de fora: abrir um projeto, passar ao
+ * seguinte e voltar dele à lista têm o morph da fotografia, e a cortina
+ * escondia-o. A regra é pela rota, e não link a link, para um link novo para
+ * um projeto não voltar a esconder o morph por esquecimento;
+ * `data-sem-cortina` fica para os outros casos.
  *
  * É uma função pura para se poder testar sem browser; quem lê o evento e o
  * `<a>` é `CortinaDeNavegacao.tsx`.
@@ -20,6 +23,10 @@ export const TEMPO_MINIMO_MS = 850;
 export const TEMPO_DE_SAIDA_MS = 300;
 /** Se a página nova não chegar, a cortina sai na mesma: nunca fica presa. */
 export const TEMPO_MAXIMO_MS = 5000;
+
+/* `/realisations` e `/realisations/<slug>`, com ou sem prefixo de língua. */
+const LISTA_DE_PROJETOS = /^(?:\/[a-z]{2}(?:-[A-Z]{2})?)?\/realisations\/?$/;
+const PROJETO = /^(?:\/[a-z]{2}(?:-[A-Z]{2})?)?\/realisations\/[^/]+\/?$/;
 
 export function deveCobrir(clique: Clique, ligacao: Ligacao, local: Local): boolean {
   if (!local.movimento) return false;
@@ -37,5 +44,8 @@ export function deveCobrir(clique: Clique, ligacao: Ligacao, local: Local): bool
   }
 
   if (destino.origin !== atual.origin) return false;
-  return destino.pathname !== atual.pathname;
+  if (destino.pathname === atual.pathname) return false;
+  if (PROJETO.test(destino.pathname)) return false;
+  if (PROJETO.test(atual.pathname) && LISTA_DE_PROJETOS.test(destino.pathname)) return false;
+  return true;
 }

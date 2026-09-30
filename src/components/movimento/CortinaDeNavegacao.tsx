@@ -89,9 +89,21 @@ export function CortinaDeNavegacao({ comFolha }: { comFolha: boolean }) {
       relogios.current.push(window.setTimeout(sair, TEMPO_MAXIMO_MS));
     };
 
+    /* Quando o pedido ao servidor falha, o Next faz uma navegação completa, e a
+       página antiga vai para a cache do browser ainda tapada, com o relógio
+       parado. Ao voltar com "anterior", mostra-se logo, sem cortina. */
+    const aoVoltar = (evento: PageTransitionEvent) => {
+      if (!evento.persisted) return;
+      limpar();
+      pedido = null;
+      raiz.removeAttribute("data-cortina");
+      raiz.style.removeProperty("--cortina-decorrido");
+    };
+
     /* Na fase de captura, antes do `Link` do Next: se ele depois cancelar a
        navegação, o limite de segurança tira a cortina. */
     document.addEventListener("click", aoClicar, true);
+    window.addEventListener("pageshow", aoVoltar);
     sairRef.current = sair;
 
     /* Um pedido que vem do componente anterior: a cortina nova é outro
@@ -107,6 +119,7 @@ export function CortinaDeNavegacao({ comFolha }: { comFolha: boolean }) {
 
     return () => {
       document.removeEventListener("click", aoClicar, true);
+      window.removeEventListener("pageshow", aoVoltar);
       limpar();
       /* Com um pedido em curso, a cortina fica: o próximo componente tira-a. */
       if (!pedido) raiz.removeAttribute("data-cortina");
