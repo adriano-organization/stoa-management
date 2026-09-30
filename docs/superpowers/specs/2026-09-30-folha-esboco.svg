@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -2 216 132" width="864" height="528">
+  <rect x="0" y="-2" width="216" height="132" fill="#f2eee7"/>
+  <g transform="translate(4,0)" fill="none" stroke="#3f7d3a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 4 C 34 30, 16 60, 18 88 C 20 112, 36 126, 54 126 C 74 126, 88 110, 88 86 C 88 58, 76 32, 60 4 Z"/>
+    <path d="M60 6 C 62 40, 62.5 75, 60 102"/>
+    <path d="M45.5 20 L 61 12.8"/>
+    <path d="M36.2 32.5 L 61.6 21"/>
+    <path d="M28.5 45.2 L 62 30.2"/>
+    <path d="M22.7 58.1 L 62.2 40.5"/>
+    <path d="M19.1 71 L 62.1 52"/>
+    <path d="M17.8 83.8 L 61.8 64.4"/>
+    <path d="M19.8 98.1 L 61.2 79.5"/>
+    <path d="M24.7 109.4 L 60.4 93.3"/>
+    <path d="M30 118 C 50 112, 72 96, 87 72"/>
+  </g>
+  <text x="104" y="68" font-family="Archivo, Helvetica Neue, Arial" font-weight="600" font-size="30" letter-spacing="1" fill="none" stroke="#2b2b28" stroke-width="0.7">STOA</text>
+  <text x="105" y="86" font-family="Helvetica Neue, Arial" font-size="9.5" letter-spacing="3.2" fill="#2b2b28">MANAGEMENT</text>
+</svg>
