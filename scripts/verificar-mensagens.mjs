@@ -5,15 +5,16 @@
  * nome da chave à vista — `projetos.immeuble-village.titulo` no lugar de um
  * título — e quem costuma descobrir é o cliente.
  *
- * 1. **As línguas têm as mesmas chaves.** Hoje só há `fr-CH`; no dia em que
- *    entrar o alemão, é isto que diz o que ficou por traduzir.
+ * 1. **As línguas têm as mesmas chaves.** O francês é a referência; é isto
+ *    que diz o que ficou por traduzir em `pt` e `en`.
  * 2. **Os dados têm texto.** Cada projeto tem título; cada imagem do
  *    manifesto e cada vídeo têm texto alternativo; cada missão e estado usados
  *    têm rótulo. Lido dos dados, e não de uma lista escrita à mão que ficaria
  *    para trás.
- * 3. **A tipografia francesa.** Nada de travessão (—) no texto público, e o
- *    espaço antes de `; ! ? :` tem de ser o fino/inseparável, não um espaço
- *    normal — senão o sinal fica sozinho no início da linha seguinte.
+ * 3. **A tipografia.** Em todas as línguas, nada de travessão (—) no texto
+ *    público nem apóstrofo reto. Em francês, o espaço antes de `; ! ? :` tem
+ *    de ser o fino/inseparável, não um espaço normal — senão o sinal fica
+ *    sozinho no início da linha seguinte.
  *
  * Corre com o carregador dos testes (ver `package.json`), para poder ler os
  * dados em TypeScript tal como estão.
@@ -86,16 +87,20 @@ for (const l of linguas) {
 
 /* ------------------------------------------------- 3. tipografia -- */
 
-for (const l of linguas.filter((l) => l.startsWith("fr"))) {
+for (const l of linguas) {
   for (const caminho of chaves(msgs[l])) {
     const texto = seguir(msgs[l], caminho);
     if (typeof texto !== "string") continue;
     if (texto.includes("—")) problemas.push(`${l}.json: travessão (—) em ${caminho} — usar ponto, vírgula ou dois pontos`);
-    /* Espaço normal antes de ; ! ? : (fora de um URL ou de uma hora). */
-    if (/ [;!?:](\s|$)/.test(texto)) {
+    if (texto.includes("'")) problemas.push(`${l}.json: apóstrofo reto (') em ${caminho} — usar ’`);
+    /* Espaço normal antes de ; ! ? : (fora de um URL ou de uma hora). Só em
+       francês: em português e inglês o sinal cola à palavra. */
+    if (l.startsWith("fr") && / [;!?:](\s|$)/.test(texto)) {
       problemas.push(`${l}.json: espaço normal antes de ; ! ? : em ${caminho} — usar o espaço fino (U+202F) ou inseparável (U+00A0)`);
     }
-    if (texto.includes("'")) problemas.push(`${l}.json: apóstrofo reto (') em ${caminho} — usar ’`);
+    if (!l.startsWith("fr") && /[\u202F\u00A0][;!?:]/.test(texto)) {
+      problemas.push(`${l}.json: espaço antes de ; ! ? : em ${caminho} — é regra do francês, não de ${l}`);
+    }
   }
 }
 
@@ -104,7 +109,7 @@ for (const l of linguas.filter((l) => l.startsWith("fr"))) {
 if (problemas.length === 0) {
   console.log(
     `✓ ${base.length} chaves em ${linguas.join(", ")} · ${TODOS_OS_PROJETOS.length} projetos com título · ` +
-      `${manifesto.imagens.length} imagens e ${manifesto.videos.length} vídeos com texto alternativo · tipografia francesa em ordem`,
+      `${manifesto.imagens.length} imagens e ${manifesto.videos.length} vídeos com texto alternativo · tipografia em ordem`,
   );
   process.exit(0);
 }

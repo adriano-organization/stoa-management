@@ -1,0 +1,376 @@
+{
+  "marca": {
+    "nome": "STOA Management",
+    "curto": "STOA",
+    "segundo": "Management",
+    "actividade": "Construction management"
+  },
+  "nav": {
+    "saltar": "Skip to content",
+    "principal": "Main navigation",
+    "inicio": "STOA Management, home",
+    "realisations": "Projects",
+    "expertises": "Expertise",
+    "aPropos": "About",
+    "contact": "Contact",
+    "menu": "Menu",
+    "fechar": "Close the menu",
+    "lingua": "Language"
+  },
+  "metadata": {
+    "inicio": {
+      "titulo": "STOA Management · Construction management",
+      "descricao": "Project preparation, cost management and construction management for renovations, houses and apartment buildings. STOA Management, Farvagny-le-Grand, canton of Fribourg."
+    },
+    "realisations": {
+      "titulo": "Projects",
+      "descricao": "The projects and references of STOA Management, a construction management office in Farvagny-le-Grand."
+    },
+    "contact": {
+      "titulo": "Contact",
+      "descricao": "A renovation, a house or an apartment building? Write to STOA Management or give us a call."
+    },
+    "naoEncontrada": {
+      "titulo": "Page not found"
+    }
+  },
+  "heroi": {
+    "linha1": "Your project.",
+    "linha2": "Clear direction.",
+    "subtitulo": "Preparation, coordination and follow-up of your building works.",
+    "ctaRealisations": "See our projects",
+    "ctaContacto": "Let’s talk about your project",
+    "defilar": "Scroll"
+  },
+  "apresentacao": {
+    "etiqueta": "The office",
+    "titulo": "Renovations, houses, apartment buildings. We prepare the project, track the costs and run the site.",
+    "paragrafo1": "STOA Management is a construction management office based in Farvagny-le-Grand, in the canton of Fribourg.",
+    "paragrafo2": "From structural work to finishing, we coordinate how the project unfolds and step in where needed.",
+    "paragrafo3": "More than ten years in this field have given us solid knowledge and a sense of priorities.",
+    "factos": {
+      "baseRotulo": "Office",
+      "base": "Farvagny-le-Grand (FR)",
+      "dominiosRotulo": "Fields",
+      "dominios": "Renovations, houses, apartment buildings",
+      "experienciaRotulo": "Experience",
+      "experiencia": "More than ten years"
+    },
+    "legenda": "Façade detail"
+  },
+  "destaque": {
+    "titulo": "Projects",
+    "intro": "A selection of projects, from excavation to façade.",
+    "verTodos": "All projects",
+    "verProjeto": "View the project"
+  },
+  "especialidades": {
+    "titulo": "Expertise",
+    "intro": "Three skills, from the project to the site.",
+    "itens": {
+      "preparacao": {
+        "titulo": "Project preparation",
+        "resumo": "Preliminary design, planning application, construction drawings, building costs, tenders.",
+        "detalhe": "Everything decided before the site opens: the project takes shape, permits are applied for, costs are estimated and contractors are consulted."
+      },
+      "financas": {
+        "titulo": "Cost management",
+        "resumo": "Monitoring and control of construction costs.",
+        "detalhe": "Costs are tracked throughout construction, so that every decision is made knowing its effect on the budget."
+      },
+      "direcao": {
+        "titulo": "Construction management",
+        "resumo": "Coordination and intervention as the project unfolds.",
+        "detalhe": "On site, construction management organises the contractors’ work, follows progress and steps in when a decision is needed."
+      }
+    },
+    "mostrar": "Show details"
+  },
+  "metodo": {
+    "titulo": "Method",
+    "intro": "Construction management is built in order.",
+    "aviso": "Draft text, to be approved by STOA.",
+    "etapas": {
+      "compreender": {
+        "titulo": "Understand",
+        "texto": "The project, the site, the budget and your expectations."
+      },
+      "preparar": {
+        "titulo": "Prepare",
+        "texto": "Drawings, permits, cost estimates, tenders."
+      },
+      "coordenar": {
+        "titulo": "Coordinate",
+        "texto": "The contractors, the schedule and the decisions to be made."
+      },
+      "acompanhar": {
+        "titulo": "Follow up",
+        "texto": "Progress, execution and costs, on site."
+      },
+      "entregar": {
+        "titulo": "Hand over",
+        "texto": "Acceptance of the works and closing of the site."
+      }
+    }
+  },
+  "equipa": {
+    "titulo": "The team",
+    "intro": "The people who follow your building works.",
+    "aviso": "Profiles pending: photos and details to be provided by STOA.",
+    "vazio": {
+      "nome": "Name to be added",
+      "funcao": "Role to be added",
+      "apresentacao": "Introduction coming soon.",
+      "retrato": "Portrait coming soon"
+    },
+    "perfis": {}
+  },
+  "chamada": {
+    "titulo": "Let’s talk about your project.",
+    "texto": "Renovation, house or apartment building: tell us about your project and we will get back to you.",
+    "cta": "Describe your project",
+    "ouDireto": "Or directly"
+  },
+  "rodape": {
+    "navegacao": "Navigation",
+    "contacto": "Contact",
+    "redes": "Social",
+    "morada": "Address",
+    "verMapa": "View on the map",
+    "direitos": "© {ano} STOA Management",
+    "credito": "Website: DevPlus",
+    "topo": "Back to top"
+  },
+  "realisations": {
+    "titulo": "Projects",
+    "intro": "Each project has its own page, with its images and confirmed information.",
+    "introReferencias": "References of STOA Management and its associates.",
+    "projetos": "Projects",
+    "referencias": {
+      "titulo": "References",
+      "intro": "Assignments carried out by STOA associates, in collaboration with the companies listed.",
+      "colunas": {
+        "periodo": "Year",
+        "projeto": "Project",
+        "local": "Location",
+        "missao": "Role",
+        "colaboracao": "In collaboration with"
+      }
+    }
+  },
+  "projeto": {
+    "rotulos": {
+      "local": "Location",
+      "missao": "Role",
+      "estado": "Status",
+      "periodo": "Period",
+      "colaboracao": "In collaboration with",
+      "pessoa": "Assignment carried out by"
+    },
+    "estados": {
+      "termine": "Completed",
+      "en-cours": "In progress"
+    },
+    "missoes": {
+      "direction-des-travaux": "Construction management",
+      "assistant-direction-des-travaux": "Assistant construction manager"
+    },
+    "ficha": "Project details",
+    "intervencaoTitulo": "STOA’s role",
+    "missaoTitulo": "The assignment",
+    "intervencaoEmFalta": "Text to be written with STOA: role, scope of the assignment, how it unfolded.",
+    "referenciaNota": "Reference: assignment carried out by a STOA associate, in collaboration with {empresa} ({cidade}).",
+    "etapas": "Site progress",
+    "etapasNota": "Aerial views taken at different times.",
+    "etapa": "Stage {n}",
+    "galeria": "Images",
+    "seguinte": "Next project",
+    "voltar": "All projects",
+    "provisorio": "Provisional, to be approved",
+    "provisorioNota": "Provisional project: grouping of images to be confirmed by STOA (name, location, role, rights). Not published.",
+    "video": {
+      "pausa": "Pause the video",
+      "ler": "Play the video",
+      "rever": "Watch the video again"
+    }
+  },
+  "projetos": {
+    "immeuble-balcons-filants": {
+      "titulo": "Building with continuous balconies",
+      "resumo": "Aerial views of a four-storey building with continuous balconies, on the edge of a village."
+    },
+    "immeuble-village": {
+      "titulo": "Three-storey building",
+      "resumo": "Aerial view of a three-storey building, between houses and sports grounds."
+    },
+    "chantier-immeuble": {
+      "titulo": "Apartment building site",
+      "resumo": "Aerial views of a building site in a residential area, from the foundations to the structure."
+    },
+    "villas-mitoyennes": {
+      "titulo": "Terraced houses",
+      "resumo": "A group of terraced houses between meadow and forest, seen from the sky."
+    },
+    "immeuble-facades-panneaux": {
+      "titulo": "Building with panelled façades",
+      "resumo": "A three-storey building: the solar roof seen from the sky, the façade seen from the ground."
+    },
+    "terrassement-fondations": {
+      "titulo": "Earthworks and foundations",
+      "resumo": "A plot seen from the sky, from earthworks to the first foundations."
+    },
+    "immeuble-facades-rosees": {
+      "titulo": "Building with pink façades",
+      "resumo": "A five-storey building and its surroundings under construction."
+    },
+    "immeuble-toiture-vegetalisee": {
+      "titulo": "Building with a green roof",
+      "resumo": "A building with a green roof and solar panels, in a residential area."
+    },
+    "maison-toiture-tuiles": {
+      "titulo": "House with a tiled roof",
+      "resumo": "A three-storey house with a tiled roof and balconies on the façade."
+    },
+    "batiment-activites": {
+      "titulo": "Commercial building",
+      "resumo": "A commercial building with a solar roof, in an industrial area."
+    },
+    "transformation-arconciel": {
+      "titulo": "Conversion",
+      "resumo": "Conversion of an apartment in Arconciel, where Leandro Lopes managed the works."
+    },
+    "quartier-villas-chesopelloz": {
+      "titulo": "Housing estate",
+      "resumo": "Construction management of a housing estate in Chésopelloz."
+    },
+    "immeuble-ppe-noreaz": {
+      "titulo": "Condominium building",
+      "resumo": "Site and construction management of a building in Noréaz."
+    },
+    "quartier-villas-corminboeuf": {
+      "titulo": "Housing estate",
+      "resumo": "Housing estate in Corminboeuf, where Leandro Lopes assisted the construction management."
+    }
+  },
+  "contacto": {
+    "titulo": "Let’s talk about your project.",
+    "intro": "Tell us about your project in a few lines. We will reply by e-mail or by phone.",
+    "formulario": {
+      "titulo": "Your enquiry",
+      "obrigatorio": "required",
+      "facultativo": "optional",
+      "nome": "Name",
+      "email": "E-mail",
+      "telefone": "Phone",
+      "tipo": "Type of project",
+      "tipoEscolher": "Choose…",
+      "tipos": {
+        "renovation": "Renovation or conversion",
+        "maison": "Detached house",
+        "immeuble": "Apartment building",
+        "autre": "Other"
+      },
+      "local": "Site location",
+      "localAjuda": "Municipality or region, if you know it.",
+      "mensagem": "Your message",
+      "mensagemAjuda": "The project, how far along it is, your questions.",
+      "isco": "Do not fill in this field",
+      "enviar": "Send the enquiry",
+      "aEnviar": "Sending…",
+      "erros": {
+        "nome": "Please enter your name.",
+        "email": "Please enter a valid e-mail address.",
+        "telefone": "This phone number does not seem valid.",
+        "tipo": "Please choose a type of project.",
+        "mensagem": "Describe your project in a few words (at least 10 characters).",
+        "longo": "This text is too long.",
+        "resumoUm": "One field needs correcting:",
+        "resumoVarios": "{n} fields need correcting:"
+      },
+      "sucesso": {
+        "titulo": "Thank you, your message has been sent.",
+        "texto": "We have received it and will reply as soon as possible."
+      },
+      "falhas": {
+        "limite": "Too many messages have been sent from this connection. Try again in an hour or write to us directly at {email}.",
+        "servico": "The message could not be sent. Write to us directly at {email} or give us a call.",
+        "configuracao": "The form is not yet connected to our mailbox: your message was not sent. Write to us directly at {email}.",
+        "rapido": "The form was sent too quickly. Check your details and send it again.",
+        "ligacoes": "Your message contains too many links. Remove some and send it again."
+      },
+      "dados": "Your data is used only to reply to your enquiry. It is neither passed on nor used for advertising. The message reaches us through our e-mail delivery provider.",
+      "novo": "Send another enquiry",
+      "ouDireto": "You can also write to us directly at {email}."
+    },
+    "direto": {
+      "titulo": "Reach us directly",
+      "email": "E-mail",
+      "telefones": "Phone",
+      "morada": "Address",
+      "mapa": "View on the map",
+      "redes": "Social"
+    },
+    "legendaBureau": "The office, in Farvagny-le-Grand"
+  },
+  "naoEncontrada": {
+    "etiqueta": "Error 404",
+    "titulo": "Page not found.",
+    "texto": "This page does not exist or has moved.",
+    "inicio": "Back to the home page",
+    "realisations": "See the projects"
+  },
+  "comum": {
+    "cantao": "canton of Fribourg",
+    "pais": "Switzerland"
+  },
+  "medias": {
+    "partilha": "Aerial view of a four-storey building in the Fribourg countryside, STOA Management.",
+    "heroi-immeuble": "Aerial view of a white four-storey building with continuous balconies, between meadows and villages.",
+    "facade-panneaux": "Façade of light panels and dark windows, seen from below against a blue sky.",
+    "immeuble-e-balcons": "Four-storey building with continuous balconies, seen from the sky, with countryside behind.",
+    "immeuble-e-grue": "White building with a solar roof, a construction crane nearby.",
+    "immeuble-a-facade": "Building with pink façades, seen from the neighbouring plot under construction.",
+    "immeuble-a-aerien": "Aerial view of a building with pink façades and its surroundings under construction.",
+    "immeuble-b-toiture": "Aerial view of a white building with a green roof, in a residential area.",
+    "immeuble-b-terrasses": "Terraces and green roof of a white building, seen from the sky.",
+    "villas-d-prairie": "White terraced houses with grey roofs, between meadow and forest.",
+    "villas-d-lisiere": "The terraced houses seen from the side, countryside on the horizon.",
+    "maison-f-facade": "White house with a tiled roof, seen from the garden.",
+    "maison-f-toiture": "Aerial view of a house with a tiled roof and balconies.",
+    "chantier-g-etape1-a": "Overhead view of a building site: foundation walls, crane and silo.",
+    "chantier-g-etape1-b": "Overhead view of the site at foundation stage.",
+    "chantier-g-etape1-c": "Building site seen from above: formwork, crane and yellow silo.",
+    "chantier-g-etape2-a": "Overhead view of the site: floor slab being formed.",
+    "chantier-g-etape2-b": "The site in a residential area: slab, formwork and yellow silo.",
+    "chantier-g-etape2-c": "Structure under way, surrounded by houses with solar roofs.",
+    "chantier-g-etape3-a": "Building under construction in scaffolding, with crane and yellow silo.",
+    "chantier-g-etape3-b": "Structure of the building in scaffolding, seen from the sky.",
+    "chantier-g-etape3-c": "Overhead view of the building’s structure.",
+    "batiment-h-toiture": "Dark commercial building with a solar roof, in an industrial area.",
+    "batiment-h-installation": "Site facilities at the foot of commercial buildings.",
+    "batiment-h-zone": "Industrial area and building with a solar roof, aerial view.",
+    "terrain-i-etape1-a": "Plot under earthworks seen from above, between fields and houses.",
+    "terrain-i-etape1-b": "Earthworks on a plot: excavators and first trenches.",
+    "terrain-i-etape1-c": "The plot under earthworks, oblique view.",
+    "terrain-i-etape2-a": "Excavations and excavators on the plot, at the edge of a field.",
+    "terrain-i-etape2-b": "Levelled plot and construction machinery, aerial view.",
+    "terrain-i-etape3-a": "Foundations under way: reinforcement, formwork and crane.",
+    "terrain-i-etape3-b": "Overhead view of the foundations and the crane.",
+    "immeuble-j1-toiture": "Building with a solar roof and a light façade, seen from the sky.",
+    "immeuble-j2-village": "Aerial view of a three-storey building between houses and sports grounds.",
+    "immeuble-j2-arbre": "Three-storey building behind the crown of a large tree.",
+    "plan-annote": "Ground floor plan annotated by hand, lying on a table.",
+    "bureau-poste": "Workstation with plans and binders.",
+    "bureau-plateau": "Open-plan office, steel beams and plants.",
+    "ref-arconciel": "Converted apartment under a timber roof structure, with a staircase and pendant lights.",
+    "ref-chesopelloz": "Contemporary houses along a street, in Chésopelloz.",
+    "ref-noreaz": "Aerial view of a white building with a dark roof, in Noréaz.",
+    "ref-corminboeuf": "Aerial view of the housing estate under construction, in Corminboeuf.",
+    "videos": {
+      "approche-immeuble": "Drone approach to a building with continuous balconies.",
+      "orbite-immeuble": "Circular drone flight around a building with continuous balconies.",
+      "approche-villas": "Drone approach to terraced houses between meadow and forest.",
+      "recul-immeuble-panneaux": "Drone view pulling back from a building’s solar roof to reveal it in full."
+    }
+  }
+}

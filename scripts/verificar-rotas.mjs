@@ -5,13 +5,18 @@ const publico = process.env.STOA_PUBLICATION === '1';
 /* Em publicação, o que não está validado não pode estar no HTML — nem
    visível, nem no que vai para o browser (o catálogo de mensagens já foi
    serializado inteiro por engano). */
-const mensagens = JSON.parse(readFileSync(new URL('../messages/fr-CH.json', import.meta.url), 'utf8'));
-const proibidosEmPublicacao = [
+const catalogos = ['fr-CH', 'pt', 'en'].map((l) =>
+  JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), 'utf8')),
+);
+const proibidosEmPublicacao = catalogos.flatMap((mensagens) => [
   mensagens.metodo.intro,
   ...Object.values(mensagens.metodo.etapas).map((e) => e.texto),
   mensagens.projetos['immeuble-balcons-filants'].titulo,
+]);
+const rotas = [
+  '/', '/realisations', '/contact', '/realisations/transformation-arconciel',
+  '/pt', '/pt/realisations', '/en', '/en/contact', '/en/realisations/transformation-arconciel',
 ];
-const rotas = ['/', '/realisations', '/contact', '/realisations/transformation-arconciel'];
 for (const rota of rotas) {
   const resposta = await fetch(base + rota);
   assert.equal(resposta.status, 200, rota);
@@ -26,7 +31,7 @@ for (const rota of rotas) {
   if (publico) for (const texto of proibidosEmPublicacao) assert.ok(!html.includes(texto), `${rota}: por validar no HTML: ${texto}`);
   console.log(`✓ ${rota}`);
 }
-for (const rota of ['/rota-inexistente', '/realisations/inexistente']) {
+for (const rota of ['/rota-inexistente', '/realisations/inexistente', '/pt/rota-inexistente', '/de/realisations']) {
   assert.equal((await fetch(base + rota)).status, 404, rota);
 }
 const provisoria = await fetch(base + '/realisations/immeuble-balcons-filants');

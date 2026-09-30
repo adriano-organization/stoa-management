@@ -1,4 +1,6 @@
-import { routing } from "@/i18n/routing";
+import { caminhoLocalizado } from "@/i18n/routing";
+
+export { caminhoLocalizado };
 
 /**
  * Endereço público do site — fonte única.
@@ -53,19 +55,6 @@ export const URL_ESTUDIO = "https://devplus.pt";
  * modo de publicação deixa sair.
  */
 export const ROTAS_FIXAS = ["/", "/realisations", "/contact"] as const;
-
-/**
- * O caminho de uma rota numa língua, já com o prefixo certo.
- *
- * Existe porque a regra do `localePrefix: "as-needed"` — a língua por omissão
- * sem prefixo, as outras com — está em vários sítios que têm de concordar (o
- * sitemap, os `alternates` das metadata), e escrevê-la à mão em cada um é
- * garantir que um fica para trás.
- */
-export function caminhoLocalizado(rota: string, locale: string): string {
-  const prefixo = locale === routing.defaultLocale ? "" : `/${locale}`;
-  return rota === "/" ? prefixo || "/" : `${prefixo}${rota}`;
-}
 
 /** O mesmo, mas absoluto — que é o que o sitemap e as metadata precisam. */
 export const urlLocalizado = (rota: string, locale: string) =>

@@ -1,7 +1,9 @@
 "use client";
 
+import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
+import { NOMES_DAS_LINGUAS, caminhoLocalizado, routing, type Locale } from "@/i18n/routing";
 import { Marca } from "./Marca";
 
 export type TextosDoCabecalho = {
@@ -13,13 +15,15 @@ export type TextosDoCabecalho = {
   contact: string;
   menu: string;
   fechar: string;
+  lingua: string;
 };
 
 /**
  * O cabeçalho fixo.
  *
  * - **Sobre a fotografia** do herói é transparente e claro; depois ganha fundo.
- *   A página diz onde há fotografia por baixo com `data-sob-cabecalho`.
+ *   A página diz onde há fotografia por baixo com `data-sob-cabecalho` (o
+ *   herói, e cada projeto em destaque, que é uma fotografia de ponta a ponta).
  * - **Esconde-se a descer e volta a subir**, para as imagens terem o ecrã
  *   inteiro. Nunca se esconde enquanto tem o foco do teclado.
  * - **No telemóvel** o menu é um `<dialog>` modal: o browser trata do foco
@@ -28,8 +32,14 @@ export type TextosDoCabecalho = {
  * `Expertises` e `À propos` são secções da página inicial (`/#expertises`,
  * `/#a-propos`): a partir de uma página interior, o link navega para a
  * inicial e o browser desce até à secção.
+ *
+ * O seletor de língua leva à **mesma página** na outra língua: os *slugs* são
+ * iguais em todas (ver `i18n/routing.ts`), por isso basta mudar o prefixo. Usa
+ * o `Link` do Next e não o do `next-intl`, que para o francês gerava
+ * `/fr-CH/...` (o prefixo serve-lhe para gravar o cookie de língua, que aqui
+ * está desligado) e obrigava a um redirecionamento.
  */
-export function Cabecalho({ textos }: { textos: TextosDoCabecalho }) {
+export function Cabecalho({ textos, locale }: { textos: TextosDoCabecalho; locale: Locale }) {
   const caminho = usePathname();
   const [sobreFoto, setSobreFoto] = useState(false);
   const [escondido, setEscondido] = useState(false);
@@ -51,8 +61,13 @@ export function Cabecalho({ textos }: { textos: TextosDoCabecalho }) {
       const y = window.scrollY;
       const altura = cabecalho.current?.offsetHeight ?? 72;
 
-      const foto = document.querySelector("[data-sob-cabecalho]");
-      setSobreFoto(foto ? foto.getBoundingClientRect().bottom > altura : false);
+      const fotos = document.querySelectorAll("[data-sob-cabecalho]");
+      setSobreFoto(
+        Array.from(fotos).some((foto) => {
+          const caixa = foto.getBoundingClientRect();
+          return caixa.top <= 0 && caixa.bottom > altura;
+        }),
+      );
 
       const focado = cabecalho.current?.contains(document.activeElement) ?? false;
       if (y < 240 || focado) setEscondido(false);
@@ -114,6 +129,14 @@ export function Cabecalho({ textos }: { textos: TextosDoCabecalho }) {
           </ul>
         </nav>
 
+        <SeletorDeLingua
+          className="cabecalho__linguas"
+          caminho={caminho}
+          atual={locale}
+          rotulo={textos.lingua}
+          formato="curto"
+        />
+
         <button
           type="button"
           className="cabecalho__menu"
@@ -151,7 +174,54 @@ export function Cabecalho({ textos }: { textos: TextosDoCabecalho }) {
             )}
           </ol>
         </nav>
+        <SeletorDeLingua
+          className="menu-movel__linguas envelope"
+          caminho={caminho}
+          atual={locale}
+          rotulo={textos.lingua}
+          formato="nome"
+        />
       </dialog>
     </header>
+  );
+}
+
+function SeletorDeLingua({
+  className,
+  caminho,
+  atual,
+  rotulo,
+  formato,
+}: {
+  className: string;
+  caminho: string;
+  atual: Locale;
+  rotulo: string;
+  formato: "curto" | "nome";
+}) {
+  return (
+    <nav aria-label={rotulo} className={className}>
+      <ul>
+        {routing.locales.map((l) => {
+          const { nome, curto } = NOMES_DAS_LINGUAS[l];
+          return (
+            <li key={l}>
+              {/* `lang` para o leitor de ecrã dizer "Português" com a pronúncia
+                  certa; no formato curto, o nome inteiro vai no `aria-label`
+                  porque "PT" lido letra a letra não diz nada. */}
+              <NextLink
+                href={caminhoLocalizado(caminho, l)}
+                lang={l}
+                hrefLang={l}
+                aria-label={formato === "curto" ? nome : undefined}
+                aria-current={l === atual ? "true" : undefined}
+              >
+                {formato === "curto" ? curto : nome}
+              </NextLink>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }

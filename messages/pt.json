@@ -1,0 +1,376 @@
+{
+  "marca": {
+    "nome": "STOA Management",
+    "curto": "STOA",
+    "segundo": "Management",
+    "actividade": "Direção de obras"
+  },
+  "nav": {
+    "saltar": "Ir para o conteúdo",
+    "principal": "Navegação principal",
+    "inicio": "STOA Management, página inicial",
+    "realisations": "Obras",
+    "expertises": "Competências",
+    "aPropos": "Sobre nós",
+    "contact": "Contacto",
+    "menu": "Menu",
+    "fechar": "Fechar o menu",
+    "lingua": "Língua"
+  },
+  "metadata": {
+    "inicio": {
+      "titulo": "STOA Management · Direção de obras",
+      "descricao": "Preparação de projeto, gestão financeira e direção de obras para renovações, moradias e prédios. STOA Management, Farvagny-le-Grand, cantão de Friburgo."
+    },
+    "realisations": {
+      "titulo": "Obras",
+      "descricao": "Os projetos e referências da STOA Management, gabinete de direção de obras em Farvagny-le-Grand."
+    },
+    "contact": {
+      "titulo": "Contacto",
+      "descricao": "Um projeto de renovação, de moradia ou de prédio? Escreva à STOA Management ou ligue-nos."
+    },
+    "naoEncontrada": {
+      "titulo": "Página não encontrada"
+    }
+  },
+  "heroi": {
+    "linha1": "O seu projeto.",
+    "linha2": "Uma direção clara.",
+    "subtitulo": "Preparação, coordenação e acompanhamento das suas obras.",
+    "ctaRealisations": "Conhecer as nossas obras",
+    "ctaContacto": "Falemos do seu projeto",
+    "defilar": "Descer"
+  },
+  "apresentacao": {
+    "etiqueta": "O gabinete",
+    "titulo": "Renovações, moradias, prédios. Preparamos o projeto, acompanhamos os custos e dirigimos a obra.",
+    "paragrafo1": "A STOA Management é um gabinete de direção de obras sediado em Farvagny-le-Grand, no cantão de Friburgo.",
+    "paragrafo2": "Da estrutura aos acabamentos, coordenamos o desenrolar do projeto e intervimos onde é preciso.",
+    "paragrafo3": "Mais de dez anos nesta área deram-nos conhecimentos sólidos e o sentido das prioridades.",
+    "factos": {
+      "baseRotulo": "Gabinete",
+      "base": "Farvagny-le-Grand (FR)",
+      "dominiosRotulo": "Áreas",
+      "dominios": "Renovações, moradias, prédios",
+      "experienciaRotulo": "Experiência",
+      "experiencia": "Mais de dez anos"
+    },
+    "legenda": "Pormenor de fachada"
+  },
+  "destaque": {
+    "titulo": "Obras",
+    "intro": "Uma seleção de projetos, da escavação à fachada.",
+    "verTodos": "Todas as obras",
+    "verProjeto": "Ver o projeto"
+  },
+  "especialidades": {
+    "titulo": "Competências",
+    "intro": "Três competências, do projeto à obra.",
+    "itens": {
+      "preparacao": {
+        "titulo": "Preparação de projeto",
+        "resumo": "Anteprojeto, pedido de licença, projeto de execução, custos de construção, consultas às empresas.",
+        "detalhe": "Tudo o que se decide antes de a obra começar: o projeto ganha forma, as licenças são pedidas, os custos são estimados e as empresas consultadas."
+      },
+      "financas": {
+        "titulo": "Gestão financeira",
+        "resumo": "Acompanhamento e controlo dos custos da construção.",
+        "detalhe": "Os custos são acompanhados durante toda a construção, para que cada decisão seja tomada sabendo o efeito que tem no orçamento."
+      },
+      "direcao": {
+        "titulo": "Direção de obras",
+        "resumo": "Coordenação e intervenção no desenrolar do projeto.",
+        "detalhe": "Na obra, a direção organiza as intervenções das empresas, acompanha o avanço dos trabalhos e intervém quando é preciso tomar uma decisão."
+      }
+    },
+    "mostrar": "Ver o detalhe"
+  },
+  "metodo": {
+    "titulo": "Método",
+    "intro": "Uma direção de obras constrói-se por ordem.",
+    "aviso": "Proposta de texto, a validar com a STOA.",
+    "etapas": {
+      "compreender": {
+        "titulo": "Compreender",
+        "texto": "O projeto, o terreno, o orçamento e o que espera."
+      },
+      "preparar": {
+        "titulo": "Preparar",
+        "texto": "Plantas, licenças, estimativa de custos, consultas às empresas."
+      },
+      "coordenar": {
+        "titulo": "Coordenar",
+        "texto": "As empresas, o planeamento e as decisões a tomar."
+      },
+      "acompanhar": {
+        "titulo": "Acompanhar",
+        "texto": "O avanço, a execução e os custos, na obra."
+      },
+      "entregar": {
+        "titulo": "Entregar",
+        "texto": "A receção da obra e o fecho do estaleiro."
+      }
+    }
+  },
+  "equipa": {
+    "titulo": "A equipa",
+    "intro": "As pessoas que acompanham as suas obras.",
+    "aviso": "Perfis pendentes: fotografias e informações a fornecer pela STOA.",
+    "vazio": {
+      "nome": "Nome a completar",
+      "funcao": "Função a completar",
+      "apresentacao": "Apresentação em breve.",
+      "retrato": "Retrato em breve"
+    },
+    "perfis": {}
+  },
+  "chamada": {
+    "titulo": "Falemos do seu projeto.",
+    "texto": "Renovação, moradia ou prédio: descreva-nos o seu projeto e nós respondemos.",
+    "cta": "Descrever o seu projeto",
+    "ouDireto": "Ou diretamente"
+  },
+  "rodape": {
+    "navegacao": "Navegação",
+    "contacto": "Contacto",
+    "redes": "Redes",
+    "morada": "Morada",
+    "verMapa": "Ver no mapa",
+    "direitos": "© {ano} STOA Management",
+    "credito": "Site: DevPlus",
+    "topo": "Voltar ao topo"
+  },
+  "realisations": {
+    "titulo": "Obras",
+    "intro": "Cada projeto tem a sua página, com as imagens e as informações confirmadas.",
+    "introReferencias": "As referências da STOA Management e dos seus colaboradores.",
+    "projetos": "Projetos",
+    "referencias": {
+      "titulo": "Referências",
+      "intro": "Missões realizadas por colaboradores da STOA, em colaboração com as empresas indicadas.",
+      "colunas": {
+        "periodo": "Ano",
+        "projeto": "Projeto",
+        "local": "Local",
+        "missao": "Missão",
+        "colaboracao": "Em colaboração com"
+      }
+    }
+  },
+  "projeto": {
+    "rotulos": {
+      "local": "Local",
+      "missao": "Missão",
+      "estado": "Estado",
+      "periodo": "Período",
+      "colaboracao": "Em colaboração com",
+      "pessoa": "Missão assegurada por"
+    },
+    "estados": {
+      "termine": "Concluído",
+      "en-cours": "Em curso"
+    },
+    "missoes": {
+      "direction-des-travaux": "Direção de obras",
+      "assistant-direction-des-travaux": "Assistente de direção de obras"
+    },
+    "ficha": "Ficha do projeto",
+    "intervencaoTitulo": "A intervenção da STOA",
+    "missaoTitulo": "A missão",
+    "intervencaoEmFalta": "Texto a redigir com a STOA: papel, alcance da missão, desenrolar.",
+    "referenciaNota": "Referência: missão realizada por um colaborador da STOA, em colaboração com {empresa} ({cidade}).",
+    "etapas": "Acompanhamento da obra",
+    "etapasNota": "Vistas aéreas tiradas em diferentes momentos.",
+    "etapa": "Etapa {n}",
+    "galeria": "Imagens",
+    "seguinte": "Projeto seguinte",
+    "voltar": "Todas as obras",
+    "provisorio": "Provisório, a validar",
+    "provisorioNota": "Projeto provisório: agrupamento de imagens a confirmar pela STOA (nome, local, missão, direitos). Não publicado.",
+    "video": {
+      "pausa": "Pausar o vídeo",
+      "ler": "Reproduzir o vídeo",
+      "rever": "Ver o vídeo de novo"
+    }
+  },
+  "projetos": {
+    "immeuble-balcons-filants": {
+      "titulo": "Prédio com varandas corridas",
+      "resumo": "Vistas aéreas de um prédio de quatro pisos com varandas corridas, à beira de uma aldeia."
+    },
+    "immeuble-village": {
+      "titulo": "Prédio de três pisos",
+      "resumo": "Vista aérea de um prédio de três pisos, entre moradias e campos de desporto."
+    },
+    "chantier-immeuble": {
+      "titulo": "Obra de um prédio",
+      "resumo": "Vistas aéreas de uma obra em zona residencial, das fundações à estrutura."
+    },
+    "villas-mitoyennes": {
+      "titulo": "Moradias geminadas",
+      "resumo": "Um conjunto de moradias geminadas entre prado e floresta, visto do céu."
+    },
+    "immeuble-facades-panneaux": {
+      "titulo": "Prédio com fachadas em painéis",
+      "resumo": "Um prédio de três pisos: a cobertura fotovoltaica vista do céu, a fachada vista do chão."
+    },
+    "terrassement-fondations": {
+      "titulo": "Terraplanagem e fundações",
+      "resumo": "Um lote visto do céu, da terraplanagem às primeiras fundações."
+    },
+    "immeuble-facades-rosees": {
+      "titulo": "Prédio com fachadas rosadas",
+      "resumo": "Um prédio de cinco pisos e a sua envolvente em obras."
+    },
+    "immeuble-toiture-vegetalisee": {
+      "titulo": "Prédio com cobertura verde",
+      "resumo": "Um prédio com cobertura verde e painéis solares, num bairro residencial."
+    },
+    "maison-toiture-tuiles": {
+      "titulo": "Moradia com telhado de telha",
+      "resumo": "Uma moradia de três pisos, telhado de telha e varandas na fachada."
+    },
+    "batiment-activites": {
+      "titulo": "Edifício de atividades",
+      "resumo": "Um edifício de atividades com cobertura fotovoltaica, numa zona industrial."
+    },
+    "transformation-arconciel": {
+      "titulo": "Transformação",
+      "resumo": "Transformação de um apartamento em Arconciel, cujas obras foram dirigidas por Leandro Lopes."
+    },
+    "quartier-villas-chesopelloz": {
+      "titulo": "Bairro de moradias",
+      "resumo": "Direção de obras de um bairro de moradias em Chésopelloz."
+    },
+    "immeuble-ppe-noreaz": {
+      "titulo": "Prédio em propriedade horizontal",
+      "resumo": "Gestão da obra e direção de obras de um prédio em Noréaz."
+    },
+    "quartier-villas-corminboeuf": {
+      "titulo": "Bairro de moradias",
+      "resumo": "Bairro de moradias em Corminboeuf, onde Leandro Lopes foi assistente da direção de obras."
+    }
+  },
+  "contacto": {
+    "titulo": "Falemos do seu projeto.",
+    "intro": "Descreva-nos o seu projeto em poucas linhas. Respondemos por e-mail ou por telefone.",
+    "formulario": {
+      "titulo": "O seu pedido",
+      "obrigatorio": "obrigatório",
+      "facultativo": "facultativo",
+      "nome": "Nome",
+      "email": "E-mail",
+      "telefone": "Telefone",
+      "tipo": "Tipo de projeto",
+      "tipoEscolher": "Escolher…",
+      "tipos": {
+        "renovation": "Renovação ou transformação",
+        "maison": "Moradia",
+        "immeuble": "Prédio",
+        "autre": "Outro"
+      },
+      "local": "Localização da obra",
+      "localAjuda": "Localidade ou região, se já a souber.",
+      "mensagem": "A sua mensagem",
+      "mensagemAjuda": "O projeto, em que fase está, as suas perguntas.",
+      "isco": "Não preencher este campo",
+      "enviar": "Enviar o pedido",
+      "aEnviar": "A enviar…",
+      "erros": {
+        "nome": "Indique o seu nome.",
+        "email": "Indique um endereço de e-mail válido.",
+        "telefone": "Este número de telefone não parece válido.",
+        "tipo": "Escolha um tipo de projeto.",
+        "mensagem": "Descreva o seu projeto em poucas palavras (pelo menos 10 caracteres).",
+        "longo": "Este texto é demasiado longo.",
+        "resumoUm": "Há um campo a corrigir:",
+        "resumoVarios": "Há {n} campos a corrigir:"
+      },
+      "sucesso": {
+        "titulo": "Obrigado, a sua mensagem foi enviada.",
+        "texto": "Recebemo-la e responderemos assim que possível."
+      },
+      "falhas": {
+        "limite": "Foram enviadas demasiadas mensagens a partir desta ligação. Tente de novo dentro de uma hora ou escreva-nos diretamente para {email}.",
+        "servico": "Não foi possível enviar a mensagem. Escreva-nos diretamente para {email} ou ligue-nos.",
+        "configuracao": "O formulário ainda não está ligado ao nosso e-mail: a sua mensagem não foi enviada. Escreva-nos diretamente para {email}.",
+        "rapido": "O formulário foi enviado depressa demais. Verifique os seus dados e envie-o de novo.",
+        "ligacoes": "A sua mensagem tem demasiados links. Retire alguns e envie-a de novo."
+      },
+      "dados": "Os seus dados servem apenas para responder ao seu pedido. Não são cedidos nem usados para fins publicitários. A mensagem chega-nos através do nosso fornecedor de envio de e-mails.",
+      "novo": "Enviar outro pedido",
+      "ouDireto": "Também nos pode escrever diretamente para {email}."
+    },
+    "direto": {
+      "titulo": "Contactar-nos diretamente",
+      "email": "E-mail",
+      "telefones": "Telefone",
+      "morada": "Morada",
+      "mapa": "Ver no mapa",
+      "redes": "Redes"
+    },
+    "legendaBureau": "O gabinete, em Farvagny-le-Grand"
+  },
+  "naoEncontrada": {
+    "etiqueta": "Erro 404",
+    "titulo": "Página não encontrada.",
+    "texto": "Esta página não existe ou mudou de endereço.",
+    "inicio": "Voltar à página inicial",
+    "realisations": "Ver as obras"
+  },
+  "comum": {
+    "cantao": "cantão de Friburgo",
+    "pais": "Suíça"
+  },
+  "medias": {
+    "partilha": "Vista aérea de um prédio de quatro pisos no campo friburguês, STOA Management.",
+    "heroi-immeuble": "Vista aérea de um prédio branco de quatro pisos com varandas corridas, entre prados e aldeias.",
+    "facade-panneaux": "Fachada em painéis claros e janelas escuras, vista de baixo sob um céu azul.",
+    "immeuble-e-balcons": "Prédio de quatro pisos com varandas corridas, visto do céu, com o campo ao fundo.",
+    "immeuble-e-grue": "Prédio branco com cobertura fotovoltaica, com uma grua de obra ao lado.",
+    "immeuble-a-facade": "Prédio com fachadas rosadas, visto a partir do terreno vizinho em obras.",
+    "immeuble-a-aerien": "Vista aérea de um prédio com fachadas rosadas e da sua envolvente em obras.",
+    "immeuble-b-toiture": "Vista aérea de um prédio branco com cobertura verde, num bairro residencial.",
+    "immeuble-b-terrasses": "Terraços e cobertura verde de um prédio branco, vistos do céu.",
+    "villas-d-prairie": "Moradias geminadas brancas com telhado cinzento, entre prado e floresta.",
+    "villas-d-lisiere": "As moradias geminadas vistas de lado, com o campo no horizonte.",
+    "maison-f-facade": "Moradia branca com telhado de telha, vista a partir do jardim.",
+    "maison-f-toiture": "Vista aérea de uma moradia com telhado de telha e varandas.",
+    "chantier-g-etape1-a": "Vista zenital de uma obra: muros de fundação, grua e silo.",
+    "chantier-g-etape1-b": "Vista zenital da obra na fase das fundações.",
+    "chantier-g-etape1-c": "Obra vista de cima: cofragens, grua e silo amarelo.",
+    "chantier-g-etape2-a": "Vista zenital da obra: laje em cofragem.",
+    "chantier-g-etape2-b": "A obra em zona residencial: laje, cofragens e silo amarelo.",
+    "chantier-g-etape2-c": "Estrutura em curso, rodeada de moradias com painéis solares no telhado.",
+    "chantier-g-etape3-a": "Prédio em construção com andaimes, grua e silo amarelo.",
+    "chantier-g-etape3-b": "Estrutura do prédio com andaimes, vista do céu.",
+    "chantier-g-etape3-c": "Vista zenital da estrutura do prédio.",
+    "batiment-h-toiture": "Edifício de atividades escuro com cobertura fotovoltaica, numa zona industrial.",
+    "batiment-h-installation": "Estaleiro junto a edifícios de atividades.",
+    "batiment-h-zone": "Zona industrial e edifício com cobertura fotovoltaica, vista aérea.",
+    "terrain-i-etape1-a": "Lote em terraplanagem visto de cima, entre campos e moradias.",
+    "terrain-i-etape1-b": "Terraplanagem de um lote: escavadoras e primeiras valas.",
+    "terrain-i-etape1-c": "O lote em terraplanagem, em vista oblíqua.",
+    "terrain-i-etape2-a": "Escavações e escavadoras no lote, à beira de um campo.",
+    "terrain-i-etape2-b": "Lote terraplanado e máquinas de obra, vista aérea.",
+    "terrain-i-etape3-a": "Fundações em curso: armaduras, cofragens e grua.",
+    "terrain-i-etape3-b": "Vista zenital das fundações e da grua.",
+    "immeuble-j1-toiture": "Prédio com cobertura fotovoltaica e fachada clara, visto do céu.",
+    "immeuble-j2-village": "Vista aérea de um prédio de três pisos entre moradias e campos de desporto.",
+    "immeuble-j2-arbre": "Prédio de três pisos por trás da copa de uma grande árvore.",
+    "plan-annote": "Planta de rés-do-chão anotada à mão, pousada numa mesa.",
+    "bureau-poste": "Posto de trabalho com plantas e dossiês.",
+    "bureau-plateau": "Escritório em espaço aberto, vigas metálicas e plantas.",
+    "ref-arconciel": "Apartamento transformado sob uma estrutura de madeira, com escada e candeeiros suspensos.",
+    "ref-chesopelloz": "Moradias contemporâneas ao longo de uma rua, em Chésopelloz.",
+    "ref-noreaz": "Vista aérea de um prédio branco com telhado escuro, em Noréaz.",
+    "ref-corminboeuf": "Vista aérea do bairro de moradias em construção, em Corminboeuf.",
+    "videos": {
+      "approche-immeuble": "Aproximação com drone a um prédio com varandas corridas.",
+      "orbite-immeuble": "Voo circular com drone em torno de um prédio com varandas corridas.",
+      "approche-villas": "Aproximação com drone a moradias geminadas entre prado e floresta.",
+      "recul-immeuble-panneaux": "Vista de drone que recua a partir da cobertura fotovoltaica de um prédio e o revela por inteiro."
+    }
+  }
+}

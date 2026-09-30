@@ -5,8 +5,12 @@ import { routing, type Locale } from "@/i18n/routing";
 import { EM_PUBLICACAO } from "./publicacao";
 import { URL_SITE, caminhoLocalizado, urlLocalizado } from "./site";
 
-/** O `og:locale` que as redes esperam: `fr_CH` e não `fr-CH`. */
-export const localeOpenGraph = (locale: string) => locale.replace("-", "_");
+/**
+ * O `og:locale` que as redes esperam: `fr_CH` e não `fr-CH`, e sempre com
+ * região — `pt` e `en` sozinhos não são aceites por todas.
+ */
+const REGIAO_OPEN_GRAPH: Record<string, string> = { pt: "pt_PT", en: "en_GB" };
+export const localeOpenGraph = (locale: string) => REGIAO_OPEN_GRAPH[locale] ?? locale.replace("-", "_");
 
 type Partilha = { url: string; largura: number; altura: number; alt: string };
 

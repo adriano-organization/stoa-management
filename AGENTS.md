@@ -28,9 +28,16 @@ não é apanhado por nenhum teste. Ver `docs/direction-artistique.md`.
 
 - **Código, variáveis, funções e comentários em português** (a equipa que o
   mantém é portuguesa). Comentários explicam **porquê**, não o quê.
-- **Tudo o que o público lê está em francês da Suíça** (`fr-CH`), em
-  `messages/fr-CH.json`: curto, concreto, sem travessões visíveis, com espaço
-  fino antes de `; ! ?` e apóstrofo tipográfico (`’`).
+- **O site está em três línguas**: francês da Suíça (`fr-CH`, a principal,
+  sem prefixo no URL), português (`/pt`) e inglês (`/en`). O francês é a
+  referência: um texto novo escreve-se primeiro em `messages/fr-CH.json` e
+  traduz-se logo para `messages/pt.json` e `messages/en.json` — o
+  `npm run mensagens` falha se as chaves não forem as mesmas nas três.
+- Em todas: curto, concreto, sem travessões visíveis e com apóstrofo
+  tipográfico (`’`). Em francês, espaço fino antes de `; ! ?`.
+- Uma tradução não acrescenta nem tira factos ao francês.
+- O email que o formulário manda à STOA vai sempre em francês, com a língua
+  do visitante indicada.
 
 ## As regras que dão erro visível
 
@@ -38,7 +45,7 @@ não é apanhado por nenhum teste. Ver `docs/direction-artistique.md`.
 
 O que é igual em qualquer língua (morada, contactos, locais, datas, ids de
 imagens) vive em `src/data/`. O que muda com a língua (títulos, resumos,
-rótulos, textos alternativos) vive em `messages/fr-CH.json`.
+rótulos, textos alternativos) vive em `messages/<língua>.json`.
 
 ### `null` quer dizer "não confirmado"
 

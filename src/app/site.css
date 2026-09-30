@@ -160,8 +160,54 @@ main:focus {
   font-weight: 500;
 }
 
+/* As línguas: discretas, a seguir ao contacto. A atual fica sublinhada e sem
+   cursor de link, como a página atual na navegação. */
+/* O `auto` junta a navegação e as línguas à direita; sem ele, o
+   `space-between` da barra punha a navegação a meio. */
+.cabecalho__nav {
+  margin-left: auto;
+}
+
+.cabecalho__linguas {
+  margin-left: -1rem;
+}
+
+.cabecalho__linguas ul {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.cabecalho__linguas a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 44px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+  transition: opacity 220ms ease;
+}
+
+.cabecalho__linguas a:hover,
+.cabecalho__linguas a[aria-current] {
+  opacity: 1;
+}
+
+.cabecalho__linguas a[aria-current] {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}
+
 @media (max-width: 860px) {
   .cabecalho__nav {
+    display: none;
+  }
+
+  .cabecalho__linguas {
     display: none;
   }
 
@@ -246,6 +292,23 @@ main:focus {
 }
 
 .menu-movel__nav a[aria-current="page"] {
+  color: var(--color-verde-claro);
+}
+
+.menu-movel__linguas ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.menu-movel__linguas a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-mineral-claro);
+}
+
+.menu-movel__linguas a[aria-current] {
   color: var(--color-verde-claro);
 }
 

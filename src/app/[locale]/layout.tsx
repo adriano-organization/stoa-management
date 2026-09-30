@@ -82,6 +82,7 @@ export default async function LayoutDoSite({
     contact: nav("contact"),
     menu: nav("menu"),
     fechar: nav("fechar"),
+    lingua: nav("lingua"),
   };
 
   return (
@@ -98,7 +99,7 @@ export default async function LayoutDoSite({
           <a href="#conteudo" className="saltar">
             {nav("saltar")}
           </a>
-          <Cabecalho textos={textosDoCabecalho} />
+          <Cabecalho textos={textosDoCabecalho} locale={locale} />
           <main id="conteudo" tabIndex={-1}>
             {children}
           </main>

@@ -183,3 +183,9 @@ test("o assunto nunca leva quebras de linha, venha o nome como vier", () => {
   const { assunto } = corpoDoEmail(pedido, ROTULOS);
   assert.equal(/[\r\n]/.test(assunto), false);
 });
+
+test("o email diz em que língua a pessoa escreveu, e só quando não é o francês", () => {
+  const pedido = validar(VALIDO).pedido;
+  assert.equal(corpoDoEmail(pedido, ROTULOS).texto.includes("Langue"), false);
+  assert.match(corpoDoEmail(pedido, { ...ROTULOS, lingua: "Português" }).texto, /^Langue : Português$/m);
+});

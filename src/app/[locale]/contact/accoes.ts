@@ -2,7 +2,7 @@
 
 import { getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
-import { routing } from "@/i18n/routing";
+import { NOMES_DAS_LINGUAS, routing } from "@/i18n/routing";
 import { CAMPO_CARIMBO, CAMPO_ISCO, suspeita } from "@/lib/contacto/antispam";
 import { ErroDeEnvio, enviarPedido } from "@/lib/contacto/envio";
 import { lerValores, validar, type Erros, type Valores } from "@/lib/contacto/esquema";
@@ -65,9 +65,12 @@ export async function enviarPedidoDeContacto(
     return { estado: "falhou", motivo: "limite", valores };
   }
 
-  const t = await getTranslations({ locale, namespace: "contacto.formulario" });
+  /* O email é para a STOA, não para quem escreveu: vai sempre na língua
+     principal do site, com a língua do visitante indicada à parte. */
+  const t = await getTranslations({ locale: routing.defaultLocale, namespace: "contacto.formulario" });
   try {
     await enviarPedido(validado.pedido, {
+      lingua: locale === routing.defaultLocale ? undefined : NOMES_DAS_LINGUAS[locale].nome,
       tipo: t(`tipos.${validado.pedido.tipo}`),
       campos: {
         nome: t("nome"),

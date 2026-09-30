@@ -46,7 +46,13 @@ export function variaveisEmFalta(): string[] {
   return VARIAVEIS.filter((nome) => !process.env[nome]?.trim());
 }
 
-export type Rotulos = { tipo: string; campos: Record<"nome" | "email" | "telefone" | "tipo" | "local" | "mensagem", string> };
+export type Rotulos = {
+  tipo: string;
+  campos: Record<"nome" | "email" | "telefone" | "tipo" | "local" | "mensagem", string>;
+  /** A língua em que a pessoa escreveu, quando não é o francês: é nela que a
+      STOA vai querer responder. */
+  lingua?: string;
+}
 
 export function corpoDoEmail(pedido: Pedido, rotulos: Rotulos): { assunto: string; texto: string } {
   const linha = (rotulo: string, valor: string) => (valor ? `${rotulo} : ${valor}` : null);
@@ -58,6 +64,7 @@ export function corpoDoEmail(pedido: Pedido, rotulos: Rotulos): { assunto: strin
     linha(rotulos.campos.telefone, pedido.telefone),
     linha(rotulos.campos.tipo, rotulos.tipo),
     linha(rotulos.campos.local, pedido.local),
+    linha("Langue", rotulos.lingua ?? ""),
     "",
     `${rotulos.campos.mensagem} :`,
     pedido.mensagem,

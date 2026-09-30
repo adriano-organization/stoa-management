@@ -6,7 +6,8 @@ import { routing } from "./i18n/routing";
  * `proxy.ts` — é o antigo `middleware.ts`, renomeado.
  *
  * Só faz uma coisa: o negociador de língua do `next-intl`, que reescreve
- * `/realisations` para a rota interna `/fr-CH/realisations` sem mudar o
+ * `/realisations` para a rota interna `/fr-CH/realisations` (e `/pt/...`,
+ * `/en/...` para as rotas dessas línguas) sem mudar o
  * endereço que o visitante vê.
  */
 export default createMiddleware(routing);
