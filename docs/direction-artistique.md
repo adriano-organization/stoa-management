@@ -4,7 +4,7 @@ Grelha assimétrica, calcário, carvão e verde derivado da identidade existente
 
 ## Três momentos
 
-1. Hero: fotografia real, marca atrás do edifício e aproximação curta. Geometria em píxeis do original em `src/data/heroi.ts`. Desktop usa a imagem aérea; mobile usa a fachada de maior resolução. Na primeira visita da sessão, uma entrada de ~2,85 s passa do desenho técnico (arestas lidas na própria fotografia, `plantaDe`) à fotografia; no mobile é só a aresta da fachada. Qualquer gesto a acaba; menos movimento e sem JavaScript mostram o estado final.
+1. Hero: fotografia real, marca atrás do edifício e aproximação curta. Geometria em píxeis do original em `src/data/heroi.ts`. Desktop usa a imagem aérea; mobile usa a fachada de maior resolução. Na primeira visita da sessão, uma entrada de ~2,7 s passa do desenho técnico do edifício e dos principais contornos do envolvente (`plantaDe`) à fotografia inteira, numa dissolução coordenada sem fase do prédio isolado; no mobile é só a aresta da fachada. Qualquer gesto a acaba; menos movimento e sem JavaScript mostram o estado final.
 2. Projetos: sequência de imagens amplas com sobreposição temporária em desktop; leitura vertical no mobile.
 3. Fecho: entrada da marca de grande escala.
 

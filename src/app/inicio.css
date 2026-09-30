@@ -147,21 +147,10 @@ html:has(.heroi:not([data-passou])) {
 
 /* ------------------------------------------------- a entrada do herói --
 
-   Só com `html[data-intro]` (script do layout e `EntradaDoHeroi.tsx`) e só
-   com fotografia. Linha do tempo, ~2,85 s:
-
-     0     – 0,8 s   linhas de construção, sobre pedra
-     0,28  – 1,5 s   a planta: telhado, verticais, lajes (pela ordem `--i`)
-     1,05  – 1,55 s  as superfícies dão corpo aos volumes
-     1,4   – 2,05 s  a fotografia sobe dentro da silhueta; as superfícies saem
-     1,75  – 2,3 s   o contexto entra (a pedra dissolve-se), as linhas apagam-se
-     2,3   – 2,85 s  a marca sobe por trás; o título e os botões chegam
-
-   Duas fases, com o estado nas variáveis: o desenho (`--desenho`) corre logo;
-   a obra (`--obra`) espera pela fotografia (`data-intro-foto`). As duas param
-   enquanto a cortina entre páginas tapa o ecrã. Tudo o que o `--p` usa
-   (`scale` do `<img>`, `translate` do texto da marca, `opacity` do conteúdo)
-   fica de fora: as animações vão para outros elementos ou propriedades. */
+   Uma única passagem da cena desenhada à fotografia inteira (~2,7 s).
+   Edifício e envolvente partilham as coordenadas da fotografia. A pedra
+   dissolve-se na composição toda: não há uma fotografia recortada isolada.
+   Marca e texto entram durante a passagem. `--obra` espera pela imagem. */
 
 :root[data-intro] {
   --desenho: running;
@@ -178,7 +167,6 @@ html:has(.heroi:not([data-passou])) {
 }
 
 .heroi__pedra,
-.heroi__obra,
 .heroi__planta {
   display: none;
 }
@@ -187,10 +175,6 @@ html:has(.heroi:not([data-passou])) {
   position: absolute;
   inset: 0;
   background: var(--color-pedra);
-}
-
-.heroi__obra img {
-  clip-path: var(--silhueta-paisagem);
 }
 
 .heroi__planta {
@@ -207,21 +191,42 @@ html:has(.heroi:not([data-passou])) {
 }
 
 :root[data-intro] [data-com-foto] .heroi__pedra,
-:root[data-intro] [data-com-foto] .heroi__obra,
 :root[data-intro] [data-com-foto] .heroi__planta--paisagem {
   display: block;
 }
 
 :root[data-intro] [data-com-foto] .heroi__pedra {
-  animation: intro-apaga 550ms ease 1750ms both;
+  animation: intro-apaga 1500ms cubic-bezier(0.4, 0, 0.2, 1) 1000ms both;
   animation-play-state: var(--obra);
+}
+
+.heroi__envolvente {
+  stroke: var(--color-grafite);
+  stroke-opacity: 0.55;
+  stroke-width: 0.95;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.heroi__vegetacao,
+.heroi__detalhes {
+  stroke: var(--color-grafite);
+  stroke-opacity: 0.45;
+  stroke-width: 0.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.heroi__vegetacao {
+  stroke-opacity: 0.58;
+  stroke-width: 0.9;
 }
 
 /* Linhas de construção: finas, claras, prolongamentos de arestas reais. */
 .heroi__guias {
   stroke: var(--color-grafite);
-  stroke-opacity: 0.3;
-  stroke-width: 0.7;
+  stroke-opacity: 0.18;
+  stroke-width: 0.65;
 }
 
 /* A planta: o traço de um desenho técnico. A espessura está em píxeis do
@@ -242,54 +247,60 @@ html:has(.heroi:not([data-passou])) {
 
 /* `dasharray: 1 2`: o intervalo maior do que o traço, sem ponto solto na
    ponta antes de ele se desenhar. */
+:root[data-intro] .heroi__vegetacao path,
+:root[data-intro] .heroi__detalhes path,
+:root[data-intro] .heroi__envolvente path,
 :root[data-intro] .heroi__guias path,
 :root[data-intro] .heroi__tracos path {
   stroke-dasharray: 1 2;
   stroke-dashoffset: 1;
 }
 
+:root[data-intro] .heroi__vegetacao path,
+:root[data-intro] .heroi__detalhes path {
+  animation:
+    intro-traca 850ms var(--curva-saida) calc(280ms + var(--i) * 16ms) both,
+    intro-apaga 1150ms ease 1450ms both;
+  animation-play-state: var(--desenho), var(--obra);
+}
+
+:root[data-intro] .heroi__envolvente path {
+  animation:
+    intro-traca 800ms var(--curva-saida) calc(100ms + var(--i) * 18ms) both,
+    intro-apaga 1050ms ease 1350ms both;
+  animation-play-state: var(--desenho), var(--obra);
+}
+
 :root[data-intro] .heroi__guias path {
   animation:
     intro-traca 800ms var(--curva-suave) calc(var(--i) * 90ms) both,
-    intro-apaga 400ms ease 2050ms both;
+    intro-apaga 850ms ease 1200ms both;
   animation-play-state: var(--desenho), var(--obra);
 }
 
 :root[data-intro] .heroi__tracos path {
   animation:
     intro-traca 480ms var(--curva-saida) calc(280ms + var(--i) * 60ms) both,
-    intro-apaga 400ms ease 2050ms both;
+    intro-apaga 1050ms ease 1550ms both;
   animation-play-state: var(--desenho), var(--obra);
 }
 
 :root[data-intro] .heroi__superficies path {
   animation:
-    intro-surge 500ms ease 1050ms both,
-    intro-apaga 450ms ease 1600ms both;
+    intro-surge 450ms ease 700ms both,
+    intro-apaga 900ms ease 1200ms both;
   animation-play-state: var(--desenho), var(--obra);
 }
 
-/* A obra: a fotografia sobe dentro da silhueta, andar a andar. */
-:root[data-intro] [data-com-foto] .heroi__obra {
-  animation: intro-sobe 650ms var(--curva-saida) 1400ms both;
-  animation-play-state: var(--obra);
-}
-
-/* O recorte (o que tapa a marca) só depois de a pedra sair: por cima dela
-   mostraria de repente o relvado da frente. É a mesma imagem que está por
-   baixo, por isso a troca não se vê. */
-:root[data-intro] [data-com-foto] .heroi__recorte {
-  animation: intro-surge 1ms linear 2300ms both;
-  animation-play-state: var(--obra);
-}
-
+/* A pedra cobre fotografia, marca e recorte de uma só vez. Dissolver também
+   o recorte duplicaria a opacidade sobre o prédio e denunciaria a máscara. */
 :root[data-intro] [data-com-foto] .heroi__marca {
-  animation: intro-marca 550ms var(--curva-saida) 2300ms both;
+  animation: intro-surge 1000ms var(--curva-saida) 1650ms both;
   animation-play-state: var(--obra);
 }
 
 :root[data-intro] [data-com-foto] .heroi__veu {
-  animation: intro-surge 550ms ease 1750ms both;
+  animation: intro-surge 1500ms cubic-bezier(0.4, 0, 0.2, 1) 1000ms both;
   animation-play-state: var(--obra);
 }
 
@@ -297,12 +308,12 @@ html:has(.heroi:not([data-passou])) {
    não se vê não recebe foco nem cliques. É o `.envelope` que anima, não o
    `.heroi__conteudo`, cuja opacidade é do `--p`. */
 :root[data-intro] [data-com-foto] .heroi__conteudo .envelope {
-  animation: intro-texto 500ms var(--curva-saida) 2350ms both;
+  animation: intro-texto 750ms var(--curva-saida) 1850ms both;
   animation-play-state: var(--obra);
 }
 
 :root[data-intro] [data-com-foto] .heroi__defilar {
-  animation: intro-surge 400ms ease 2500ms both;
+  animation: intro-surge 400ms ease 2250ms both;
   animation-play-state: var(--obra);
 }
 
@@ -311,6 +322,13 @@ html:has(.heroi:not([data-passou])) {
 :root[data-intro]:has(.heroi__palco[data-com-foto]) .cabecalho[data-sobre-foto] {
   color: var(--color-grafite);
   background: transparent;
+  animation: intro-cabecalho 1100ms ease 1450ms both;
+  animation-play-state: var(--obra);
+}
+
+@keyframes intro-cabecalho {
+  from { color: var(--color-grafite); }
+  to { color: var(--color-calcario); }
 }
 
 @keyframes intro-traca {
@@ -327,22 +345,6 @@ html:has(.heroi:not([data-passou])) {
 
 @keyframes intro-apaga {
   to {
-    opacity: 0;
-  }
-}
-
-@keyframes intro-sobe {
-  from {
-    clip-path: inset(100% 0 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes intro-marca {
-  from {
-    translate: 0 7%;
     opacity: 0;
   }
 }
@@ -521,9 +523,6 @@ html:has(.heroi:not([data-passou])) {
     display: block;
   }
 
-  .heroi__obra img {
-    clip-path: var(--silhueta-retrato);
-  }
 
   .heroi__planta {
     transform-origin: var(--zoom-retrato, 50% 50%);

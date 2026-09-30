@@ -21,14 +21,13 @@ import { EntradaDoHeroi } from "./EntradaDoHeroi";
  * 4. o título, o subtítulo e as duas ações, legíveis e clicáveis desde o
  *    primeiro instante.
  *
- * **A entrada** (só na primeira visita à inicial em cada sessão, ~2,85 s, CSS):
+ * **A entrada** (só na primeira visita à inicial em cada sessão, ~2,7 s, CSS):
  * sobre pedra, linhas de construção e a planta do edifício desenham-se (lidas
- * na fotografia, `plantaDe`); os volumes ganham corpo; a fotografia sobe
- * dentro da silhueta; o contexto entra, as linhas apagam-se e fica a
- * composição de sempre — a marca sobe por trás, o título e os botões chegam.
+ * na fotografia, `plantaDe`); o envolvente liga o edifício à paisagem. A fotografia inteira revela-se
+ * sob o desenho; marca e conteúdo entram durante essa passagem, sem uma
+ * fase intermédia com a fotografia do prédio isolada.
  * Quem decide se há entrada, e a acaba se o visitante mexer, é
- * `EntradaDoHeroi.tsx`. As camadas da entrada (`__pedra`, `__obra`,
- * `__planta`) só se veem com `html[data-intro]`; sem ele, o herói é o de
+ * `EntradaDoHeroi.tsx`. As camadas da entrada (`__pedra`, `__planta`) só se veem com `html[data-intro]`; sem ele, o herói é o de
  * sempre.
  *
  * **Em ecrã deitado** a secção tem ~1,9 alturas de ecrã e o palco fica preso:
@@ -89,13 +88,12 @@ export async function Heroi({ locale }: { locale: Locale }) {
         {comFotografia && <EntradaDoHeroi />}
         <div className="heroi__caixa">
           {comFotografia && <FotoDoHeroi className="heroi__foto" prioridade />}
-          {comFotografia && <div className="heroi__pedra" aria-hidden="true" />}
           <Marca composicao={paisagem} className="heroi__marca heroi__marca--paisagem" />
           <Marca composicao={retrato} className="heroi__marca heroi__marca--retrato" />
           {comFotografia && <FotoDoHeroi className="heroi__foto heroi__recorte" />}
+          {comFotografia && <div className="heroi__pedra" aria-hidden="true" />}
           {comFotografia && (
             <>
-              <FotoDoHeroi className="heroi__foto heroi__obra" />
               <Planta composicao={paisagem} className="heroi__planta heroi__planta--paisagem" />
               <Planta composicao={retrato} className="heroi__planta heroi__planta--retrato" />
             </>
@@ -207,7 +205,7 @@ function Marca({ composicao, className }: { composicao: Composicao; className: s
  */
 function Planta({ composicao, className }: { composicao: Composicao; className: string }) {
   const { largura, altura } = composicao;
-  const { guias, tracos, superficies } = plantaDe(composicao);
+  const { guias, tracos, superficies, envolvente = [], vegetacao = [], detalhes = [] } = plantaDe(composicao);
   return (
     <svg
       className={className}
@@ -216,6 +214,21 @@ function Planta({ composicao, className }: { composicao: Composicao; className: 
       aria-hidden="true"
       focusable="false"
     >
+      <g className="heroi__envolvente">
+        {envolvente.map((traco, i) => (
+          <path key={i} d={caminho([traco])} pathLength={1} style={{ "--i": i } as CSSProperties} />
+        ))}
+      </g>
+      <g className="heroi__vegetacao">
+        {vegetacao.map((traco, i) => (
+          <path key={i} d={traco} pathLength={1} style={{ "--i": i } as CSSProperties} />
+        ))}
+      </g>
+      <g className="heroi__detalhes">
+        {detalhes.map((traco, i) => (
+          <path key={i} d={caminho([traco])} pathLength={1} style={{ "--i": i } as CSSProperties} />
+        ))}
+      </g>
       <g className="heroi__guias">
         {guias.map((guia, i) => (
           <path key={i} d={caminho([guia])} pathLength={1} style={{ "--i": i } as CSSProperties} />
