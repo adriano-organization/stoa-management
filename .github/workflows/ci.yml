@@ -1,59 +1,177 @@
-name: Verificar STOA
+# Corre a cada push e em cada PR contra `main`. Verifica o código, faz o build
+# e arranca o site para confirmar rotas, cabeçalhos, ausência de terceiros e de
+# cookies — nos dois modos (aperçu e publicação).
+
+name: CI
+
 on:
   push:
-    branches: [main, nouveau-site]
+    branches: [main]
   pull_request:
     branches: [main]
-permissions:
-  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+# Nenhum passo escreve no repositório.
+permissions:
+  contents: read
+
 jobs:
   verificar:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # "0" = aperçu (tudo visível, noindex); "1" = publicação (só o validado).
+        publicacao: ["0", "1"]
+
     env:
-      STOA_PUBLICATION: '0'
-      RESEND_API_KEY: sentinela-ci-resend-8b2d4e6f
-      UPSTASH_REDIS_REST_TOKEN: sentinela-ci-upstash-2e4f6a8c
-      UPSTASH_REDIS_REST_URL: https://sentinela-ci-upstash.invalid
+      STOA_PUBLICATION: ${{ matrix.publicacao }}
+
+    # Actions fixadas por SHA; o Dependabot lê a versão no comentário.
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run tipos
-      - run: npm run mensagens
-      - run: npm run testes
-      - run: npm run build
-      - run: npm run segredos
-      - name: Rotas e isolamento
-        run: |
-          npm start > /tmp/stoa-ci.log 2>&1 &
-          servidor=$!
-          trap 'kill "$servidor"' EXIT
-          for tentativa in $(seq 1 60); do
-            if curl -sf http://localhost:3000/ > /dev/null; then break; fi
-            sleep 1
-          done
-          node scripts/verificar-rotas.mjs
-      - name: Build público
+
+      - name: Instalar
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tipos
+        run: npm run tipos
+
+      - name: Mensagens (títulos, textos alternativos, tipografia)
+        run: npm run mensagens
+
+      - name: Testes
+        run: npm run testes
+
+      - name: Vulnerabilidades
+        run: npm audit --audit-level=high
+
+      # Valores sentinela nas variáveis sensíveis: o build não as lê, e o passo
+      # seguinte prova-o procurando-as no que vai para o browser.
+      - name: Build
         run: npm run build
         env:
-          STOA_PUBLICATION: '1'
-      - name: Rotas públicas e exclusão de projetos provisórios
+          RESEND_API_KEY: sentinela-ci-resend-8b2d4e6f
+          UPSTASH_REDIS_REST_TOKEN: sentinela-ci-upstash-2e4f6a8c
+          UPSTASH_REDIS_REST_URL: https://sentinela-ci-upstash.invalid
+
+      - name: Nenhum segredo no que vai para o browser
+        run: npm run segredos
         env:
-          STOA_PUBLICATION: '1'
+          RESEND_API_KEY: sentinela-ci-resend-8b2d4e6f
+          UPSTASH_REDIS_REST_TOKEN: sentinela-ci-upstash-2e4f6a8c
+          UPSTASH_REDIS_REST_URL: https://sentinela-ci-upstash.invalid
+
+      - name: Arrancar o site
         run: |
-          npm start -- --port 3201 > /tmp/stoa-publico-ci.log 2>&1 &
-          servidor=$!
-          trap 'kill "$servidor"' EXIT
-          for tentativa in $(seq 1 60); do
-            if curl -sf http://localhost:3201/ > /dev/null; then break; fi
+          set -euo pipefail
+          npm start &
+          echo $! > .servidor.pid
+          for _ in $(seq 1 60); do
+            if curl -sf --max-time 2 -o /dev/null http://localhost:3000/; then
+              echo "o site respondeu"; exit 0
+            fi
             sleep 1
           done
-          node scripts/verificar-rotas.mjs http://localhost:3201
+          echo "::error::o site não arrancou em 60s"; exit 1
+
+      - name: As páginas respondem
+        run: |
+          set -euo pipefail
+          verificar() {
+            local caminho="$1" esperado="$2" obtido
+            obtido=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:3000${caminho}")
+            if [ "$obtido" != "$esperado" ]; then
+              echo "::error::${caminho} devolveu ${obtido}, esperava ${esperado}"; return 1
+            fi
+            echo "✓ ${caminho} → ${obtido}"
+          }
+          verificar /                                         200
+          verificar /realisations                             200
+          verificar /contact                                  200
+          verificar /realisations/transformation-arconciel    200
+          verificar /sitemap.xml                              200
+          verificar /robots.txt                               200
+          verificar /uma-rota-que-nao-existe                  404
+          verificar /realisations/nao-existe                  404
+
+          # Um projeto provisório só existe em aperçu.
+          if [ "$STOA_PUBLICATION" = "1" ]; then
+            verificar /realisations/immeuble-balcons-filants  404
+          else
+            verificar /realisations/immeuble-balcons-filants  200
+          fi
+
+      - name: Indexação conforme o modo
+        run: |
+          set -euo pipefail
+          robots=$(curl -s http://localhost:3000/robots.txt)
+          html=$(curl -s http://localhost:3000/)
+          if [ "$STOA_PUBLICATION" = "1" ]; then
+            if grep -q "Disallow: /$" <<< "$robots"; then echo "::error::publicação com robots a bloquear"; exit 1; fi
+            if grep -q 'name="robots" content="noindex' <<< "$html"; then echo "::error::publicação com noindex"; exit 1; fi
+          else
+            grep -q "Disallow: /" <<< "$robots" || { echo "::error::aperçu sem robots a bloquear"; exit 1; }
+            grep -q 'name="robots" content="noindex' <<< "$html" || { echo "::error::aperçu sem noindex"; exit 1; }
+          fi
+          echo "✓ indexação conforme o modo ${STOA_PUBLICATION}"
+
+      - name: Os cabeçalhos de segurança estão lá
+        run: |
+          set -euo pipefail
+          cabecalhos=$(curl -s -D - -o /dev/null http://localhost:3000/ | tr 'A-Z' 'a-z')
+          for cabecalho in content-security-policy x-frame-options x-content-type-options \
+                           referrer-policy permissions-policy strict-transport-security; do
+            grep -q "^${cabecalho}:" <<< "$cabecalhos" || { echo "::error::falta ${cabecalho}"; exit 1; }
+            echo "✓ ${cabecalho}"
+          done
+          if grep -q "unsafe-eval" <<< "$cabecalhos"; then echo "::error::CSP de produção com 'unsafe-eval'"; exit 1; fi
+          if grep -qi '^x-powered-by:' <<< "$cabecalhos"; then echo "::error::X-Powered-By presente"; exit 1; fi
+          echo "✓ CSP sem 'unsafe-eval' e sem X-Powered-By"
+
+      # Só conta o que o browser carrega sozinho (src e <link> que fazem
+      # pedidos); um <a href> para o mapa ou as redes é um link normal.
+      - name: O site não carrega nada de fora
+        run: |
+          set -euo pipefail
+          for caminho in / /realisations /contact; do
+            html=$(curl -s "http://localhost:3000${caminho}")
+            externos=$(
+              {
+                grep -oE 'src="https?://[^"]*"' <<< "$html" || true
+                grep -oE '<link[^>]*rel="(stylesheet|preload|preconnect|dns-prefetch|modulepreload|icon)"[^>]*>' <<< "$html" \
+                  | grep -oE 'href="https?://[^"]*"' || true
+              } | sort -u
+            )
+            if [ -n "$externos" ]; then
+              echo "::error::${caminho} carrega recursos de terceiros:"; echo "$externos"; exit 1
+            fi
+            echo "✓ ${caminho} sem recursos de terceiros"
+          done
+
+      - name: O site não grava cookies
+        run: |
+          set -euo pipefail
+          for caminho in / /realisations /contact; do
+            if curl -s -o /dev/null -D - "http://localhost:3000${caminho}" | grep -qi '^set-cookie:'; then
+              echo "::error::${caminho} devolve Set-Cookie"; exit 1
+            fi
+          done
+          echo "✓ nenhuma página grava cookies"
+
+      - name: Desligar o site
+        if: always()
+        run: kill "$(cat .servidor.pid)" || true
