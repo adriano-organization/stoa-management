@@ -17,6 +17,15 @@
   background: var(--color-carvao);
 }
 
+/* Puxar para lá do topo (o elástico do macOS e do iOS) arrastava o herói para
+   baixo e mostrava o calcário por cima da fotografia. Enquanto o herói está à
+   vista, o topo fica firme; depois de passar (`data-passou`), o elástico volta
+   para o fundo da página. Sem JavaScript o herói nunca "passa", e a página
+   inicial fica toda sem elástico, o que não custa nada. */
+html:has(.heroi:not([data-passou])) {
+  overscroll-behavior-y: none;
+}
+
 .heroi__palco {
   position: relative;
   top: 0;
