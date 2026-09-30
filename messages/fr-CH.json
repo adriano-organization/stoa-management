@@ -192,64 +192,143 @@
       "pausa": "Mettre la vidéo en pause",
       "ler": "Lire la vidéo",
       "rever": "Revoir la vidéo"
-    }
+    },
+    "relato": "Récit du projet",
+    "relatoExemplo": "Texte d’exemple. Les passages encadrés sont à compléter avec STOA.",
+    "lacuna": "À compléter :",
+    "capitulos": {
+      "projeto": "Le projet",
+      "obra": "Le chantier",
+      "entrega": "La remise"
+    },
+    "figura": "Fig. {n}"
   },
   "projetos": {
     "immeuble-balcons-filants": {
       "titulo": "Immeuble à balcons filants",
-      "resumo": "Vues aériennes d’un immeuble de quatre niveaux à balcons filants, en bordure de village."
+      "resumo": "Vues aériennes d’un immeuble de quatre niveaux à balcons filants, en bordure de village.",
+      "relato": {
+        "projeto": "Un immeuble de logements en bordure de village, pour <lacuna>maître d’ouvrage</lacuna>. Quatre niveaux, et des balcons filants qui tiennent la façade d’un bout à l’autre.",
+        "obra": "STOA <lacuna>rôle exact sur le chantier</lacuna>. Entreprises, planning et coûts se coordonnent au même endroit, du gros œuvre aux finitions.",
+        "entrega": "Réception de l’ouvrage <lacuna>date</lacuna>. Vu du ciel, le bâtiment trouve sa place en bordure du village."
+      }
     },
     "immeuble-village": {
       "titulo": "Immeuble de trois niveaux",
-      "resumo": "Vue aérienne d’un immeuble de trois niveaux, entre maisons et terrains de sport."
+      "resumo": "Vue aérienne d’un immeuble de trois niveaux, entre maisons et terrains de sport.",
+      "relato": {
+        "projeto": "Trois niveaux entre les maisons et les terrains de sport. Un immeuble de <lacuna>nombre</lacuna> logements, construit pour <lacuna>maître d’ouvrage</lacuna>.",
+        "obra": "Sur un terrain entouré de voisins, l’organisation du chantier compte autant que la construction. <lacuna>Ce que STOA a pris en charge</lacuna>.",
+        "entrega": "Réception de l’ouvrage <lacuna>date</lacuna>. L’immeuble a trouvé sa place dans le quartier."
+      }
     },
     "chantier-immeuble": {
       "titulo": "Chantier d’immeuble",
-      "resumo": "Vues aériennes d’un chantier en milieu résidentiel, des fondations à la structure."
+      "resumo": "Vues aériennes d’un chantier en milieu résidentiel, des fondations à la structure.",
+      "relato": {
+        "projeto": "Un immeuble en milieu résidentiel, pour <lacuna>maître d’ouvrage</lacuna>. Le chantier a été photographié du ciel, étape après étape.",
+        "obra": "Des fondations à la structure, les mêmes vues reviennent et montrent l’avancement. C’est ce que la direction des travaux suit au quotidien : les délais, l’exécution, les coûts.",
+        "entrega": "Prochaine étape <lacuna>à préciser</lacuna>. La série d’images continue jusqu’à la remise de l’ouvrage."
+      }
     },
     "villas-mitoyennes": {
       "titulo": "Villas mitoyennes",
-      "resumo": "Un ensemble de villas mitoyennes entre prairie et forêt, vu du ciel."
+      "resumo": "Un ensemble de villas mitoyennes entre prairie et forêt, vu du ciel.",
+      "relato": {
+        "projeto": "Un ensemble de villas mitoyennes entre prairie et forêt, pour <lacuna>maître d’ouvrage</lacuna>. <lacuna>Nombre</lacuna> maisons, une même écriture.",
+        "obra": "Plusieurs maisons, un seul chantier. Les interventions s’enchaînent d’une villa à l’autre, et la direction des travaux tient le rythme de l’ensemble.",
+        "entrega": "Réception de l’ouvrage <lacuna>date</lacuna>. Les villas s’ouvrent sur la prairie, la forêt en fond."
+      }
     },
     "immeuble-facades-panneaux": {
       "titulo": "Immeuble aux façades en panneaux",
-      "resumo": "Un immeuble de trois niveaux : la toiture photovoltaïque vue du ciel, la façade vue du sol."
+      "resumo": "Un immeuble de trois niveaux : la toiture photovoltaïque vue du ciel, la façade vue du sol.",
+      "relato": {
+        "projeto": "Un immeuble de trois niveaux, pour <lacuna>maître d’ouvrage</lacuna>. Façades en panneaux, toiture couverte de photovoltaïque.",
+        "obra": "Une enveloppe en panneaux demande de la précision à chaque raccord. <lacuna>Rôle de STOA et points marquants du chantier</lacuna>.",
+        "entrega": "Réception de l’ouvrage <lacuna>date</lacuna>. Du sol, la façade. Du ciel, la toiture qui produit."
+      }
     },
     "terrassement-fondations": {
       "titulo": "Terrassement et fondations",
-      "resumo": "Une parcelle vue du ciel, du terrassement aux premières fondations."
+      "resumo": "Une parcelle vue du ciel, du terrassement aux premières fondations.",
+      "relato": {
+        "projeto": "Une parcelle, avant le bâtiment. <lacuna>Programme à construire</lacuna> pour <lacuna>maître d’ouvrage</lacuna>.",
+        "obra": "Terrassement, puis premières fondations. Les vues aériennes suivent ce qui ne se verra plus une fois le bâtiment debout.",
+        "entrega": "<lacuna>Suite du chantier ou date de réception</lacuna>. Tout ce qui vient ensuite repose sur ces premières étapes."
+      }
     },
     "immeuble-facades-rosees": {
       "titulo": "Immeuble aux façades rosées",
-      "resumo": "Un immeuble de cinq niveaux et ses abords en travaux."
+      "resumo": "Un immeuble de cinq niveaux et ses abords en travaux.",
+      "relato": {
+        "projeto": "Un immeuble de cinq niveaux aux façades rosées, pour <lacuna>maître d’ouvrage</lacuna>.",
+        "obra": "Le bâtiment est debout, les abords sont encore en travaux. C’est souvent là que se joue la fin d’un chantier : aménagements extérieurs, raccords, finitions.",
+        "entrega": "Réception de l’ouvrage <lacuna>date</lacuna>. Un ouvrage est remis quand ses abords le sont aussi."
+      }
     },
     "immeuble-toiture-vegetalisee": {
       "titulo": "Immeuble à toiture végétalisée",
-      "resumo": "Un immeuble à toiture végétalisée et panneaux solaires, dans un quartier résidentiel."
+      "resumo": "Un immeuble à toiture végétalisée et panneaux solaires, dans un quartier résidentiel.",
+      "relato": {
+        "projeto": "Un immeuble dans un quartier résidentiel, pour <lacuna>maître d’ouvrage</lacuna>. Sur le toit, végétation et panneaux solaires se partagent la surface.",
+        "obra": "<lacuna>Rôle de STOA</lacuna>. Une toiture qui porte de la végétation et de l’énergie se coordonne entre plusieurs corps de métier, jusqu’au dernier relevé d’étanchéité.",
+        "entrega": "Réception de l’ouvrage <lacuna>date</lacuna>. Vue d’en haut, la cinquième façade du bâtiment."
+      }
     },
     "maison-toiture-tuiles": {
       "titulo": "Maison à toiture en tuiles",
-      "resumo": "Une maison de trois niveaux, toiture en tuiles et balcons en façade."
+      "resumo": "Une maison de trois niveaux, toiture en tuiles et balcons en façade.",
+      "relato": {
+        "projeto": "Une maison de trois niveaux, pour <lacuna>maître d’ouvrage</lacuna>. Toiture en tuiles, balcons en façade.",
+        "obra": "À l’échelle d’une maison, chaque décision se voit. <lacuna>Rôle de STOA et déroulement du chantier</lacuna>.",
+        "entrega": "La maison est remise à ses propriétaires <lacuna>date</lacuna>."
+      }
     },
     "batiment-activites": {
       "titulo": "Bâtiment d’activités",
-      "resumo": "Un bâtiment d’activités à toiture photovoltaïque, dans une zone artisanale."
+      "resumo": "Un bâtiment d’activités à toiture photovoltaïque, dans une zone artisanale.",
+      "relato": {
+        "projeto": "Un bâtiment d’activités en zone artisanale, pour <lacuna>maître d’ouvrage</lacuna>. Une toiture photovoltaïque, des volumes pensés pour le travail.",
+        "obra": "Un bâtiment d’activités se construit souvent dans des délais serrés. <lacuna>Rôle de STOA, contraintes du chantier</lacuna>.",
+        "entrega": "Remise des locaux <lacuna>date</lacuna>. <lacuna>Ce qu’il faut retenir du projet</lacuna>."
+      }
     },
     "transformation-arconciel": {
       "titulo": "Transformation",
-      "resumo": "Transformation d’un appartement à Arconciel, dont Leandro Lopes a dirigé les travaux."
+      "resumo": "Transformation d’un appartement à Arconciel, dont Leandro Lopes a dirigé les travaux.",
+      "relato": {
+        "projeto": "La transformation d’un appartement à Arconciel, en 2020. <lacuna>Nature des travaux</lacuna>.",
+        "obra": "Leandro Lopes dirige les travaux, en collaboration avec Georges Hayoz. Dans un bâtiment existant, chaque démolition se décide après avoir vu ce qu’il y a derrière.",
+        "entrega": "Remise de l’appartement <lacuna>date</lacuna>. <lacuna>Ce que la transformation a changé</lacuna>."
+      }
     },
     "quartier-villas-chesopelloz": {
       "titulo": "Quartier de villas",
-      "resumo": "Direction des travaux d’un quartier de villas à Chésopelloz."
+      "resumo": "Direction des travaux d’un quartier de villas à Chésopelloz.",
+      "relato": {
+        "projeto": "Un quartier de villas à Chésopelloz, en 2015. <lacuna>Nombre</lacuna> maisons, pour <lacuna>maître d’ouvrage</lacuna>.",
+        "obra": "Direction des travaux en collaboration avec Formul’habitat, à Bulle. Un quartier se construit maison après maison, et le planning se tient à l’échelle de l’ensemble.",
+        "entrega": "Remise des villas <lacuna>date</lacuna>. <lacuna>Ce qu’il faut retenir de la mission</lacuna>."
+      }
     },
     "immeuble-ppe-noreaz": {
       "titulo": "Immeuble en PPE",
-      "resumo": "Gestion du chantier et direction des travaux d’un immeuble à Noréaz."
+      "resumo": "Gestion du chantier et direction des travaux d’un immeuble à Noréaz.",
+      "relato": {
+        "projeto": "Un immeuble en propriété par étages à Noréaz, en 2017. <lacuna>Nombre</lacuna> appartements.",
+        "obra": "Gestion du chantier et direction des travaux, en collaboration avec Archi-Thèmes, à Vaulruz. En PPE, chaque acquéreur fait ses choix, et le chantier les intègre sans perdre le fil.",
+        "entrega": "Remise des appartements <lacuna>date</lacuna>. <lacuna>Ce qu’il faut retenir de la mission</lacuna>."
+      }
     },
     "quartier-villas-corminboeuf": {
       "titulo": "Quartier de villas",
-      "resumo": "Quartier de villas à Corminboeuf, où Leandro Lopes a assisté la direction des travaux."
+      "resumo": "Quartier de villas à Corminboeuf, où Leandro Lopes a assisté la direction des travaux.",
+      "relato": {
+        "projeto": "Un quartier de villas à Corminboeuf, construit de 2016 à 2021. <lacuna>Nombre</lacuna> maisons.",
+        "obra": "Leandro Lopes assiste la direction des travaux, en collaboration avec Roya Immobilier, à Villars-sur-Glâne. Sur plusieurs années, un quartier se construit par étapes, et chaque étape prépare la suivante.",
+        "entrega": "Remise des dernières villas <lacuna>date</lacuna>. <lacuna>Ce qu’il faut retenir de la mission</lacuna>."
+      }
     }
   },
   "contacto": {

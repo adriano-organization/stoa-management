@@ -5,8 +5,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ChamadaContacto } from "@/components/ChamadaContacto";
 import { Foto } from "@/components/Foto";
 import { Galeria } from "@/components/projetos/Galeria";
+import { capitulosDoRelato } from "@/components/projetos/Relato";
 import { SeloProvisorio } from "@/components/SeloProvisorio";
-import { projetoPorSlug, projetoSeguinte, projetosVisiveis, type Projeto } from "@/data/projetos";
+import { projetoPorSlug, projetoSeguinte, projetosVisiveis, relatoPublicavel, type Projeto } from "@/data/projetos";
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { dadosDaImagem, dadosDaPartilha } from "@/lib/medias";
@@ -61,6 +62,7 @@ export default async function PaginaDoProjeto({ params }: Parametros) {
   const tp = await getTranslations({ locale, namespace: "projeto" });
   const medias = await getTranslations({ locale, namespace: "medias" });
   const seguinte = projetoSeguinte(slug);
+  const capitulos = await capitulosDoRelato(projeto, locale);
 
   /* Uma capa pequena (as referências do site antigo, ~820 px) não se estica a
      toda a largura: fica numa coluna, no tamanho que tem. */
@@ -103,7 +105,7 @@ export default async function PaginaDoProjeto({ params }: Parametros) {
 
         <Intervencao projeto={projeto} locale={locale} />
 
-        <Galeria blocos={projeto.galeria} locale={locale} />
+        <Galeria blocos={projeto.galeria} capitulos={capitulos} locale={locale} />
 
         {seguinte && <ProjetoSeguinte projeto={seguinte} locale={locale} />}
       </article>
@@ -149,9 +151,9 @@ async function Ficha({ projeto, locale }: { projeto: Projeto; locale: Locale }) 
 /**
  * O papel da STOA no projeto. Nas referências, a frase que as distingue (uma
  * missão de um colaborador, com outra empresa). Nos projetos da STOA, o texto
- * de `projetos.<slug>.intervencao` — que ainda não existe para nenhum: em
- * aperçu fica o lembrete do que falta escrever; em publicação, a secção não
- * aparece.
+ * de `projetos.<slug>.intervencao` — que ainda não existe para nenhum. Sem
+ * ele, o relato já conta o papel da STOA; sem os dois, em aperçu fica o
+ * lembrete do que falta escrever, e em publicação a secção não aparece.
  */
 async function Intervencao({ projeto, locale }: { projeto: Projeto; locale: Locale }) {
   const tp = await getTranslations({ locale, namespace: "projeto" });
@@ -171,7 +173,7 @@ async function Intervencao({ projeto, locale }: { projeto: Projeto; locale: Loca
   }
 
   const texto = t.has("intervencao") ? t("intervencao") : null;
-  if (!texto && EM_PUBLICACAO) return null;
+  if (!texto && (EM_PUBLICACAO || relatoPublicavel(projeto))) return null;
 
   return (
     <section className="projeto__intervencao envelope" aria-labelledby="intervencao-titulo">

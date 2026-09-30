@@ -192,64 +192,143 @@
       "pausa": "Pausar o vídeo",
       "ler": "Reproduzir o vídeo",
       "rever": "Ver o vídeo de novo"
-    }
+    },
+    "relato": "Relato do projeto",
+    "relatoExemplo": "Texto de exemplo. As passagens assinaladas completam-se com a STOA.",
+    "lacuna": "A completar:",
+    "capitulos": {
+      "projeto": "O projeto",
+      "obra": "A obra",
+      "entrega": "A entrega"
+    },
+    "figura": "Fig. {n}"
   },
   "projetos": {
     "immeuble-balcons-filants": {
       "titulo": "Prédio com varandas corridas",
-      "resumo": "Vistas aéreas de um prédio de quatro pisos com varandas corridas, à beira de uma aldeia."
+      "resumo": "Vistas aéreas de um prédio de quatro pisos com varandas corridas, à beira de uma aldeia.",
+      "relato": {
+        "projeto": "Um prédio de habitação à entrada da aldeia, para <lacuna>dono de obra</lacuna>. Quatro pisos, e varandas corridas que atravessam a fachada de ponta a ponta.",
+        "obra": "A STOA <lacuna>papel exato na obra</lacuna>. Empresas, planeamento e custos coordenam-se no mesmo sítio, da estrutura aos acabamentos.",
+        "entrega": "Receção da obra <lacuna>data</lacuna>. Visto do céu, o edifício encontra o seu lugar à entrada da aldeia."
+      }
     },
     "immeuble-village": {
       "titulo": "Prédio de três pisos",
-      "resumo": "Vista aérea de um prédio de três pisos, entre moradias e campos de desporto."
+      "resumo": "Vista aérea de um prédio de três pisos, entre moradias e campos de desporto.",
+      "relato": {
+        "projeto": "Três pisos entre as casas e os campos de desporto. Um prédio de <lacuna>número</lacuna> habitações, construído para <lacuna>dono de obra</lacuna>.",
+        "obra": "Num terreno rodeado de vizinhos, a organização da obra conta tanto como a construção. <lacuna>O que a STOA assumiu</lacuna>.",
+        "entrega": "Receção da obra <lacuna>data</lacuna>. O prédio encontrou o seu lugar no bairro."
+      }
     },
     "chantier-immeuble": {
       "titulo": "Obra de um prédio",
-      "resumo": "Vistas aéreas de uma obra em zona residencial, das fundações à estrutura."
+      "resumo": "Vistas aéreas de uma obra em zona residencial, das fundações à estrutura.",
+      "relato": {
+        "projeto": "Um prédio numa zona residencial, para <lacuna>dono de obra</lacuna>. A obra foi fotografada do céu, etapa a etapa.",
+        "obra": "Das fundações à estrutura, as mesmas vistas repetem-se e mostram o avanço. É o que a direção de obra acompanha todos os dias: prazos, execução, custos.",
+        "entrega": "Próxima etapa <lacuna>a precisar</lacuna>. A série de imagens continua até à entrega da obra."
+      }
     },
     "villas-mitoyennes": {
       "titulo": "Moradias geminadas",
-      "resumo": "Um conjunto de moradias geminadas entre prado e floresta, visto do céu."
+      "resumo": "Um conjunto de moradias geminadas entre prado e floresta, visto do céu.",
+      "relato": {
+        "projeto": "Um conjunto de moradias geminadas entre prado e floresta, para <lacuna>dono de obra</lacuna>. <lacuna>Número</lacuna> casas, uma mesma linguagem.",
+        "obra": "Várias casas, uma só obra. As intervenções sucedem-se de uma moradia para a outra, e a direção de obra mantém o ritmo do conjunto.",
+        "entrega": "Receção da obra <lacuna>data</lacuna>. As moradias abrem-se para o prado, com a floresta ao fundo."
+      }
     },
     "immeuble-facades-panneaux": {
       "titulo": "Prédio com fachadas em painéis",
-      "resumo": "Um prédio de três pisos: a cobertura fotovoltaica vista do céu, a fachada vista do chão."
+      "resumo": "Um prédio de três pisos: a cobertura fotovoltaica vista do céu, a fachada vista do chão.",
+      "relato": {
+        "projeto": "Um prédio de três pisos, para <lacuna>dono de obra</lacuna>. Fachadas em painéis, cobertura com painéis fotovoltaicos.",
+        "obra": "Uma envolvente em painéis pede precisão em cada remate. <lacuna>Papel da STOA e momentos marcantes da obra</lacuna>.",
+        "entrega": "Receção da obra <lacuna>data</lacuna>. Do chão, a fachada. Do céu, a cobertura que produz."
+      }
     },
     "terrassement-fondations": {
       "titulo": "Terraplanagem e fundações",
-      "resumo": "Um lote visto do céu, da terraplanagem às primeiras fundações."
+      "resumo": "Um lote visto do céu, da terraplanagem às primeiras fundações.",
+      "relato": {
+        "projeto": "Um terreno, antes do edifício. <lacuna>Programa a construir</lacuna> para <lacuna>dono de obra</lacuna>.",
+        "obra": "Movimentação de terras, depois as primeiras fundações. As vistas aéreas acompanham o que deixará de se ver quando o edifício estiver de pé.",
+        "entrega": "<lacuna>Seguimento da obra ou data de receção</lacuna>. Tudo o que vem depois assenta nestas primeiras etapas."
+      }
     },
     "immeuble-facades-rosees": {
       "titulo": "Prédio com fachadas rosadas",
-      "resumo": "Um prédio de cinco pisos e a sua envolvente em obras."
+      "resumo": "Um prédio de cinco pisos e a sua envolvente em obras.",
+      "relato": {
+        "projeto": "Um prédio de cinco pisos com fachadas rosadas, para <lacuna>dono de obra</lacuna>.",
+        "obra": "O edifício está de pé, os arranjos exteriores ainda em obra. É muitas vezes aí que se decide o fim de uma obra: exteriores, remates, acabamentos.",
+        "entrega": "Receção da obra <lacuna>data</lacuna>. Uma obra entrega-se quando a envolvente também está pronta."
+      }
     },
     "immeuble-toiture-vegetalisee": {
       "titulo": "Prédio com cobertura verde",
-      "resumo": "Um prédio com cobertura verde e painéis solares, num bairro residencial."
+      "resumo": "Um prédio com cobertura verde e painéis solares, num bairro residencial.",
+      "relato": {
+        "projeto": "Um prédio num bairro residencial, para <lacuna>dono de obra</lacuna>. Na cobertura, vegetação e painéis solares dividem a superfície.",
+        "obra": "<lacuna>Papel da STOA</lacuna>. Uma cobertura que leva vegetação e energia coordena-se entre várias especialidades, até ao último remate da impermeabilização.",
+        "entrega": "Receção da obra <lacuna>data</lacuna>. Vista de cima, a quinta fachada do edifício."
+      }
     },
     "maison-toiture-tuiles": {
       "titulo": "Moradia com telhado de telha",
-      "resumo": "Uma moradia de três pisos, telhado de telha e varandas na fachada."
+      "resumo": "Uma moradia de três pisos, telhado de telha e varandas na fachada.",
+      "relato": {
+        "projeto": "Uma casa de três pisos, para <lacuna>dono de obra</lacuna>. Cobertura em telha, varandas na fachada.",
+        "obra": "À escala de uma casa, cada decisão vê-se. <lacuna>Papel da STOA e decorrer da obra</lacuna>.",
+        "entrega": "A casa é entregue aos proprietários <lacuna>data</lacuna>."
+      }
     },
     "batiment-activites": {
       "titulo": "Edifício de atividades",
-      "resumo": "Um edifício de atividades com cobertura fotovoltaica, numa zona industrial."
+      "resumo": "Um edifício de atividades com cobertura fotovoltaica, numa zona industrial.",
+      "relato": {
+        "projeto": "Um edifício de atividades numa zona artesanal, para <lacuna>dono de obra</lacuna>. Uma cobertura fotovoltaica, volumes pensados para o trabalho.",
+        "obra": "Um edifício de atividades constrói-se muitas vezes em prazos apertados. <lacuna>Papel da STOA, condicionantes da obra</lacuna>.",
+        "entrega": "Entrega dos espaços <lacuna>data</lacuna>. <lacuna>O que fica do projeto</lacuna>."
+      }
     },
     "transformation-arconciel": {
       "titulo": "Transformação",
-      "resumo": "Transformação de um apartamento em Arconciel, cujas obras foram dirigidas por Leandro Lopes."
+      "resumo": "Transformação de um apartamento em Arconciel, cujas obras foram dirigidas por Leandro Lopes.",
+      "relato": {
+        "projeto": "A transformação de um apartamento em Arconciel, em 2020. <lacuna>Natureza dos trabalhos</lacuna>.",
+        "obra": "Leandro Lopes dirige a obra, em colaboração com a Georges Hayoz. Num edifício existente, cada demolição decide-se depois de ver o que está por trás.",
+        "entrega": "Entrega do apartamento <lacuna>data</lacuna>. <lacuna>O que a transformação mudou</lacuna>."
+      }
     },
     "quartier-villas-chesopelloz": {
       "titulo": "Bairro de moradias",
-      "resumo": "Direção de obras de um bairro de moradias em Chésopelloz."
+      "resumo": "Direção de obras de um bairro de moradias em Chésopelloz.",
+      "relato": {
+        "projeto": "Um bairro de moradias em Chésopelloz, em 2015. <lacuna>Número</lacuna> casas, para <lacuna>dono de obra</lacuna>.",
+        "obra": "Direção de obra em colaboração com a Formul’habitat, em Bulle. Um bairro constrói-se casa a casa, e o planeamento mantém-se à escala do conjunto.",
+        "entrega": "Entrega das moradias <lacuna>data</lacuna>. <lacuna>O que fica da missão</lacuna>."
+      }
     },
     "immeuble-ppe-noreaz": {
       "titulo": "Prédio em propriedade horizontal",
-      "resumo": "Gestão da obra e direção de obras de um prédio em Noréaz."
+      "resumo": "Gestão da obra e direção de obras de um prédio em Noréaz.",
+      "relato": {
+        "projeto": "Um prédio em propriedade horizontal em Noréaz, em 2017. <lacuna>Número</lacuna> apartamentos.",
+        "obra": "Gestão da obra e direção de obra, em colaboração com a Archi-Thèmes, em Vaulruz. Em propriedade horizontal, cada comprador faz as suas escolhas, e a obra integra-as sem perder o fio.",
+        "entrega": "Entrega dos apartamentos <lacuna>data</lacuna>. <lacuna>O que fica da missão</lacuna>."
+      }
     },
     "quartier-villas-corminboeuf": {
       "titulo": "Bairro de moradias",
-      "resumo": "Bairro de moradias em Corminboeuf, onde Leandro Lopes foi assistente da direção de obras."
+      "resumo": "Bairro de moradias em Corminboeuf, onde Leandro Lopes foi assistente da direção de obras.",
+      "relato": {
+        "projeto": "Um bairro de moradias em Corminboeuf, construído de 2016 a 2021. <lacuna>Número</lacuna> casas.",
+        "obra": "Leandro Lopes assiste a direção de obra, em colaboração com a Roya Immobilier, em Villars-sur-Glâne. Ao longo de vários anos, um bairro constrói-se por etapas, e cada etapa prepara a seguinte.",
+        "entrega": "Entrega das últimas moradias <lacuna>data</lacuna>. <lacuna>O que fica da missão</lacuna>."
+      }
     }
   },
   "contacto": {

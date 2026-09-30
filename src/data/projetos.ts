@@ -70,6 +70,11 @@ const Projeto = z.object({
   foco: z.string().optional(),
   video: Video.nullable(),
   galeria: z.array(Bloco),
+  /* O relato da página (`projetos.<slug>.relato` nas mensagens). `exemplo` é
+     uma proposta com lacunas por preencher com a STOA: aparece em aperçu, com
+     o selo, e nunca em publicação — nem num projeto já validado. `null`: sem
+     relato. */
+  relato: z.enum(["exemplo", "validado"]).nullable(),
   /* A ordem na página inicial; `null` fica só no portefólio. */
   destaque: z.number().int().positive().nullable(),
   /* A imagem de partilha (1200×630) gerada para este projeto, se houver. */
@@ -116,6 +121,7 @@ const DADOS = [
       { tipo: "par", imagens: ["heroi-immeuble", "immeuble-e-grue"] },
       { tipo: "video", video: "orbite-immeuble" },
     ],
+    relato: "exemplo",
     destaque: 1,
     partilha: "partilha-immeuble-e",
   },
@@ -133,6 +139,7 @@ const DADOS = [
     capa: "immeuble-j2-village",
     video: null,
     galeria: [{ tipo: "largo", imagem: "immeuble-j2-arbre" }],
+    relato: "exemplo",
     destaque: 2,
     partilha: "partilha-immeuble-j2",
   },
@@ -154,6 +161,7 @@ const DADOS = [
       { tipo: "largo", imagem: "chantier-g-etape2-c" },
       { tipo: "par", imagens: ["chantier-g-etape1-b", "chantier-g-etape3-c"] },
     ],
+    relato: "exemplo",
     destaque: 3,
     partilha: "partilha-chantier-g",
   },
@@ -174,6 +182,7 @@ const DADOS = [
       { tipo: "video", video: "approche-villas" },
       { tipo: "largo", imagem: "villas-d-lisiere" },
     ],
+    relato: "exemplo",
     destaque: 4,
     partilha: "partilha-villas-d",
   },
@@ -194,6 +203,7 @@ const DADOS = [
       { tipo: "video", video: "recul-immeuble-panneaux" },
       { tipo: "par", imagens: ["facade-panneaux", "immeuble-j1-toiture"] },
     ],
+    relato: "exemplo",
     destaque: null,
   },
   {
@@ -213,6 +223,7 @@ const DADOS = [
       { tipo: "etapas", imagens: ["terrain-i-etape1-b", "terrain-i-etape2-a", "terrain-i-etape3-b"] },
       { tipo: "largo", imagem: "terrain-i-etape1-c" },
     ],
+    relato: "exemplo",
     destaque: null,
   },
   {
@@ -229,6 +240,7 @@ const DADOS = [
     capa: "immeuble-a-aerien",
     video: null,
     galeria: [{ tipo: "largo", imagem: "immeuble-a-facade" }],
+    relato: "exemplo",
     destaque: null,
   },
   {
@@ -245,6 +257,7 @@ const DADOS = [
     capa: "immeuble-b-toiture",
     video: null,
     galeria: [{ tipo: "largo", imagem: "immeuble-b-terrasses" }],
+    relato: "exemplo",
     destaque: null,
   },
   {
@@ -261,6 +274,7 @@ const DADOS = [
     capa: "maison-f-toiture",
     video: null,
     galeria: [{ tipo: "largo", imagem: "maison-f-facade" }],
+    relato: "exemplo",
     destaque: null,
   },
   {
@@ -277,6 +291,7 @@ const DADOS = [
     capa: "batiment-h-toiture",
     video: null,
     galeria: [{ tipo: "par", imagens: ["batiment-h-installation", "batiment-h-zone"] }],
+    relato: "exemplo",
     destaque: null,
   },
 
@@ -295,6 +310,7 @@ const DADOS = [
     capa: "ref-arconciel",
     video: null,
     galeria: [],
+    relato: "exemplo",
     destaque: null,
   },
   {
@@ -311,6 +327,7 @@ const DADOS = [
     capa: "ref-chesopelloz",
     video: null,
     galeria: [],
+    relato: "exemplo",
     destaque: null,
   },
   {
@@ -327,6 +344,7 @@ const DADOS = [
     capa: "ref-noreaz",
     video: null,
     galeria: [],
+    relato: "exemplo",
     destaque: null,
   },
   {
@@ -343,6 +361,7 @@ const DADOS = [
     capa: "ref-corminboeuf",
     video: null,
     galeria: [],
+    relato: "exemplo",
     destaque: null,
   },
 ];
@@ -372,6 +391,10 @@ export const projetosVisiveis = (): Projeto[] =>
   EM_PUBLICACAO ? TODOS_OS_PROJETOS.filter((p) => p.publicacao === "validado") : TODOS_OS_PROJETOS;
 
 export const realizacoesStoa = () => projetosVisiveis().filter((p) => p.realizadoPor === "stoa");
+
+/** O relato só sai se estiver validado; em aperçu, também o de exemplo. */
+export const relatoPublicavel = (p: Projeto): boolean =>
+  p.relato !== null && (!EM_PUBLICACAO || p.relato === "validado");
 
 export const referencias = () => projetosVisiveis().filter((p) => p.realizadoPor === "colaborador");
 

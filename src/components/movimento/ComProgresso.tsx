@@ -3,7 +3,7 @@
 import { useRef, type CSSProperties, type ReactNode } from "react";
 import { useProgresso, type ModoDeProgresso } from "@/lib/movimento/progresso";
 
-type Etiqueta = "section" | "div" | "article" | "footer" | "header" | "li";
+type Etiqueta = "section" | "div" | "article" | "footer" | "header" | "li" | "figure";
 
 /**
  * Um elemento que recebe `--p` do motor de movimento (ou `--entrada` e

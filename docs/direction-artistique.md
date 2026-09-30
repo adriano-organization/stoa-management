@@ -8,6 +8,8 @@ Grelha assimétrica, calcário, carvão e verde derivado da identidade existente
 2. Projetos: sequência de imagens amplas com sobreposição temporária em desktop; leitura vertical no mobile.
 3. Fecho: entrada da marca de grande escala.
 
+A **página de cada projeto** lê-se como a obra andou: os capítulos do relato (número gigante em contorno, rótulo em mono, fio verde que se desenha ao rolar; os pares trocam de lado) intercalados com os blocos da galeria. Cada imagem vive num quadro de proporção fixa preso à grelha, com legenda numerada ("Fig. 01"); os blocos largos alternam de lado como os capítulos e ficam até 1280 px (o tamanho dos originais do drone). Ao entrar, o quadro abre-se de um recorte e a fotografia desliza lá dentro; o par sobrepõe a segunda imagem ao canto da primeira, e a sobreposição muda ao rolar. No telemóvel o par não se sobrepõe (tapava a legenda).
+
 O motor anterior não tinha desmontagem adequada à navegação entre páginas. Foi substituído por `src/lib/movimento/progresso.ts`, que escreve `--p`; não adicionar outro motor sobre os mesmos elementos.
 
 ## Revisão visual obrigatória

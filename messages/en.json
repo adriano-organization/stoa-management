@@ -192,64 +192,143 @@
       "pausa": "Pause the video",
       "ler": "Play the video",
       "rever": "Watch the video again"
-    }
+    },
+    "relato": "Project story",
+    "relatoExemplo": "Sample text. The marked passages are to be completed with STOA.",
+    "lacuna": "To complete:",
+    "capitulos": {
+      "projeto": "The project",
+      "obra": "On site",
+      "entrega": "Handover"
+    },
+    "figura": "Fig. {n}"
   },
   "projetos": {
     "immeuble-balcons-filants": {
       "titulo": "Building with continuous balconies",
-      "resumo": "Aerial views of a four-storey building with continuous balconies, on the edge of a village."
+      "resumo": "Aerial views of a four-storey building with continuous balconies, on the edge of a village.",
+      "relato": {
+        "projeto": "A residential building on the edge of a village, for <lacuna>client</lacuna>. Four storeys, with continuous balconies running the full length of the façade.",
+        "obra": "STOA <lacuna>exact role on site</lacuna>. Contractors, schedule and costs are coordinated in one place, from structural work to finishes.",
+        "entrega": "Handover <lacuna>date</lacuna>. From the air, the building settles into the edge of the village."
+      }
     },
     "immeuble-village": {
       "titulo": "Three-storey building",
-      "resumo": "Aerial view of a three-storey building, between houses and sports grounds."
+      "resumo": "Aerial view of a three-storey building, between houses and sports grounds.",
+      "relato": {
+        "projeto": "Three storeys between houses and sports fields. A building of <lacuna>number</lacuna> homes, built for <lacuna>client</lacuna>.",
+        "obra": "On a plot surrounded by neighbours, organising the site matters as much as the construction. <lacuna>What STOA took on</lacuna>.",
+        "entrega": "Handover <lacuna>date</lacuna>. The building has found its place in the neighbourhood."
+      }
     },
     "chantier-immeuble": {
       "titulo": "Apartment building site",
-      "resumo": "Aerial views of a building site in a residential area, from the foundations to the structure."
+      "resumo": "Aerial views of a building site in a residential area, from the foundations to the structure.",
+      "relato": {
+        "projeto": "A building in a residential area, for <lacuna>client</lacuna>. The site was photographed from the air, stage by stage.",
+        "obra": "From foundations to structure, the same views return and show the progress. It is what site management follows every day: deadlines, execution, costs.",
+        "entrega": "Next stage <lacuna>to be specified</lacuna>. The series of images continues until handover."
+      }
     },
     "villas-mitoyennes": {
       "titulo": "Terraced houses",
-      "resumo": "A group of terraced houses between meadow and forest, seen from the sky."
+      "resumo": "A group of terraced houses between meadow and forest, seen from the sky.",
+      "relato": {
+        "projeto": "A group of semi-detached houses between meadow and forest, for <lacuna>client</lacuna>. <lacuna>Number</lacuna> homes, one architectural language.",
+        "obra": "Several houses, one site. Work moves from one house to the next, and site management keeps the pace of the whole.",
+        "entrega": "Handover <lacuna>date</lacuna>. The houses open onto the meadow, with the forest behind."
+      }
     },
     "immeuble-facades-panneaux": {
       "titulo": "Building with panelled façades",
-      "resumo": "A three-storey building: the solar roof seen from the sky, the façade seen from the ground."
+      "resumo": "A three-storey building: the solar roof seen from the sky, the façade seen from the ground.",
+      "relato": {
+        "projeto": "A three-storey building, for <lacuna>client</lacuna>. Panel façades, a roof covered in solar panels.",
+        "obra": "A panel envelope demands precision at every joint. <lacuna>STOA’s role and key moments on site</lacuna>.",
+        "entrega": "Handover <lacuna>date</lacuna>. From the ground, the façade. From the air, a roof that produces energy."
+      }
     },
     "terrassement-fondations": {
       "titulo": "Earthworks and foundations",
-      "resumo": "A plot seen from the sky, from earthworks to the first foundations."
+      "resumo": "A plot seen from the sky, from earthworks to the first foundations.",
+      "relato": {
+        "projeto": "A plot, before the building. <lacuna>What is being built</lacuna> for <lacuna>client</lacuna>.",
+        "obra": "Earthworks, then the first foundations. The aerial views record what will no longer be visible once the building stands.",
+        "entrega": "<lacuna>Next stage or handover date</lacuna>. Everything that follows rests on these first stages."
+      }
     },
     "immeuble-facades-rosees": {
       "titulo": "Building with pink façades",
-      "resumo": "A five-storey building and its surroundings under construction."
+      "resumo": "A five-storey building and its surroundings under construction.",
+      "relato": {
+        "projeto": "A five-storey building with pink façades, for <lacuna>client</lacuna>.",
+        "obra": "The building stands; the surroundings are still under way. That is often where the end of a project is decided: landscaping, junctions, finishes.",
+        "entrega": "Handover <lacuna>date</lacuna>. A building is handed over when its surroundings are too."
+      }
     },
     "immeuble-toiture-vegetalisee": {
       "titulo": "Building with a green roof",
-      "resumo": "A building with a green roof and solar panels, in a residential area."
+      "resumo": "A building with a green roof and solar panels, in a residential area.",
+      "relato": {
+        "projeto": "A building in a residential neighbourhood, for <lacuna>client</lacuna>. On the roof, planting and solar panels share the surface.",
+        "obra": "<lacuna>STOA’s role</lacuna>. A roof carrying both planting and energy is coordinated across several trades, down to the last waterproofing upstand.",
+        "entrega": "Handover <lacuna>date</lacuna>. Seen from above, the building’s fifth façade."
+      }
     },
     "maison-toiture-tuiles": {
       "titulo": "House with a tiled roof",
-      "resumo": "A three-storey house with a tiled roof and balconies on the façade."
+      "resumo": "A three-storey house with a tiled roof and balconies on the façade.",
+      "relato": {
+        "projeto": "A three-storey house, for <lacuna>client</lacuna>. Tiled roof, balconies on the façade.",
+        "obra": "At the scale of a house, every decision shows. <lacuna>STOA’s role and how the project unfolded</lacuna>.",
+        "entrega": "The house is handed over to its owners <lacuna>date</lacuna>."
+      }
     },
     "batiment-activites": {
       "titulo": "Commercial building",
-      "resumo": "A commercial building with a solar roof, in an industrial area."
+      "resumo": "A commercial building with a solar roof, in an industrial area.",
+      "relato": {
+        "projeto": "A commercial building in a light-industrial zone, for <lacuna>client</lacuna>. A solar roof, volumes designed for work.",
+        "obra": "A commercial building is often built to tight deadlines. <lacuna>STOA’s role, site constraints</lacuna>.",
+        "entrega": "Handover of the premises <lacuna>date</lacuna>. <lacuna>Key takeaway from the project</lacuna>."
+      }
     },
     "transformation-arconciel": {
       "titulo": "Conversion",
-      "resumo": "Conversion of an apartment in Arconciel, where Leandro Lopes managed the works."
+      "resumo": "Conversion of an apartment in Arconciel, where Leandro Lopes managed the works.",
+      "relato": {
+        "projeto": "The renovation of an apartment in Arconciel, in 2020. <lacuna>Nature of the work</lacuna>.",
+        "obra": "Leandro Lopes manages the works, in collaboration with Georges Hayoz. In an existing building, each demolition is decided after seeing what lies behind.",
+        "entrega": "Handover of the apartment <lacuna>date</lacuna>. <lacuna>What the renovation changed</lacuna>."
+      }
     },
     "quartier-villas-chesopelloz": {
       "titulo": "Housing estate",
-      "resumo": "Construction management of a housing estate in Chésopelloz."
+      "resumo": "Construction management of a housing estate in Chésopelloz.",
+      "relato": {
+        "projeto": "A neighbourhood of houses in Chésopelloz, in 2015. <lacuna>Number</lacuna> homes, for <lacuna>client</lacuna>.",
+        "obra": "Site management in collaboration with Formul’habitat, in Bulle. A neighbourhood is built house by house, and the schedule is held at the scale of the whole.",
+        "entrega": "Handover of the houses <lacuna>date</lacuna>. <lacuna>Key takeaway from the mission</lacuna>."
+      }
     },
     "immeuble-ppe-noreaz": {
       "titulo": "Condominium building",
-      "resumo": "Site and construction management of a building in Noréaz."
+      "resumo": "Site and construction management of a building in Noréaz.",
+      "relato": {
+        "projeto": "A condominium building in Noréaz, in 2017. <lacuna>Number</lacuna> apartments.",
+        "obra": "Site and works management, in collaboration with Archi-Thèmes, in Vaulruz. In a condominium, each buyer makes their own choices, and the site integrates them without losing the thread.",
+        "entrega": "Handover of the apartments <lacuna>date</lacuna>. <lacuna>Key takeaway from the mission</lacuna>."
+      }
     },
     "quartier-villas-corminboeuf": {
       "titulo": "Housing estate",
-      "resumo": "Housing estate in Corminboeuf, where Leandro Lopes assisted the construction management."
+      "resumo": "Housing estate in Corminboeuf, where Leandro Lopes assisted the construction management.",
+      "relato": {
+        "projeto": "A neighbourhood of houses in Corminboeuf, built from 2016 to 2021. <lacuna>Number</lacuna> homes.",
+        "obra": "Leandro Lopes assists the site management, in collaboration with Roya Immobilier, in Villars-sur-Glâne. Over several years, a neighbourhood is built in stages, and each stage prepares the next.",
+        "entrega": "Handover of the last houses <lacuna>date</lacuna>. <lacuna>Key takeaway from the mission</lacuna>."
+      }
     }
   },
   "contacto": {

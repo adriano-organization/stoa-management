@@ -7,13 +7,13 @@
   - os projetos provisórios não afirmam nada (local, estado, missão, período)
     que ninguém confirmou;
   - em publicação, nada provisório sai — nem nas listas, nem nos destaques,
-    nem na equipa.
+    nem na equipa, nem o relato de exemplo de um projeto já validado.
 */
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { TODOS_OS_PROJETOS, projetosEmDestaque, projetosVisiveis } from "../src/data/projetos.ts";
+import { TODOS_OS_PROJETOS, projetosEmDestaque, projetosVisiveis, relatoPublicavel } from "../src/data/projetos.ts";
 
 const RAIZ = new URL("..", import.meta.url).pathname;
 const mensagens = JSON.parse(readFileSync(`${RAIZ}messages/fr-CH.json`, "utf8"));
@@ -70,6 +70,7 @@ test("em publicação, nada provisório sai — nem nos destaques, nem na equipa
       visiveis: p.projetosVisiveis().map((x) => x.publicacao),
       destaque: p.projetosEmDestaque().map((x) => x.publicacao),
       equipa: e.perfisVisiveis().length,
+      relatos: p.projetosVisiveis().filter(p.relatoPublicavel).map((x) => x.relato),
     }));
   `;
   const saida = execFileSync(
@@ -77,9 +78,15 @@ test("em publicação, nada provisório sai — nem nos destaques, nem na equipa
     ["--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "--import", "./testes/apoio/carregador.mjs", "--input-type=module", "-e", codigo],
     { cwd: RAIZ, env: { ...process.env, STOA_PUBLICATION: "1" }, encoding: "utf8" },
   );
-  const { visiveis, destaque, equipa } = JSON.parse(saida.trim().split("\n").pop());
+  const { visiveis, destaque, equipa, relatos } = JSON.parse(saida.trim().split("\n").pop());
   assert.ok(visiveis.length > 0);
   assert.ok(visiveis.every((v) => v === "validado"), JSON.stringify(visiveis));
   assert.ok(destaque.every((v) => v === "validado"), JSON.stringify(destaque));
   assert.equal(equipa, 0);
+  /* As referências já estão validadas, mas o relato delas ainda é exemplo. */
+  assert.ok(relatos.every((r) => r === "validado"), JSON.stringify(relatos));
+});
+
+test("em aperçu, o relato de exemplo aparece", () => {
+  assert.ok(TODOS_OS_PROJETOS.filter((p) => p.relato === "exemplo").every(relatoPublicavel));
 });

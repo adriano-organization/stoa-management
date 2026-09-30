@@ -7,7 +7,8 @@
  *
  * 1. **As línguas têm as mesmas chaves.** O francês é a referência; é isto
  *    que diz o que ficou por traduzir em `pt` e `en`.
- * 2. **Os dados têm texto.** Cada projeto tem título; cada imagem do
+ * 2. **Os dados têm texto.** Cada projeto tem título (e relato, se o tiver,
+ *    sem lacunas quando está validado); cada imagem do
  *    manifesto e cada vídeo têm texto alternativo; cada missão e estado usados
  *    têm rótulo. Lido dos dados, e não de uma lista escrita à mão que ficaria
  *    para trás.
@@ -66,6 +67,15 @@ for (const p of TODOS_OS_PROJETOS) {
   exigir(`projetos.${p.slug}.titulo`, `o título do projeto "${p.slug}"`);
   if (p.missao) exigir(`projeto.missoes.${p.missao}`, `o rótulo da missão "${p.missao}"`);
   if (p.estado) exigir(`projeto.estados.${p.estado}`, `o rótulo do estado "${p.estado}"`);
+  if (p.relato) exigir(`projetos.${p.slug}.relato.projeto`, `o relato do projeto "${p.slug}"`);
+  /* Um relato validado é um texto aprovado: uma lacuna esquecida lá dentro
+     sairia em público como "<lacuna>date</lacuna>". */
+  if (p.relato === "validado") {
+    for (const l of linguas) {
+      const relato = JSON.stringify(seguir(msgs[l], `projetos.${p.slug}.relato`) ?? {});
+      if (relato.includes("<lacuna>")) problemas.push(`${l}.json: o relato validado de "${p.slug}" ainda tem lacunas`);
+    }
+  }
 }
 
 /* As chaves de `medias` levam hífenes (`chantier-g-etape1-a`): lê-se o objeto
