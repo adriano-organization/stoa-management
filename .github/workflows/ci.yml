@@ -53,8 +53,12 @@ jobs:
       - name: Mensagens (títulos, textos alternativos, tipografia)
         run: npm run mensagens
 
+      # Os testes escolhem eles próprios o modo (o de publicação corre num
+      # processo à parte); aqui começam sempre em aperçu.
       - name: Testes
         run: npm run testes
+        env:
+          STOA_PUBLICATION: ""
 
       - name: Vulnerabilidades
         run: npm audit --audit-level=high
