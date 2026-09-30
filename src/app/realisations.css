@@ -178,14 +178,12 @@
   translate: 0 -50%;
 }
 
-/* A chegada: a imagem abre-se de um recorte, as letras sobem uma a uma, o
-   destaque assenta no fim. Só com movimento; e parada enquanto a cortina da
-   navegação ainda tapa a página, para não acontecer às escondidas. Os
-   `backwards` deixam os valores finais nas mãos do `--p` quando acabam. */
-[data-movimento] .abertura__media {
-  animation: abertura-recorte 1500ms var(--curva-suave) 80ms backwards;
-}
-
+/* A chegada: a fotografia está inteira desde o primeiro momento (um recorte
+   que se abria parecia uma imagem a carregar) e só assenta de perto; as
+   letras sobem uma a uma, o destaque assenta no fim. Só com movimento; e
+   parada enquanto a cortina da navegação ainda tapa a página, para não
+   acontecer às escondidas. Os `backwards` deixam os valores finais nas mãos
+   do `--p` quando acabam. */
 [data-movimento] .abertura__media img,
 [data-movimento] .abertura__media video {
   animation: abertura-aproxima 2200ms var(--curva-saida) 80ms backwards;
@@ -203,14 +201,8 @@
   animation-delay: 1250ms;
 }
 
-html[data-cortina="entrar"] .abertura :is(.abertura__media, img, video, .abertura__letras span, .abertura__destaque > *) {
+html[data-cortina="entrar"] .abertura :is(img, video, .abertura__letras span, .abertura__destaque > *) {
   animation-play-state: paused;
-}
-
-@keyframes abertura-recorte {
-  from {
-    clip-path: inset(18% 14% 22% 14%);
-  }
 }
 
 @keyframes abertura-aproxima {
@@ -1161,7 +1153,7 @@ html[data-cortina="entrar"] .abertura :is(.abertura__media, img, video, .abertur
 }
 
 /* A entrada, só para quem vê movimento: o quadro abre-se de um recorte
-   (como a abertura do portefólio) e a fotografia, um pouco maior do que ele,
+   ao entrar no ecrã e a fotografia, um pouco maior do que ele,
    desliza devagar ao contrário da página. Em repouso, o quadro está inteiro
    e a fotografia no sítio. */
 [data-movimento] .galeria__quadro {
