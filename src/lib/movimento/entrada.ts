@@ -7,6 +7,23 @@
 export const CHAVE_DA_ENTRADA = "stoa-entrada";
 
 /**
+ * O logótipo pede a entrada outra vez. Ir à inicial pelo logótipo é voltar ao
+ * princípio, e aí a entrada passa sempre; pelos outros caminhos (regressar de
+ * um projeto, uma âncora) o herói aparece pronto.
+ *
+ * Esquece que a entrada já se viu nesta sessão — a inicial que se montar a
+ * seguir decide-a de novo. Quando já se está na inicial não se monta nada, e
+ * é o `EVENTO_DA_ENTRADA` que a recomeça (`EntradaDoHeroi.tsx`).
+ */
+export function pedirEntrada() {
+  try {
+    sessionStorage.removeItem(CHAVE_DA_ENTRADA);
+  } catch {}
+}
+
+export const EVENTO_DA_ENTRADA = "stoa:entrada";
+
+/**
  * O script do `<head>`, antes da primeira pintura: `data-movimento` a quem não
  * pediu menos movimento, e a decisão da entrada do herói (`data-intro`) — só
  * numa das `inicios`, sem âncora, na primeira vez da sessão. Se o React não

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect } from "react";
-import { CHAVE_DA_ENTRADA } from "@/lib/movimento/entrada";
+import { CHAVE_DA_ENTRADA, EVENTO_DA_ENTRADA } from "@/lib/movimento/entrada";
 import { useMenosMovimento } from "@/lib/movimento/preferencia";
 
 /* As animações da entrada chamam-se todas `intro-…` (`inicio.css`). */
@@ -33,6 +33,8 @@ const arrumar = () => {
  *   da primeira pintura (`html[data-intro]`). Numa navegação interna, decide
  *   aqui, antes da pintura: primeira vez na inicial nesta sessão, sem âncora.
  *   Ao voltar de um projeto já se viu — o herói aparece pronto, onde estava.
+ *   O logótipo é a exceção: pede a entrada outra vez (`pedirEntrada`), e se
+ *   já se está na inicial recomeça-a aqui (`EVENTO_DA_ENTRADA`).
  * - **A fotografia manda.** O desenho corre logo; o resto (a obra, o
  *   contexto, a marca, o texto) espera por `data-intro-foto`, que só chega
  *   com a imagem descodificada. Se não chegar a tempo, acaba-se.
@@ -59,7 +61,10 @@ export function EntradaDoHeroi() {
       raiz.setAttribute("data-intro", "");
     }
 
-    let ativa = raiz.hasAttribute("data-intro") && palco !== null;
+    /* Cada começo é uma geração: o que uma entrada anterior (cancelada pelo
+       logótipo) ainda tenha pendente já não mexe na nova. */
+    let geracao = 0;
+    let ativa = false;
     let limite = 0;
 
     const animacoes = () =>
@@ -67,31 +72,37 @@ export function EntradaDoHeroi() {
         .getAnimations()
         .filter((a): a is CSSAnimation => a instanceof CSSAnimation && DA_ENTRADA.test(a.animationName));
 
-    const acabar = () => {
-      if (!ativa) return;
+    const parar = () => {
       ativa = false;
       window.clearTimeout(limite);
       GESTOS.forEach((g) => window.removeEventListener(g, acelerar, true));
+    };
+
+    const acabar = (g: number) => {
+      if (g !== geracao || !ativa) return;
+      parar();
       arrumar();
     };
 
     /* Acaba depressa mas pelo mesmo caminho; sem a fotografia não há o que
        mostrar, e acaba já. */
-    const acelerar = () => {
-      if (!raiz.hasAttribute("data-intro-foto")) return acabar();
+    function acelerar() {
+      if (!ativa) return;
+      if (!raiz.hasAttribute("data-intro-foto")) return acabar(geracao);
       animacoes().forEach((a) => a.updatePlaybackRate(8));
-    };
+    }
 
-    if (!palco) arrumar();
-    if (ativa) {
+    const iniciar = () => {
+      const g = ++geracao;
+      ativa = true;
       try {
         sessionStorage.setItem(CHAVE_DA_ENTRADA, "1");
       } catch {}
 
       limite = window.setTimeout(() => {
-        if (!raiz.hasAttribute("data-intro-foto")) acabar();
+        if (!raiz.hasAttribute("data-intro-foto")) acabar(g);
       }, LIMITE_MS);
-      GESTOS.forEach((g) => window.addEventListener(g, acelerar, { capture: true, passive: true }));
+      GESTOS.forEach((gesto) => window.addEventListener(gesto, acelerar, { capture: true, passive: true }));
 
       /* `load`, e não `decode()`: num separador em segundo plano o browser adia
          a descodificação até ele se ver, e a entrada acabava pelo limite. A
@@ -104,19 +115,38 @@ export function EntradaDoHeroi() {
         imagem.addEventListener("error", () => recusar(new Error("falhou")), { once: true });
       })
         .then(() => {
-          if (!ativa) return;
+          if (g !== geracao || !ativa) return;
           raiz.setAttribute("data-intro-foto", "");
           return Promise.all(animacoes().map((a) => a.finished));
         })
-        .then(acabar, acabar);
-    }
+        .then(
+          () => acabar(g),
+          () => acabar(g),
+        );
+    };
+
+    if (!palco) arrumar();
+    else if (raiz.hasAttribute("data-intro")) iniciar();
+
+    /* O logótipo, já na inicial: não há página nova a montar, por isso a
+       entrada recomeça aqui. Tirar e voltar a pôr o atributo no mesmo instante
+       não recomeçava as animações — o browser tem de ver a entrada sair. */
+    const aoPedir = () => {
+      if (!palco || !raiz.hasAttribute("data-movimento")) return;
+      parar();
+      arrumar();
+      raiz.getBoundingClientRect();
+      raiz.setAttribute("data-intro", "");
+      iniciar();
+    };
+    window.addEventListener(EVENTO_DA_ENTRADA, aoPedir);
 
     return () => {
       montadas -= 1;
       const estavaAtiva = ativa;
-      ativa = false;
-      window.clearTimeout(limite);
-      GESTOS.forEach((g) => window.removeEventListener(g, acelerar, true));
+      parar();
+      geracao += 1;
+      window.removeEventListener(EVENTO_DA_ENTRADA, aoPedir);
       /* Saiu-se da inicial a meio: arruma, a menos que outra instância (o
          remontar do modo estrito) já a tenha retomado. */
       if (estavaAtiva) window.setTimeout(() => montadas === 0 && arrumar(), 0);

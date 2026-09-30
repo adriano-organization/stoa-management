@@ -4,6 +4,7 @@ import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { NOMES_DAS_LINGUAS, caminhoLocalizado, routing, type Locale } from "@/i18n/routing";
+import { EVENTO_DA_ENTRADA, pedirEntrada } from "@/lib/movimento/entrada";
 import { Marca } from "./Marca";
 
 export type TextosDoCabecalho = {
@@ -104,7 +105,7 @@ export function Cabecalho({ textos, locale }: { textos: TextosDoCabecalho; local
       style={{ viewTransitionName: "cabecalho" }}
     >
       <div className="cabecalho__barra envelope">
-        <Link href="/" className="cabecalho__marca" aria-label={textos.inicio}>
+        <Link href="/" className="cabecalho__marca" aria-label={textos.inicio} onClick={aoClicarNaMarca}>
           <Marca />
         </Link>
 
@@ -224,4 +225,20 @@ function SeletorDeLingua({
       </ul>
     </nav>
   );
+}
+
+/**
+ * O logótipo leva à inicial **com a entrada do herói**, mesmo que já se tenha
+ * visto nesta sessão (`pedirEntrada`). Se já se está na inicial não há página
+ * nova: sobe-se ao topo e a entrada recomeça ali. Ctrl/⌘/Shift ou o botão do
+ * meio abrem noutro sítio e não mexem na página atual.
+ */
+function aoClicarNaMarca(evento: React.MouseEvent<HTMLAnchorElement>) {
+  if (evento.button !== 0 || evento.metaKey || evento.ctrlKey || evento.shiftKey || evento.altKey) return;
+  pedirEntrada();
+  const inicios = routing.locales.map((l) => caminhoLocalizado("/", l).replace(/\/$/, ""));
+  if (inicios.includes(window.location.pathname.replace(/\/$/, ""))) {
+    window.scrollTo({ top: 0, behavior: "instant" });
+    window.dispatchEvent(new Event(EVENTO_DA_ENTRADA));
+  }
 }

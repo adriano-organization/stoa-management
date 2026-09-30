@@ -6,7 +6,7 @@
 */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { CHAVE_DA_ENTRADA, scriptDeArranque } from "../src/lib/movimento/entrada.ts";
+import { CHAVE_DA_ENTRADA, pedirEntrada, scriptDeArranque } from "../src/lib/movimento/entrada.ts";
 
 const INICIOS = ["", "/pt", "/en"];
 
@@ -67,4 +67,35 @@ test("com a fotografia a tempo, o limite não mexe", () => {
   atributos.set("data-intro-foto", "");
   temporizadores[0].f();
   assert.ok(atributos.has("data-intro"));
+});
+
+/* O logótipo pede a entrada outra vez: esquece que já se viu nesta sessão. */
+test("depois de pedir a entrada (logótipo), a sessão volta a tê-la", () => {
+  const guardado = new Map([[CHAVE_DA_ENTRADA, "1"]]);
+  const anterior = globalThis.sessionStorage;
+  globalThis.sessionStorage = {
+    getItem: (k) => guardado.get(k) ?? null,
+    removeItem: (k) => guardado.delete(k),
+  };
+  try {
+    pedirEntrada();
+  } finally {
+    globalThis.sessionStorage = anterior;
+  }
+  const { atributos } = correr({ vista: guardado.has(CHAVE_DA_ENTRADA) });
+  assert.ok(atributos.has("data-intro"));
+});
+
+test("pedir a entrada sem sessionStorage (bloqueado) não rebenta", () => {
+  const anterior = globalThis.sessionStorage;
+  globalThis.sessionStorage = {
+    removeItem: () => {
+      throw new Error("bloqueado");
+    },
+  };
+  try {
+    assert.doesNotThrow(() => pedirEntrada());
+  } finally {
+    globalThis.sessionStorage = anterior;
+  }
 });
