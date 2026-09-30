@@ -4,7 +4,7 @@
 */
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { HEROI, contorno } from "../src/data/heroi.ts";
+import { HEROI, contorno, plantaDe } from "../src/data/heroi.ts";
 
 /** Lê "M1 2L3 4..." como troços de pontos. */
 function trocos(d) {
@@ -56,4 +56,56 @@ test("contorno do retrato: um só traço, do topo ao fundo da fachada", () => {
   assert.equal(trocos(d).length, 1);
   assert.ok(d.startsWith("M1252 0L1252 22"), d.slice(0, 40));
   assert.ok(d.endsWith("L2780 4032"), d.slice(-40));
+});
+
+/*
+  A planta da entrada: o desenho técnico que se transforma na fotografia. As
+  linhas foram lidas na própria fotografia (ver `heroi.ts`); aqui prova-se que
+  vivem no referencial dela e que terminam exatamente na composição final.
+*/
+const dentro = ([x, y], { largura, altura }) => x >= 0 && x <= largura && y >= 0 && y <= altura;
+
+for (const [nome, composicao] of Object.entries(HEROI)) {
+  test(`planta (${nome}): todos os pontos dentro da fotografia`, () => {
+    const p = plantaDe(composicao);
+    const todos = [...p.guias.flat(), ...p.tracos.flat(), ...p.superficies.flatMap((s) => s.pontos), ...p.silhueta];
+    assert.ok(todos.length > 0);
+    for (const ponto of todos) assert.ok(dentro(ponto, composicao), `${ponto}`);
+  });
+
+  test(`planta (${nome}): cada linha de construção atravessa o enquadramento`, () => {
+    const naBordaDaImagem = ([x, y]) => x === 0 || y === 0 || x === composicao.largura || y === composicao.altura;
+    for (const guia of plantaDe(composicao).guias) {
+      assert.ok(naBordaDaImagem(guia[0]) && naBordaDaImagem(guia.at(-1)), `${guia[0]} → ${guia.at(-1)}`);
+    }
+  });
+
+  test(`planta (${nome}): a silhueta começa na platibanda do recorte (sem costura com a marca)`, () => {
+    const { silhueta } = plantaDe(composicao);
+    const topo = composicao.recorte.filter(([, y]) => y < composicao.altura && y > 0).slice(0, 5);
+    assert.ok(topo.length > 0);
+    for (const ponto of topo) {
+      assert.ok(
+        silhueta.some(([x, y]) => x === ponto[0] && y === ponto[1]),
+        `${ponto} do recorte não está na silhueta`,
+      );
+    }
+  });
+}
+
+test("planta da paisagem: desenho completo (telhado, verticais, lajes) e três superfícies", () => {
+  const p = plantaDe(HEROI.paisagem);
+  assert.ok(p.guias.length >= 3);
+  assert.ok(p.tracos.length >= 10);
+  assert.equal(p.superficies.length, 3);
+  /* O primeiro traço é a platibanda do fundo, ponto a ponto a do recorte. */
+  assert.deepEqual(p.tracos[0], HEROI.paisagem.recorte.slice(0, p.tracos[0].length));
+});
+
+test("planta do retrato: só a aresta da fachada — nada do desenho da paisagem", () => {
+  const p = plantaDe(HEROI.retrato);
+  assert.equal(p.guias.length, 0);
+  assert.equal(p.tracos.length, 1);
+  assert.deepEqual(p.silhueta, HEROI.retrato.recorte);
+  assert.equal(`M${p.tracos[0].map(([x, y]) => `${x} ${y}`).join("L")}`, contorno(HEROI.retrato));
 });
