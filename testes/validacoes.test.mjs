@@ -14,8 +14,10 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import {
   IMAGENS_INSTITUCIONAIS,
+  MARCAS_INSTITUCIONAIS,
   TEXTOS_INSTITUCIONAIS,
   imagemPublicavel,
+  marcaPublicavel,
   textoPublicavel,
 } from "../src/data/validacoes.ts";
 import { HEROI } from "../src/data/heroi.ts";
@@ -25,7 +27,11 @@ const RAIZ = new URL("..", import.meta.url).pathname;
 const mensagens = JSON.parse(readFileSync(`${RAIZ}messages/fr-CH.json`, "utf8"));
 
 test("nada institucional está marcado como aprovado sem confirmação da STOA", () => {
-  for (const [chave, estado] of Object.entries({ ...TEXTOS_INSTITUCIONAIS, ...IMAGENS_INSTITUCIONAIS })) {
+  for (const [chave, estado] of Object.entries({
+    ...TEXTOS_INSTITUCIONAIS,
+    ...IMAGENS_INSTITUCIONAIS,
+    ...MARCAS_INSTITUCIONAIS,
+  })) {
     assert.equal(estado, "provisorio", chave);
   }
 });
@@ -45,6 +51,7 @@ test("as fotografias do herói estão na lista", () => {
 test("em aperçu (o modo destes testes), tudo sai", () => {
   assert.equal(textoPublicavel("metodo"), true);
   for (const id of Object.keys(IMAGENS_INSTITUCIONAIS)) assert.equal(imagemPublicavel(id), true, id);
+  assert.equal(marcaPublicavel("folha"), true);
 });
 
 test("em publicação, o provisório não sai — nem uma imagem fora da lista", () => {
@@ -54,6 +61,7 @@ test("em publicação, o provisório não sai — nem uma imagem fora da lista",
       metodo: v.textoPublicavel("metodo"),
       imagens: Object.keys(v.IMAGENS_INSTITUCIONAIS).map((id) => v.imagemPublicavel(id)),
       foraDaLista: v.imagemPublicavel("immeuble-e-grue"),
+      folha: v.marcaPublicavel("folha"),
     }));
   `;
   const saida = execFileSync(
@@ -61,8 +69,9 @@ test("em publicação, o provisório não sai — nem uma imagem fora da lista",
     ["--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "--import", "./testes/apoio/carregador.mjs", "--input-type=module", "-e", codigo],
     { cwd: RAIZ, env: { ...process.env, STOA_PUBLICATION: "1" }, encoding: "utf8" },
   );
-  const { metodo, imagens, foraDaLista } = JSON.parse(saida.trim().split("\n").pop());
+  const { metodo, imagens, foraDaLista, folha } = JSON.parse(saida.trim().split("\n").pop());
   assert.equal(metodo, false);
   assert.deepEqual([...new Set(imagens)], [false]);
   assert.equal(foraDaLista, false);
+  assert.equal(folha, false);
 });

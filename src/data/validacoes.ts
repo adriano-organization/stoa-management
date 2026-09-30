@@ -37,10 +37,20 @@ export const IMAGENS_INSTITUCIONAIS = {
   "bureau-plateau": "provisorio",
 } as const satisfies Partial<Record<IdImagem, Estado>>;
 
+export const MARCAS_INSTITUCIONAIS = {
+  /* A folha em linha da transição entre páginas, redesenhada a partir do
+     ícone (não há vetor do logótipo). Parecida não é igual: a STOA aprova-a
+     ou manda o original. */
+  folha: "provisorio",
+} as const satisfies Record<string, Estado>;
+
 const publicavel = (estado: Estado) => !EM_PUBLICACAO || estado === "validado";
 
 export const textoPublicavel = (chave: keyof typeof TEXTOS_INSTITUCIONAIS) =>
   publicavel(TEXTOS_INSTITUCIONAIS[chave]);
+
+export const marcaPublicavel = (chave: keyof typeof MARCAS_INSTITUCIONAIS) =>
+  publicavel(MARCAS_INSTITUCIONAIS[chave]);
 
 /**
  * Uma imagem que não esteja na lista conta como provisória: trocar a
