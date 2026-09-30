@@ -1,182 +1,633 @@
 /* ===========================================================================
-   PORTEFÓLIO — o índice, as referências e a página de cada projeto
+   PORTEFÓLIO — a abertura, o trilho, as referências e a página de cada
+   projeto
+
+   Como na inicial, o que se move lê `--p`, escrito por
+   `lib/movimento/progresso.ts`, e cada regra tem um valor de repouso: sem
+   JavaScript e com menos movimento, a composição está completa e parada.
    =========================================================================== */
 
-/* ---------------------------------------------------------------- índice */
+/* -------------------------------------------------------------- abertura */
 
-.indice {
-  padding-top: calc(var(--altura-cabecalho) + clamp(3.5rem, 8vw, 7rem));
-  padding-bottom: clamp(5rem, 10vw, 9rem);
+.abertura {
+  position: relative;
+  background: var(--color-carvao);
 }
 
-.indice__topo {
+.abertura__palco {
+  position: relative;
+  top: 0;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+}
+
+/* O percurso preso só para quem o vê mexer, como no herói da inicial. */
+@media (orientation: landscape) and (height > 560px) {
+  [data-movimento] .abertura {
+    height: 175svh;
+  }
+
+  [data-movimento] .abertura__palco {
+    position: sticky;
+  }
+}
+
+.abertura__media,
+.abertura__media .video-mudo,
+.abertura__foto {
+  position: absolute;
+  inset: 0;
+}
+
+.abertura__media {
+  overflow: hidden;
+}
+
+.abertura__media img,
+.abertura__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scale: calc(1 + var(--p, 0) * 0.14);
+}
+
+/* Em cima para o título, em baixo para o destaque; o meio fica limpo. */
+.abertura__veu {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgb(14 14 13 / 0.62) 0%, rgb(14 14 13 / 0.2) 30%, rgb(14 14 13 / 0) 45%),
+    linear-gradient(to top, rgb(14 14 13 / 0.88) 0%, rgb(14 14 13 / 0.5) 28%, rgb(14 14 13 / 0) 55%);
+}
+
+/* A imagem apaga-se no carvão do trilho que vem a seguir: a passagem de uma
+   secção à outra não tem costura. */
+.abertura__escurecer {
+  position: absolute;
+  inset: 0;
+  background: var(--color-carvao);
+  /* Em curva, e nunca até ao preto: a fotografia fica à vista quase até ao
+     fim, e sai a subir, escurecida, quando o trilho chega por baixo. Apagada
+     de todo, era um ecrã preto entre as duas secções. */
+  opacity: calc(var(--p, 0) * var(--p, 0) * 0.78);
+  pointer-events: none;
+}
+
+.abertura__titulo {
+  position: absolute;
+  inset: calc(var(--altura-cabecalho) + clamp(0.5rem, 3svh, 2.5rem)) 0 auto;
+  width: 100%;
+  max-width: var(--largura-max);
+  margin-inline: auto;
+  padding-inline: var(--margem);
+  font-size: clamp(3.4rem, 12.2vw, 15.5rem);
+  font-weight: 620;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  translate: 0 calc(var(--p, 0) * -16svh);
+  opacity: calc(1 - var(--p, 0) * 1.8);
+  pointer-events: none;
+}
+
+/* Cada letra sobe da sua linha, como a marca no herói. O `padding` deixa o
+   acento do "É" dentro da caixa que corta. */
+.abertura__letras {
+  display: block;
+  overflow: clip;
+  padding-block: 0.1em 0.04em;
+}
+
+.abertura__letras span {
+  display: inline-block;
+}
+
+.abertura__destaque {
+  position: absolute;
+  inset: auto 0 clamp(2.5rem, 7svh, 5rem);
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--intervalo);
-  align-items: end;
   row-gap: 1.5rem;
-  padding-bottom: clamp(3rem, 7vw, 6rem);
-  border-bottom: 1px solid var(--linha);
+  align-items: end;
+  translate: 0 calc(var(--p, 0) * -8svh);
+  opacity: calc(1 - var(--p, 0) * 1.6);
 }
 
-.indice__topo h1 {
+/* Apagado não é ausente: o botão deixa de receber cliques depois do limiar,
+   e volta inteiro se o teclado lá chegar. */
+.abertura[data-passou] .abertura__destaque:not(:focus-within) {
+  pointer-events: none;
+}
+
+.abertura__destaque:focus-within {
+  translate: none;
+  opacity: 1;
+}
+
+.abertura__projeto {
   grid-column: 1 / span 7;
-}
-
-.indice__intro {
-  grid-column: 9 / span 4;
-  max-width: 32ch;
-}
-
-/* A grelha assimétrica: um padrão de seis que se repete — grande à esquerda,
-   pequeno descido à direita, médio recuado, largo à direita... Nunca duas
-   linhas iguais seguidas. */
-.indice__grelha {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--intervalo);
-  row-gap: clamp(3.5rem, 8vw, 7rem);
-  padding-block: clamp(3.5rem, 7vw, 6rem);
+  gap: 0.9rem;
+  justify-items: start;
 }
 
-.cartao-projeto:nth-child(6n + 2) {
-  grid-column: 1 / span 7;
+.abertura__etiqueta {
+  color: rgb(242 238 231 / 0.85);
 }
 
-.cartao-projeto:nth-child(6n + 3) {
+.abertura__nome {
+  font-size: clamp(2rem, 1rem + 3vw, 4.4rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.abertura__meta {
+  color: var(--color-verde-claro);
+}
+
+.abertura__lado {
   grid-column: 9 / span 4;
-  margin-top: clamp(4rem, 14vw, 14rem);
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
 }
 
-.cartao-projeto:nth-child(6n + 4) {
-  grid-column: 2 / span 5;
+.abertura__resumo {
+  font-size: var(--t-medio);
+  line-height: 1.4;
+  color: rgb(242 238 231 / 0.9);
+  max-width: 34ch;
 }
 
-.cartao-projeto:nth-child(6n + 5) {
-  grid-column: 7 / span 6;
-  margin-top: clamp(3rem, 9vw, 9rem);
+.abertura__nota {
+  font-size: 0.925rem;
+  color: rgb(242 238 231 / 0.75);
+  max-width: 40ch;
 }
 
-.cartao-projeto:nth-child(6n + 6) {
-  grid-column: 1 / span 5;
+/* O botão do vídeo, a meio da margem direita: longe do título e do texto. */
+.abertura .video-mudo__botao {
+  z-index: 3;
+  top: 50%;
+  bottom: auto;
+  right: var(--margem);
+  translate: 0 -50%;
 }
 
-.cartao-projeto:nth-child(6n + 7) {
-  grid-column: 6 / span 7;
-  margin-top: clamp(3rem, 10vw, 10rem);
+/* A chegada: a imagem abre-se de um recorte, as letras sobem uma a uma, o
+   destaque assenta no fim. Só com movimento; e parada enquanto a cortina da
+   navegação ainda tapa a página, para não acontecer às escondidas. Os
+   `backwards` deixam os valores finais nas mãos do `--p` quando acabam. */
+[data-movimento] .abertura__media {
+  animation: abertura-recorte 1500ms var(--curva-suave) 80ms backwards;
 }
 
-.cartao-projeto {
+[data-movimento] .abertura__media img,
+[data-movimento] .abertura__media video {
+  animation: abertura-aproxima 2200ms var(--curva-saida) 80ms backwards;
+}
+
+[data-movimento] .abertura__letras span {
+  animation: abertura-letra 1100ms var(--curva-saida) calc(420ms + var(--i) * 42ms) backwards;
+}
+
+[data-movimento] .abertura__destaque > * {
+  animation: abertura-assenta 900ms var(--curva-saida) 1100ms backwards;
+}
+
+[data-movimento] .abertura__destaque > * + * {
+  animation-delay: 1250ms;
+}
+
+html[data-cortina="entrar"] .abertura :is(.abertura__media, img, video, .abertura__letras span, .abertura__destaque > *) {
+  animation-play-state: paused;
+}
+
+@keyframes abertura-recorte {
+  from {
+    clip-path: inset(18% 14% 22% 14%);
+  }
+}
+
+@keyframes abertura-aproxima {
+  from {
+    scale: 1.22;
+  }
+}
+
+@keyframes abertura-letra {
+  from {
+    translate: 0 108%;
+  }
+}
+
+@keyframes abertura-assenta {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    translate: 0 1.25rem;
+  }
+}
+
+@media (max-width: 899px), (orientation: portrait) {
+  .abertura__projeto,
+  .abertura__lado {
+    grid-column: 1 / -1;
+  }
+
+  .abertura__destaque {
+    translate: none;
+    opacity: 1;
+  }
+
+  .abertura__titulo {
+    translate: none;
+    opacity: 1;
+  }
+
+  .abertura__veu {
+    background:
+      linear-gradient(to bottom, rgb(14 14 13 / 0.6) 0%, rgb(14 14 13 / 0) 32%),
+      linear-gradient(to top, rgb(14 14 13 / 0.92) 0%, rgb(14 14 13 / 0.65) 40%, rgb(14 14 13 / 0) 68%);
+  }
+
+  .abertura .video-mudo__botao {
+    top: calc(var(--altura-cabecalho) + 0.75rem);
+    translate: none;
+    right: var(--margem);
+  }
+
+  .abertura__titulo {
+    top: calc(var(--altura-cabecalho) + 3.75rem);
+  }
+}
+
+@media (max-width: 520px) {
+  .abertura__lado .botao {
+    width: 100%;
+  }
+
+  .abertura__resumo {
+    font-size: 1.05rem;
+  }
+}
+
+/* ---------------------------------------------------------------- trilho */
+
+/* A largura de um cartão: 47% do ecrã, ou menos quando o ecrã é baixo, para
+   o cartão inteiro (imagem e texto) caber em altura. */
+.trilho {
+  --carta: clamp(26vw, (100svh - 22rem) * 1.6, 47vw);
+  --folga: clamp(2.5rem, 6vw, 7.5rem);
+  --descida: clamp(0rem, (100svh - 700px) * 0.35, 6rem);
   position: relative;
 }
 
-.cartao-projeto__ligacao {
+.trilho__palco {
+  padding-block: clamp(5rem, 10vw, 8rem);
+}
+
+.trilho__topo {
   display: grid;
-  gap: 1.1rem;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: 1rem;
+  align-items: end;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 
-.cartao-projeto__moldura {
+.trilho__topo h2 {
+  grid-column: 1 / span 4;
+}
+
+.trilho__intro {
+  grid-column: 5 / span 5;
+  max-width: 44ch;
+}
+
+.trilho__progresso {
+  display: none;
+}
+
+/* Em repouso (telemóvel, menos movimento, sem JavaScript) os cartões
+   descem numa coluna assimétrica: um à esquerda, o seguinte recuado. */
+.trilho__fila {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: clamp(4.5rem, 10vw, 9rem);
+  width: 100%;
+  max-width: var(--largura-max);
+  margin-inline: auto;
+  padding-inline: var(--margem);
+}
+
+/* Contentor para o número saber onde acaba a imagem: `100cqw` é a largura
+   do cartão. */
+.trilho__cartao {
+  position: relative;
+  grid-column: 1 / span 7;
+  container-type: inline-size;
+}
+
+.trilho__cartao:nth-child(even) {
+  grid-column: 6 / span 7;
+}
+
+/* O número gigante em contorno, como uma cota: atravessa o canto de baixo
+   da imagem, metade sobre a fotografia, metade sobre o carvão. (Em
+   `overlay`, como na pilha da inicial, sumia-se nas fotografias claras.) */
+.trilho__numero {
+  position: absolute;
+  top: calc(100cqw / 1.6);
+  right: 0;
+  z-index: 1;
+  font-size: clamp(5.5rem, 12vw, 13rem);
+  font-weight: 620;
+  font-stretch: 125%;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-calcario);
+  translate: -0.1em -52%;
+  pointer-events: none;
+}
+
+.trilho__ligacao {
+  display: grid;
+  gap: 1.35rem;
+}
+
+.trilho__moldura {
+  position: relative;
   overflow: hidden;
-  background: var(--color-pedra);
+  background: var(--color-grafite);
 }
 
-.cartao-projeto__moldura img {
+.trilho__moldura img {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-  transition: scale 900ms var(--curva-saida);
+  transition: scale 1000ms var(--curva-saida);
 }
 
-.cartao-projeto:nth-child(6n + 3) .cartao-projeto__moldura img,
-.cartao-projeto:nth-child(6n + 6) .cartao-projeto__moldura img {
-  aspect-ratio: 4 / 3;
+/* O traço verde da marca sublinha a imagem apontada. */
+.trilho__moldura::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: var(--color-verde-marca);
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale 700ms var(--curva-saida);
 }
 
-.cartao-projeto__ligacao:hover .cartao-projeto__moldura img {
-  scale: 1.035;
+.trilho__ligacao:is(:hover, :focus-visible) .trilho__moldura::after {
+  scale: 1 1;
 }
 
-.cartao-projeto__texto {
+.trilho__ligacao:is(:hover, :focus-visible) .trilho__moldura img {
+  scale: 1.045;
+}
+
+/* O texto fica à esquerda do número que desce da imagem. */
+.trilho__texto {
   display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  column-gap: 0.75rem;
-  row-gap: 0.35rem;
+  gap: 0.6rem;
+  justify-items: start;
+  padding-right: min(38%, 14rem);
+}
+
+.trilho__titulo {
+  display: flex;
   align-items: baseline;
-}
-
-.cartao-projeto__titulo {
-  font-size: clamp(1.35rem, 1rem + 1vw, 2rem);
+  gap: 0.6em;
+  font-size: clamp(1.55rem, 1rem + 1.5vw, 2.6rem);
   font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  text-decoration-line: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
-  text-decoration-color: transparent;
-  transition: text-decoration-color 250ms ease;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
-.cartao-projeto__ligacao:hover .cartao-projeto__titulo {
-  text-decoration-color: currentColor;
+.trilho__titulo .botao__seta {
+  font-size: 0.7em;
+  opacity: 0.5;
+  transition:
+    translate 260ms var(--curva-saida),
+    opacity 260ms ease;
 }
 
-.cartao-projeto__meta {
-  grid-column: 2;
-  color: var(--color-verde);
+.trilho__ligacao:is(:hover, :focus-visible) .trilho__titulo .botao__seta {
+  translate: 6px 0;
+  opacity: 1;
 }
 
-.cartao-projeto__selo {
-  margin-top: 0.75rem;
-  margin-left: 3.75rem;
+.trilho__resumo {
+  max-width: 44ch;
+}
+
+.trilho__meta {
+  color: var(--color-verde-claro);
+}
+
+.trilho__selo {
+  margin-top: 0.9rem;
 }
 
 @media (max-width: 899px) {
-  .indice__topo h1,
-  .indice__intro {
+  .trilho__topo h2,
+  .trilho__intro,
+  .trilho__cartao,
+  .trilho__cartao:nth-child(even) {
     grid-column: 1 / -1;
   }
 
-  .cartao-projeto:nth-child(n) {
-    grid-column: 1 / -1;
-    margin-top: 0;
-  }
-
-  .cartao-projeto__moldura img,
-  .cartao-projeto:nth-child(n) .cartao-projeto__moldura img {
+  .trilho__moldura img {
     aspect-ratio: 4 / 3;
+  }
+
+  /* Estreito, o número fica todo dentro da imagem: pendurado, obrigava os
+     títulos a partir em três linhas. */
+  .trilho__numero {
+    top: calc(100cqw * 0.75);
+    translate: -0.08em calc(-100% + 0.08em);
+  }
+
+  .trilho__texto {
+    padding-right: 0;
+  }
+}
+
+/* O trilho a sério: o palco fica preso um ecrã, e a fila anda para a esquerda
+   à medida que a página desce. A secção tem a altura do caminho que a fila
+   percorre, e por isso a roda anda tanto de lado como andaria para baixo.
+
+   `100cqw - 100%` é quanto a fila é mais larga do que o palco (o `%` de um
+   `translate` mede o próprio elemento). */
+@media (min-width: 900px) and (orientation: landscape) and (height > 600px) {
+  [data-movimento] .trilho {
+    height: calc(
+      100svh + var(--n) * var(--carta) + (var(--n) - 1) * var(--folga) + 2 * var(--margem) - 100vw
+    );
+  }
+
+  [data-movimento] .trilho__palco {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: calc(var(--altura-cabecalho) + 0.5rem) 1.5rem;
+    overflow: clip;
+    container-type: inline-size;
+  }
+
+  [data-movimento] .trilho__topo {
+    padding-bottom: clamp(1.75rem, 5svh, 3.5rem);
+  }
+
+  [data-movimento] .trilho__intro {
+    display: none;
+  }
+
+  [data-movimento] .trilho__progresso {
+    grid-column: 9 / span 4;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .trilho__barra {
+    position: relative;
+    width: clamp(7rem, 12vw, 13rem);
+    height: 1px;
+    background: var(--linha);
+  }
+
+  .trilho__barra::after {
+    content: "";
+    position: absolute;
+    inset: -1px 0;
+    background: var(--color-verde-marca);
+    scale: var(--p, 0) 1;
+    transform-origin: left;
+  }
+
+  [data-movimento] .trilho__fila {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--folga);
+    width: max-content;
+    max-width: none;
+    margin: 0;
+    translate: calc(var(--p, 0) * (100cqw - 100%)) 0;
+    will-change: translate;
+  }
+
+  [data-movimento] .trilho__cartao {
+    flex: 0 0 var(--carta);
+    width: var(--carta);
+  }
+
+  [data-movimento] .trilho__cartao:nth-child(even) {
+    margin-top: var(--descida);
+  }
+
+  /* Cada cartão com a sua chegada (`lateral`: 0 quando entra pela direita,
+     ~0,5 a meio do ecrã). A imagem abre-se ao chegar e desliza dentro da
+     moldura mais devagar do que o cartão; o número vai mais depressa. */
+  [data-movimento] .trilho__moldura {
+    clip-path: inset(calc(clamp(0, 1 - var(--p, 1) * 2.6, 1) * 14%) 0);
+  }
+
+  [data-movimento] .trilho__moldura img {
+    scale: 1.16;
+    translate: calc((var(--p, 0.5) - 0.5) * -12%) 0;
+  }
+
+  [data-movimento] .trilho__ligacao:is(:hover, :focus-visible) .trilho__moldura img {
+    scale: 1.2;
+  }
+
+  [data-movimento] .trilho__numero {
+    translate: calc(-0.1em + (0.5 - var(--p, 0.5)) * 30%) -52%;
+  }
+
+  [data-movimento] :is(.trilho__texto, .trilho__selo) {
+    opacity: clamp(0, (var(--p, 1) - 0.06) * 4, 1);
+    translate: 0 calc(clamp(0, 1 - (var(--p, 1) - 0.06) * 4, 1) * 1.5rem);
+  }
+
+  /* No trilho quem entra são as imagens: o fade geral de `data-revelar`
+     seria uma segunda entrada por cima desta. */
+  [data-movimento] .trilho__cartao[data-revelar]:not([data-visivel]) {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* Ecrã largo mas baixo: sem o resumo, para o cartão caber. */
+@media (min-width: 900px) and (orientation: landscape) and (height <= 820px) {
+  [data-movimento] .trilho__resumo {
+    display: none;
   }
 }
 
 /* ------------------------------------------------------------ referências */
 
 .referencias {
-  padding-top: clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(5rem, 11vw, 10rem) clamp(4rem, 8vw, 7rem);
 }
 
 .referencias__topo {
   display: grid;
-  gap: 1rem;
-  padding-bottom: clamp(2rem, 4vw, 3rem);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: 1.5rem;
+  align-items: end;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 
-.referencias__topo p {
-  max-width: 48ch;
+.referencias__titulo {
+  grid-column: 1 / span 7;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35em;
+}
+
+.referencias__numero {
+  padding-top: 0.5rem;
+  color: var(--color-verde);
+  letter-spacing: 0.06em;
+}
+
+.referencias__topo > p {
+  grid-column: 9 / span 4;
+  max-width: 34ch;
+}
+
+.referencias {
+  --previa: clamp(160px, 19vw, 320px);
 }
 
 .referencias__cabecalho,
 .referencia__ligacao {
   display: grid;
-  grid-template-columns: 7rem minmax(0, 3fr) minmax(0, 2.5fr) minmax(0, 2.5fr) 160px;
+  grid-template-columns: 6.5rem minmax(0, 3fr) minmax(0, 2fr) minmax(0, 2fr) var(--previa);
   column-gap: var(--intervalo);
   align-items: center;
 }
 
 .referencias__cabecalho {
   padding-bottom: 0.75rem;
-}
-
-.referencias__cabecalho span:last-child {
-  display: none;
 }
 
 .referencias__lista {
@@ -188,24 +639,35 @@
 }
 
 .referencia__ligacao {
-  padding-block: 1.1rem;
-  transition: background-color 250ms ease;
+  position: relative;
+  padding-block: clamp(1.4rem, 2.4vw, 2.1rem);
+  transition: opacity 400ms ease;
 }
 
-.referencia__ligacao:hover {
-  background: color-mix(in oklab, var(--color-pedra) 55%, transparent);
+/* O traço verde corre por cima da linha apontada. */
+.referencia__ligacao::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto;
+  height: 2px;
+  background: var(--color-verde-marca);
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale 650ms var(--curva-saida);
 }
 
 .referencia__projeto,
 .referencia__missao {
   display: grid;
-  gap: 0.15rem;
+  gap: 0.2rem;
 }
 
 .referencia__titulo {
-  font-size: clamp(1.2rem, 1rem + 0.6vw, 1.55rem);
+  font-size: clamp(1.45rem, 0.9rem + 1.5vw, 2.4rem);
   font-weight: 500;
-  letter-spacing: -0.015em;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  transition: translate 500ms var(--curva-saida);
 }
 
 .referencia__pessoa,
@@ -213,9 +675,14 @@
   font-size: 0.925rem;
 }
 
+.referencia__seta {
+  display: none;
+}
+
 .referencia__imagem {
   grid-column: 5;
   grid-row: 1 / span 2;
+  justify-self: end;
 }
 
 .referencia__imagem img {
@@ -224,7 +691,78 @@
   object-fit: cover;
 }
 
+@media (hover: hover) and (min-width: 900px) {
+  .referencia__ligacao:is(:hover, :focus-visible)::before {
+    scale: 1 1;
+  }
+
+  .referencia__ligacao:is(:hover, :focus-visible) .referencia__titulo {
+    translate: 0.75rem 0;
+  }
+
+  /* As outras linhas recuam: a que se aponta fica sozinha. */
+  .referencias__lista:has(.referencia__ligacao:hover) .referencia__ligacao:not(:hover) {
+    opacity: 0.4;
+  }
+
+  /* A fotografia não ocupa espaço: vive na última coluna, maior do que a
+     linha, e sobe como uma cortina quando a linha é apontada. As colunas
+     vizinhas dessa estão vazias, por isso não tapa texto nenhum. */
+  .referencia__imagem {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    z-index: 2;
+    width: var(--previa);
+    translate: 0 -50%;
+    rotate: 2deg;
+    clip-path: inset(100% 0 0 0);
+    pointer-events: none;
+    transition:
+      clip-path 650ms var(--curva-saida),
+      rotate 900ms var(--curva-saida);
+  }
+
+  .referencia__imagem img {
+    width: 100%;
+    scale: 1.15;
+    transition: scale 1100ms var(--curva-saida);
+  }
+
+  .referencia__ligacao:is(:hover, :focus-visible) .referencia__imagem {
+    clip-path: inset(0 0 0 0);
+    rotate: 0deg;
+  }
+
+  .referencia__ligacao:is(:hover, :focus-visible) .referencia__imagem img {
+    scale: 1;
+  }
+
+  .referencia__seta {
+    display: block;
+    position: absolute;
+    right: calc(var(--previa) + var(--intervalo));
+    top: 50%;
+    translate: -0.5rem -50%;
+    opacity: 0;
+    font-size: 1.4rem;
+    transition:
+      translate 400ms var(--curva-saida),
+      opacity 300ms ease;
+  }
+
+  .referencia__ligacao:is(:hover, :focus-visible) .referencia__seta {
+    translate: 0 -50%;
+    opacity: 1;
+  }
+}
+
 @media (max-width: 899px) {
+  .referencias__titulo,
+  .referencias__topo > p {
+    grid-column: 1 / -1;
+  }
+
   .referencias__cabecalho {
     display: none;
   }
@@ -239,7 +777,9 @@
     grid-column: 1;
   }
 
-  .referencia__imagem {
+  /* Com o `>`, para ganhar à regra de cima, que manda todos os `span` para a
+     primeira coluna. */
+  .referencia__ligacao > .referencia__imagem {
     grid-column: 2;
     grid-row: 1 / span 4;
   }

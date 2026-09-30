@@ -34,6 +34,7 @@ export function ComProgresso({
   "aria-labelledby"?: string;
   "aria-label"?: string;
   "data-sob-cabecalho"?: string;
+  "data-revelar"?: string;
 }) {
   const ref = useRef<HTMLElement>(null);
   useProgresso(ref, modo, modoExtra ? `--${modo}` : "--p", true, limiar);

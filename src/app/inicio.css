@@ -604,16 +604,6 @@ html:has(.heroi:not([data-passou])) {
   grid-column: 1 / span 6;
 }
 
-.legenda > span:first-child {
-  display: inline-block;
-  margin-right: 0.6em;
-  color: var(--color-verde);
-}
-
-.escuro .legenda > span:first-child {
-  color: var(--color-verde-claro);
-}
-
 .apresentacao__titulo {
   grid-column: 1 / span 8;
   grid-row: 2;
@@ -1468,46 +1458,5 @@ html:has(.heroi:not([data-passou])) {
 
   .equipa__retrato {
     width: min(100%, 26rem);
-  }
-}
-
-/* --------------------------------------------------------------- chamada */
-
-.chamada {
-  padding-block: clamp(6rem, 12vw, 11rem) clamp(4rem, 8vw, 7rem);
-}
-
-.chamada__grelha {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--intervalo);
-  row-gap: 3rem;
-  align-items: end;
-}
-
-.chamada__titulo {
-  grid-column: 1 / span 8;
-  max-width: 11ch;
-}
-
-.chamada__lado {
-  grid-column: 9 / span 4;
-  display: grid;
-  gap: 1.5rem;
-  justify-items: start;
-}
-
-.chamada__direto {
-  display: grid;
-  gap: 0.4rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--linha);
-  width: 100%;
-}
-
-@media (max-width: 899px) {
-  .chamada__titulo,
-  .chamada__lado {
-    grid-column: 1 / -1;
   }
 }

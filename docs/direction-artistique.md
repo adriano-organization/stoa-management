@@ -8,12 +8,16 @@ Grelha assimétrica, calcário, carvão e verde derivado da identidade existente
 2. Projetos: sequência de imagens amplas com sobreposição temporária em desktop; leitura vertical no mobile.
 3. Fecho: entrada da marca de grande escala.
 
+## Portefólio
+
+`/realisations` segue o mesmo registo, em três tempos: a **abertura** (o projeto em destaque de ponta a ponta, com o vídeo do drone quando o há, "Réalisations" em letras que sobem uma a uma, e a imagem a escurecer até ao carvão ao rolar); o **trilho** (os outros projetos numa fila que anda de lado enquanto a página desce, com número gigante em contorno, paralaxe na fotografia e barra de progresso verde; modo `lateral` do motor); e as **referências** num índice tipográfico, com a fotografia a subir em cortina ao passar o rato. Parado (telemóvel, menos movimento, sem JavaScript) o trilho é uma coluna vertical assimétrica. Em publicação, sem projetos da STOA validados, a abertura é a primeira referência, com a nota do colaborador, e não há trilho.
+
 A **página de cada projeto** lê-se como a obra andou: os capítulos do relato (número gigante em contorno, rótulo em mono, fio verde que se desenha ao rolar; os pares trocam de lado) intercalados com os blocos da galeria. Cada imagem vive num quadro de proporção fixa preso à grelha, com legenda numerada ("Fig. 01"); os blocos largos alternam de lado como os capítulos e ficam até 1280 px (o tamanho dos originais do drone). Ao entrar, o quadro abre-se de um recorte e a fotografia desliza lá dentro; o par sobrepõe a segunda imagem ao canto da primeira, e a sobreposição muda ao rolar. No telemóvel o par não se sobrepõe (tapava a legenda).
 
 O motor anterior não tinha desmontagem adequada à navegação entre páginas. Foi substituído por `src/lib/movimento/progresso.ts`, que escreve `--p`; não adicionar outro motor sobre os mesmos elementos.
 
 ## Revisão visual obrigatória
 
-Ver a inicial a 320, 390, 1440 e 2560 px, incluindo a transição completa do hero, empilhamento dos projetos e rodapé. Confirmar botões no primeiro ecrã, recorte sem deslocamentos e ausência de overflow. Navegar do portefólio a um projeto e voltar; abrir âncoras da inicial a partir de páginas interiores. Testar teclado, menu, foco, movimento reduzido e ausência de JavaScript. Verificar que o vídeo mantém poster e controlo de pausa.
+Ver a inicial a 320, 390, 1440 e 2560 px, incluindo a transição completa do hero, empilhamento dos projetos e rodapé. Confirmar botões no primeiro ecrã, recorte sem deslocamentos e ausência de overflow. No portefólio, percorrer o trilho até ao fim (1280×720 e 2560×1440 incluídos) e passar o rato nas referências. Navegar do portefólio a um projeto e voltar; abrir âncoras da inicial a partir de páginas interiores. Testar teclado, menu, foco, movimento reduzido e ausência de JavaScript. Verificar que o vídeo mantém poster e controlo de pausa.
 
 As capturas da sessão inicial estão em `lab/`, não versionadas. Não são evidência de verificações posteriores.

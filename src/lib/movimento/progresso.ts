@@ -27,6 +27,7 @@ import { useMenosMovimento } from "./preferencia";
  * | `entrada` | o topo do elemento entra por baixo | o topo do elemento chega ao topo do ecrã |
  * | `revelado` | o topo do elemento entra por baixo | o elemento está inteiro no ecrã (serve o fim da página, onde nada chega ao topo) |
  * | `coberto` | o irmão seguinte ainda está abaixo do ecrã | o irmão seguinte chegou ao topo (este ficou tapado) |
+ * | `lateral` | o lado esquerdo do elemento entra pela direita | o lado esquerdo chega à esquerda do ecrã (o trilho do portefólio, que anda de lado) |
  *
  * ## Menos movimento
  *
@@ -43,7 +44,7 @@ import { useMenosMovimento } from "./preferencia";
  * `limiar` põe `data-passou` no elemento enquanto `--p` estiver acima dele,
  * e o CSS usa isso para desligar o que já não se vê.
  */
-export type ModoDeProgresso = "preso" | "fluxo" | "entrada" | "revelado" | "coberto";
+export type ModoDeProgresso = "preso" | "fluxo" | "entrada" | "revelado" | "coberto" | "lateral";
 
 type Registo = {
   el: HTMLElement;
@@ -60,7 +61,7 @@ let ligado = false;
 
 const limitar = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
 
-function progresso(r: Registo, altura: number): number {
+function progresso(r: Registo, altura: number, largura: number): number {
   const caixa = r.el.getBoundingClientRect();
   switch (r.modo) {
     case "preso": {
@@ -78,14 +79,17 @@ function progresso(r: Registo, altura: number): number {
       if (!seguinte) return 0;
       return limitar(1 - seguinte.getBoundingClientRect().top / altura);
     }
+    case "lateral":
+      return limitar(1 - caixa.left / largura);
   }
 }
 
 function medir() {
   pedido = 0;
   const altura = window.innerHeight;
+  const largura = window.innerWidth;
   for (const r of registos) {
-    const p = progresso(r, altura);
+    const p = progresso(r, altura, largura);
     /* Só se escreve quando muda: cada escrita invalida o estilo do elemento. */
     if (Math.abs(p - r.ultimo) > 0.0005) {
       r.el.style.setProperty(r.variavel, p.toFixed(4));

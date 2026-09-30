@@ -145,6 +145,9 @@
     "titulo": "Projects",
     "intro": "Each project has its own page, with its images and confirmed information.",
     "introReferencias": "References of STOA Management and its associates.",
+    "emDestaque": "Featured project",
+    "todos": "All projects",
+    "percorrer": "Scroll",
     "projetos": "Projects",
     "referencias": {
       "titulo": "References",

@@ -18,6 +18,7 @@ export function Foto({
   alt,
   sizes,
   prioridade = false,
+  antecipar = false,
   foco,
   className,
   classNameImagem,
@@ -28,6 +29,10 @@ export function Foto({
   sizes: string;
   /* Só para a imagem do primeiro ecrã: carrega já, com prioridade alta. */
   prioridade?: boolean;
+  /* Carrega já, mas sem passar à frente de nada: para imagens que chegam ao
+     ecrã por um caminho que o `lazy` não prevê (o trilho do portefólio anda
+     de lado, cortado pelo palco, e o browser só as pedia já à vista). */
+  antecipar?: boolean;
   /* `object-position`, para quando a imagem é cortada pelo contentor. */
   foco?: string;
   className?: string;
@@ -46,7 +51,7 @@ export function Foto({
         width={largura}
         height={altura}
         alt={alt}
-        loading={prioridade ? "eager" : "lazy"}
+        loading={prioridade || antecipar ? "eager" : "lazy"}
         fetchPriority={prioridade ? "high" : undefined}
         decoding="async"
         className={classNameImagem}
