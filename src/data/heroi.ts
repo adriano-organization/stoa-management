@@ -79,3 +79,34 @@ export function poligono({ recorte, largura, altura }: Composicao): string {
   const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
   return `polygon(${recorte.map(([x, y]) => `${pct(x, largura)} ${pct(y, altura)}`).join(", ")})`;
 }
+
+/**
+ * O traço que a construção do herói desenha: o `recorte` sem os segmentos que
+ * assentam na borda da fotografia — esses só fecham o polígono, não são
+ * edifício. Começa logo a seguir a um segmento de borda, para cada troço sair
+ * inteiro e desenhar-se de uma ponta à outra.
+ */
+export function contorno({ recorte, largura, altura }: Composicao): string {
+  const naBorda = ([x1, y1]: [number, number], [x2, y2]: [number, number]) =>
+    (x1 === x2 && (x1 === 0 || x1 === largura)) || (y1 === y2 && (y1 === 0 || y1 === altura));
+
+  const n = recorte.length;
+  const segmentos = recorte.map((p, i) => [p, recorte[(i + 1) % n]] as const);
+  const inicio = segmentos.findIndex(([a, b]) => naBorda(a, b));
+
+  let d = "";
+  let aberto = false;
+  for (let k = 1; k <= n; k++) {
+    const [a, b] = segmentos[(inicio + k + n) % n];
+    if (naBorda(a, b)) {
+      aberto = false;
+      continue;
+    }
+    if (!aberto) {
+      d += `M${a[0]} ${a[1]}`;
+      aberto = true;
+    }
+    d += `L${b[0]} ${b[1]}`;
+  }
+  return d;
+}
