@@ -39,6 +39,9 @@ export function DadosEstruturados({ descricao }: { descricao: string }) {
       addressRegion: stoa.morada.cantao,
       addressCountry: stoa.morada.pais,
     },
+    ...(stoa.coordenadas
+      ? { geo: { "@type": "GeoCoordinates", latitude: stoa.coordenadas.lat, longitude: stoa.coordenadas.lon } }
+      : {}),
     ...(redesConfirmadas.length > 0 ? { sameAs: redesConfirmadas.map((r) => r.url) } : {}),
   };
 

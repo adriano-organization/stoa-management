@@ -28,10 +28,17 @@ const eslintConfig = [
      * `<picture>`, com o recorte e a escala controlados por CSS, que os
      * invólucros do `next/image` estragariam.
      *
+     * O mapa do contacto também: é um SVG, e o `next/image` não otimiza SVG
+     * (serve-o tal e qual, por um pedido a mais).
+     *
      * ⚠️ Os padrões são literais de propósito: nos globos, `[locale]` seria uma
      * classe de caracteres e a exceção deixava de se aplicar sem aviso.
      */
-    files: ["src/components/Foto.tsx", "src/components/inicio/Heroi.tsx"],
+    files: [
+      "src/components/Foto.tsx",
+      "src/components/inicio/Heroi.tsx",
+      "src/components/contacto/PlanoDoEscritorio.tsx",
+    ],
     rules: { "@next/next/no-img-element": "off" },
   },
 ];

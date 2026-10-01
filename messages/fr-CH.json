@@ -389,10 +389,20 @@
       "email": "E-mail",
       "telefones": "Téléphone",
       "morada": "Adresse",
-      "mapa": "Voir sur la carte",
+      "verPlano": "Voir sur le plan",
       "redes": "Réseaux"
     },
-    "legendaBureau": "Le bureau, à Farvagny-le-Grand"
+    "legendaBureau": "Le bureau, à Farvagny-le-Grand",
+    "escrever": {
+      "titulo": "Écrivez-nous.",
+      "texto": "Le formulaire nous parvient par e-mail."
+    },
+    "mapa": {
+      "olho": "Le bureau",
+      "abrir": "Ouvrir dans Google Maps",
+      "alt": "Plan du secteur de Farvagny, avec l’emplacement du bureau de STOA Management, Chemin de la Longivue 31.",
+      "credito": "© contributeurs OpenStreetMap"
+    }
   },
   "naoEncontrada": {
     "etiqueta": "Erreur 404",

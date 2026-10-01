@@ -4,16 +4,16 @@
 
 .contacto {
   padding-top: calc(var(--altura-cabecalho) + clamp(3.5rem, 8vw, 7rem));
-  padding-bottom: clamp(5rem, 10vw, 9rem);
 }
 
-.contacto__topo {
+/* ------------------------------------------------------------- abertura */
+
+.contacto__abertura {
   display: grid;
   gap: 1.5rem;
-  padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 
-.contacto__topo h1 {
+.contacto__abertura h1 {
   max-width: 12ch;
 }
 
@@ -21,54 +21,163 @@
   max-width: 44ch;
 }
 
-.contacto__grelha {
+/* As três vias como cotas numa planta: número em contorno (o dos capítulos
+   dos projetos), rótulo em mono e o contacto em letra grande. O fio de cima
+   ganha o verde da marca quando a via entra. */
+.vias {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  row-gap: 3rem;
+  margin-top: clamp(2.5rem, 6vw, 5rem);
+}
+
+.via {
+  position: relative;
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 0.9rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--linha);
+}
+
+.via::after {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto;
+  height: 2px;
+  background: var(--color-verde-marca);
+  transform-origin: left;
+}
+
+/* Parado (sem JavaScript, menos movimento) o verde está inteiro. */
+[data-movimento] .via:not([data-visivel])::after {
+  scale: 0 1;
+}
+
+[data-movimento] .via::after {
+  transition: scale 1100ms var(--curva-saida);
+  transition-delay: calc(var(--atraso, 0ms) + 200ms);
+}
+
+.via__numero {
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  font-weight: 620;
+  font-stretch: 125%;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1.25px var(--color-mineral);
+  user-select: none;
+  margin-bottom: 0.6rem;
+}
+
+.via__principal {
+  font-size: clamp(1.2rem, 0.9rem + 0.9vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  /* O email é uma palavra só: sem isto empurrava a coluna para fora. */
+  overflow-wrap: anywhere;
+}
+
+.via__telefones {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.via__telefones li {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.via__morada {
+  font-style: normal;
+  font-size: clamp(1.2rem, 0.9rem + 0.9vw, 1.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.via__morada .suave {
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+/* Em coluna, o número passa para o lado: por cima de cada via gastava meio
+   ecrã antes de se chegar ao contacto. */
+@media (max-width: 899px) {
+  .vias {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2.25rem;
+  }
+
+  .via {
+    grid-template-columns: 4.25rem minmax(0, 1fr);
+    column-gap: 1rem;
+    gap: 0.7rem 1rem;
+  }
+
+  .via > :not(.via__numero) {
+    grid-column: 2;
+  }
+
+  .via__numero {
+    grid-row: 1 / span 4;
+    font-size: 3rem;
+    margin-bottom: 0;
+  }
+}
+
+/* ----------------------------------------------------------- formulário */
+
+.contacto__escrever {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--intervalo);
-  row-gap: 4rem;
-  padding-top: clamp(2rem, 4vw, 3rem);
-  border-top: 1px solid var(--linha);
+  row-gap: 3rem;
+  margin-top: clamp(5rem, 11vw, 10rem);
+  padding-bottom: clamp(5rem, 11vw, 10rem);
 }
 
-.contacto__formulario {
-  grid-column: 1 / span 7;
+/* O lado fica preso enquanto o formulário, mais comprido, passa. */
+.contacto__lado {
+  grid-column: 1 / span 4;
+  align-self: start;
+  position: sticky;
+  top: calc(var(--altura-cabecalho) + 2rem);
   display: grid;
-  gap: 1.75rem;
-  align-content: start;
+  gap: 1.25rem;
+  justify-items: start;
 }
 
-.contacto__direto {
-  grid-column: 9 / span 4;
-  display: grid;
-  gap: 1.75rem;
-  align-content: start;
-}
-
-.contacto__lista {
-  display: grid;
-}
-
-.contacto__lista > div {
-  display: grid;
-  gap: 0.4rem;
-  padding-block: 1rem;
-  border-top: 1px solid var(--linha);
-}
-
-.contacto__lista dd ul {
-  display: grid;
-  gap: 0.3rem;
-}
-
-.contacto__lista address {
-  font-style: normal;
-  margin-bottom: 0.35rem;
+.contacto__nota {
+  max-width: 30ch;
 }
 
 .contacto__redes {
-  display: flex !important;
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--linha);
+  width: 100%;
+}
+
+.contacto__redes ul {
+  display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 1.25rem !important;
+  gap: 0.4rem 1.25rem;
+}
+
+.contacto__formulario {
+  grid-column: 6 / span 7;
+  display: grid;
+  align-content: start;
+}
+
+.contacto__foto {
+  width: 100%;
+  margin-top: 1rem;
 }
 
 .contacto__foto img {
@@ -86,9 +195,217 @@
 }
 
 @media (max-width: 899px) {
-  .contacto__formulario,
-  .contacto__direto {
+  .contacto__lado,
+  .contacto__formulario {
     grid-column: 1 / -1;
+  }
+
+  .contacto__lado {
+    position: static;
+  }
+
+  /* No telemóvel a fotografia viria antes do formulário e empurrava-o para
+     longe; passa para depois dele. */
+  .contacto__foto {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------- o plano */
+
+.plano {
+  /* O link "Voir sur le plan" salta para aqui; sem isto o topo ficava debaixo
+     do cabeçalho fixo. */
+  scroll-margin-top: var(--altura-cabecalho);
+  position: relative;
+  border-top: 1px solid var(--linha);
+  /* Onde o escritório está no desenho: o mesmo valor de `POSICAO` em
+     `scripts/desenhar-mapa.mjs`. */
+  --mapa-x: 64%;
+  --mapa-y: 50%;
+  /* E onde ele aparece na caixa: à direita do cartão no ecrã largo, ao
+     centro no telemóvel (onde o cartão passa para baixo). */
+  --sitio-x: var(--mapa-x);
+  /* Quantos píxeis vale uma unidade do desenho. Fixo, e não "cobrir": um
+     ecrã maior vê mais terreno com as ruas do mesmo tamanho. */
+  --escala: 0.9px;
+}
+
+.plano__mapa {
+  position: relative;
+  overflow: hidden;
+  height: clamp(30rem, 80vh, 52rem);
+  background: var(--color-calcario);
+}
+
+/* O desenho (2850 × 940 unidades) posto com o escritório no sítio do
+   alfinete. A largura nunca fica abaixo da da caixa: num ecrã mais largo do
+   que o desenho à escala, a escala sobe o que for preciso para não aparecer
+   a borda. A 0,9 px a altura (846 px) já cobre o máximo da caixa (52rem). */
+.plano__mapa > img {
+  position: absolute;
+  left: var(--sitio-x);
+  top: var(--mapa-y);
+  width: max(calc(2850 * var(--escala)), 100%);
+  max-width: none;
+  height: auto;
+  translate: calc(-1 * var(--mapa-x)) calc(-1 * var(--mapa-y));
+}
+
+/* O mapa pintado abre-se em círculo a partir do escritório. A abertura começa
+   quando o escritório entra no ecrã (a secção a 40 % do caminho) e chega aos
+   cantos do que se vê por volta dos 80 %. O raio conta em `vmax` para o ritmo
+   ser o mesmo num portátil e num ecrã de 2560 px. Sem `--p` o raio é o
+   máximo: o mapa está inteiro. */
+.plano__pintado {
+  clip-path: circle(clamp(0px, (var(--p, 1) - 0.4) * 180vmax, 200vmax) at var(--mapa-x) var(--mapa-y));
+}
+
+/* O alfinete: um losango verde, de canto vivo como tudo no site, com o nome
+   ao lado como uma cota. O nome vai à esquerda porque à direita passa o
+   Chemin de la Longivue, com o nome escrito. Assenta quando o mapa começa a
+   abrir. */
+.plano__alfinete {
+  position: absolute;
+  right: calc(100% - var(--sitio-x));
+  top: var(--mapa-y);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.9rem;
+  translate: 0.9rem -50%;
+  scale: clamp(0, (var(--p, 1) - 0.36) * 6, 1);
+  transform-origin: calc(100% - 0.9rem) 50%;
+}
+
+.plano__marca {
+  position: relative;
+  width: 1.8rem;
+  aspect-ratio: 1;
+  flex: none;
+  rotate: 45deg;
+  background: var(--color-verde);
+  border: 3px solid var(--color-calcario);
+  box-shadow: 0 0 0 1px var(--color-verde);
+  transition: background-color 220ms ease;
+}
+
+/* O halo: devagar, para dizer "é aqui" sem piscar. */
+.plano__marca::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1.5px solid var(--color-verde-marca);
+  opacity: 0;
+}
+
+[data-movimento] .plano__marca::after {
+  animation: plano-halo 2.8s var(--curva-saida) infinite;
+}
+
+@keyframes plano-halo {
+  0% { opacity: 0.9; scale: 1; }
+  80%, 100% { opacity: 0; scale: 2.4; }
+}
+
+.plano__etiqueta {
+  padding: 0.35rem 0.6rem;
+  background: var(--color-grafite);
+  color: var(--color-calcario);
+  white-space: nowrap;
+}
+
+a.plano__alfinete:hover .plano__marca,
+a.plano__alfinete:focus-visible .plano__marca {
+  background: var(--color-verde-marca);
+}
+
+a.plano__alfinete:focus-visible {
+  outline: 2px solid var(--color-verde);
+  outline-offset: 6px;
+}
+
+.plano__credito {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.5rem;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.625rem;
+  background: color-mix(in oklab, var(--color-calcario) 80%, transparent);
+  color: var(--color-mineral);
+}
+
+.plano__credito a:hover,
+.plano__credito a:focus-visible {
+  color: var(--color-grafite);
+  text-decoration: underline;
+}
+
+/* No ecrã largo o cartão fica por cima do mapa, à esquerda do escritório. */
+.plano__sobre {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--intervalo);
+  align-items: center;
+  pointer-events: none;
+}
+
+.plano__cartao {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--color-calcario);
+  border-top: 2px solid var(--color-verde-marca);
+  box-shadow: 0 18px 40px -24px color-mix(in oklab, var(--color-carvao) 45%, transparent);
+  pointer-events: auto;
+}
+
+.plano__nome {
+  font-size: var(--t-grande);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.plano__morada {
+  font-style: normal;
+  line-height: 1.45;
+  margin-bottom: 0.6rem;
+}
+
+@media (max-width: 1199px) {
+  .plano__cartao {
+    grid-column: 1 / span 5;
+  }
+}
+
+/* Abaixo disto o cartão tapava o escritório: passa para baixo do mapa. */
+@media (max-width: 899px) {
+  .plano {
+    --escala: 0.75px;
+    --sitio-x: 50%;
+  }
+
+  .plano__mapa {
+    height: clamp(22rem, 62vh, 32rem);
+  }
+
+  .plano__sobre {
+    position: static;
+    display: block;
+    pointer-events: auto;
+  }
+
+  .plano__cartao {
+    padding-inline: 0;
+    background: none;
+    box-shadow: none;
+    border-top: 0;
+    padding-block: 2.5rem 4rem;
   }
 }
 

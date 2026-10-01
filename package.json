@@ -12,7 +12,8 @@
     "mensagens": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./testes/apoio/carregador.mjs scripts/verificar-mensagens.mjs",
     "testes": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./testes/apoio/carregador.mjs --test \"testes/*.test.mjs\"",
     "segredos": "node scripts/verificar-segredos.mjs",
-    "medias": "node scripts/preparar-medias.mjs"
+    "medias": "node scripts/preparar-medias.mjs",
+    "mapa": "node scripts/desenhar-mapa.mjs"
   },
   "dependencies": {
     "next": "16.3.7",

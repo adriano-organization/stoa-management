@@ -35,6 +35,9 @@ const EsquemaStoa = z.object({
   }),
   /* Link normal para o mapa, e não um `<iframe>`: ver `src/lib/cabecalhos.ts`. */
   mapa: z.url().nullable(),
+  /* O ponto do escritório no mapa da página de contacto
+     (`scripts/desenhar-mapa.mjs`) e nos dados estruturados. */
+  coordenadas: z.object({ lat: z.number().min(45.8).max(47.9), lon: z.number().min(5.9).max(10.5) }).nullable(),
   email: z.email(),
   contactos: z.array(Pessoa),
   redes: z.object({
@@ -57,6 +60,11 @@ export const stoa: Stoa = EsquemaStoa.parse({
     pais: "CH",
   },
   mapa: "https://maps.app.goo.gl/THxUNvDjqhRdPUPNA",
+  /* Do registo oficial de endereços de edifícios (swisstopo, "Chemin de la
+     Longivue 31, 1726 Farvagny-le-Grand", EGID 192067001), consultado a
+     2026-10-01. Bate a 14 m com o ponto do link `mapa` acima, que é o do site
+     atual. ⚠️ O OpenStreetMap não tem este número: não o ir buscar lá. */
+  coordenadas: { lat: 46.725418, lon: 7.081749 },
   email: "dt@stoa-management.ch",
   contactos: [
     { nome: "Leandro Lopes", telefone: "+41 76 512 88 83", email: "l.lopes@stoa-management.ch" },
