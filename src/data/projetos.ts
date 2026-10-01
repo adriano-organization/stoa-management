@@ -415,10 +415,14 @@ export function projetosEmDestaque(maximo = 4): Projeto[] {
   return (destacados.length ? destacados : visiveis).slice(0, maximo);
 }
 
-/** O seguinte na ordem do portefólio, e o primeiro depois do último. */
-export function projetoSeguinte(slug: string): Projeto | undefined {
+/**
+ * Os `quantos` seguintes na ordem do portefólio, voltando ao início depois
+ * do último, sem nunca repetir o próprio projeto (com poucos projetos
+ * visíveis, vêm menos).
+ */
+export function projetosSeguintes(slug: string, quantos: number): Projeto[] {
   const lista = [...realizacoesStoa(), ...referencias()];
   const i = lista.findIndex((p) => p.slug === slug);
-  if (i === -1 || lista.length < 2) return undefined;
-  return lista[(i + 1) % lista.length];
+  if (i === -1) return [];
+  return Array.from({ length: Math.min(quantos, lista.length - 1) }, (_, k) => lista[(i + 1 + k) % lista.length]);
 }

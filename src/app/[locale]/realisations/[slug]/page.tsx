@@ -5,9 +5,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ChamadaContacto } from "@/components/ChamadaContacto";
 import { Foto } from "@/components/Foto";
 import { Galeria } from "@/components/projetos/Galeria";
+import { ObrasSeguintes } from "@/components/projetos/ObrasSeguintes";
 import { capitulosDoRelato } from "@/components/projetos/Relato";
 import { SeloProvisorio } from "@/components/SeloProvisorio";
-import { projetoPorSlug, projetoSeguinte, projetosVisiveis, relatoPublicavel, type Projeto } from "@/data/projetos";
+import { projetoPorSlug, projetosSeguintes, projetosVisiveis, relatoPublicavel, type Projeto } from "@/data/projetos";
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { dadosDaImagem, dadosDaPartilha } from "@/lib/medias";
@@ -61,7 +62,7 @@ export default async function PaginaDoProjeto({ params }: Parametros) {
   const t = await getTranslations({ locale, namespace: `projetos.${slug}` });
   const tp = await getTranslations({ locale, namespace: "projeto" });
   const medias = await getTranslations({ locale, namespace: "medias" });
-  const seguinte = projetoSeguinte(slug);
+  const seguintes = projetosSeguintes(slug, 3);
   const capitulos = await capitulosDoRelato(projeto, locale);
 
   /* Uma capa pequena (as referências do site antigo, ~820 px) não se estica a
@@ -107,8 +108,9 @@ export default async function PaginaDoProjeto({ params }: Parametros) {
 
         <Galeria blocos={projeto.galeria} capitulos={capitulos} locale={locale} />
 
-        {seguinte && <ProjetoSeguinte projeto={seguinte} locale={locale} />}
       </article>
+
+      {seguintes.length > 0 && <ObrasSeguintes projetos={seguintes} locale={locale} />}
 
       <ChamadaContacto locale={locale} />
     </>
@@ -186,32 +188,5 @@ async function Intervencao({ projeto, locale }: { projeto: Projeto; locale: Loca
         <SeloProvisorio texto={tp("intervencaoEmFalta")} />
       )}
     </section>
-  );
-}
-
-async function ProjetoSeguinte({ projeto, locale }: { projeto: Projeto; locale: Locale }) {
-  const tp = await getTranslations({ locale, namespace: "projeto" });
-  const t = await getTranslations({ locale, namespace: `projetos.${projeto.slug}` });
-  const medias = await getTranslations({ locale, namespace: "medias" });
-
-  return (
-    <nav className="seguinte escuro" aria-label={tp("seguinte")}>
-      <Link href={`/realisations/${projeto.slug}`} className="seguinte__ligacao envelope">
-        <span className="legenda suave">{tp("seguinte")}</span>
-        <span className="seguinte__titulo">
-          {t("titulo")}
-          <span className="botao__seta" aria-hidden="true">
-            →
-          </span>
-        </span>
-        <span className="seguinte__imagem">
-          <ViewTransition name={`projeto-${projeto.slug}`} share="morph" default="none">
-            <span className="seguinte__moldura">
-              <Foto id={projeto.capa} alt={medias(projeto.capa)} sizes="(min-width: 900px) 40vw, 92vw" />
-            </span>
-          </ViewTransition>
-        </span>
-      </Link>
-    </nav>
   );
 }

@@ -593,44 +593,152 @@ html[data-cortina] .folha-da-marca__segundo {
 /* --------------------------------------------------------------- chamada */
 
 /* O fecho de todas as páginas (`ChamadaContacto.tsx`). Vivia em `inicio.css`,
-   e numa visita direta ao portefólio ou a um projeto aparecia sem estilo. */
+   e numa visita direta ao portefólio ou a um projeto aparecia sem estilo.
 
+   A única faixa verde do site: o verde da marca escurecido até ao musgo, para
+   o texto pequeno ler bem (ver os contrastes em `globals.css`). Tudo no eixo,
+   por cima de uma quadrícula de planta que se apaga para as bordas. */
 .chamada {
-  padding-block: clamp(6rem, 12vw, 11rem) clamp(4rem, 8vw, 7rem);
+  --chamada-suave: color-mix(in srgb, var(--color-calcario) 80%, var(--color-musgo));
+  --linha: color-mix(in srgb, var(--color-calcario) 26%, transparent);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(6rem, 12vw, 11rem) clamp(5rem, 9vw, 8rem);
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 0%, color-mix(in srgb, var(--color-verde) 70%, transparent), transparent),
+    var(--color-musgo);
+  color: var(--color-calcario);
 }
 
-.chamada__grelha {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--intervalo);
-  row-gap: 3rem;
-  align-items: end;
+.chamada::before {
+  content: "";
+  position: absolute;
+  inset: -64px 0 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-calcario) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-calcario) 9%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+  mask-image: radial-gradient(ellipse 55% 60% at 50% 45%, #000 20%, transparent 100%);
+  pointer-events: none;
+}
+
+.chamada :focus-visible {
+  outline-color: var(--color-calcario);
+}
+
+.chamada__corpo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .chamada__titulo {
-  grid-column: 1 / span 8;
-  max-width: 11ch;
+  max-width: 13ch;
 }
 
-.chamada__lado {
-  grid-column: 9 / span 4;
-  display: grid;
-  gap: 1.5rem;
-  justify-items: start;
+.chamada__texto {
+  /* Largo o bastante para "décrivez-nous" não partir no hífen. */
+  max-width: 46ch;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--chamada-suave);
+}
+
+.chamada__botao {
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+}
+
+/* Sobre o verde, o hover do botão (verde) apagava-o: passa a carvão. */
+.chamada .botao--claro:hover {
+  --botao-fundo: var(--color-carvao);
+  --botao-texto: var(--color-calcario);
 }
 
 .chamada__direto {
-  display: grid;
-  gap: 0.4rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--linha);
-  width: 100%;
+  width: min(100%, 60rem);
+  margin-top: clamp(4rem, 8vw, 6.5rem);
 }
 
-@media (max-width: 899px) {
-  .chamada__titulo,
-  .chamada__lado {
-    grid-column: 1 / -1;
+/* A mesma cota do projeto seguinte, em calcário: o rótulo ao meio, o fio
+   até aos traços das pontas. */
+.chamada__cota {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: var(--chamada-suave);
+}
+
+.chamada__cota::before,
+.chamada__cota::after {
+  content: "";
+  flex: 1;
+  height: 11px;
+  background: linear-gradient(var(--linha), var(--linha)) center / 100% 1px no-repeat;
+  border-inline: 0 solid var(--linha);
+}
+
+.chamada__cota::before {
+  border-left-width: 1px;
+}
+
+.chamada__cota::after {
+  border-right-width: 1px;
+}
+
+/* As três vias lado a lado, separadas por fios verticais; o rótulo em mono
+   por cima do contacto. */
+.chamada__vias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  margin-top: 2rem;
+}
+
+.chamada__vias li {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+  padding: 0.5rem 1.5rem;
+}
+
+.chamada__vias li + li {
+  border-left: 1px solid var(--linha);
+}
+
+.chamada__vias .legenda {
+  color: var(--chamada-suave);
+}
+
+.chamada__vias a {
+  font-size: var(--t-medio);
+  letter-spacing: -0.01em;
+}
+
+/* A entrada: a faixa começa dentro das margens, como um cartão, e chega às
+   bordas antes de o título estar a meio do ecrã; a quadrícula sobe mais
+   devagar do que o texto. Em repouso, a faixa está inteira. */
+[data-movimento] .chamada {
+  clip-path: inset(0 calc(clamp(0, 1 - var(--p, 1) * 1.8, 1) * var(--margem)));
+}
+
+[data-movimento] .chamada::before {
+  translate: 0 calc(clamp(0, var(--p, 1), 1) * 64px);
+}
+
+@media (max-width: 699px) {
+  .chamada__vias {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chamada__vias li {
+    padding-block: 1rem;
+  }
+
+  .chamada__vias li + li {
+    border-left: 0;
+    border-top: 1px solid var(--linha);
   }
 }
 

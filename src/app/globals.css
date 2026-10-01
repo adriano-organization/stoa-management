@@ -12,6 +12,7 @@
      verde    #476b2f sobre calcário   5,3:1   sobre pedra 4,6:1
      verde-claro #a9c697 sobre carvão  9,7:1
      mineral-claro #a8a39a sobre carvão 7,2:1
+     calcário sobre musgo #3b5629       7,1:1   a 80 % (#cdd0c1) 5,2:1
 
    O verde original (#629641) só aparece em traços e pontos, nunca em texto:
    dá 3,0:1 sobre o calcário, o mínimo para um elemento gráfico.
@@ -27,6 +28,9 @@
   --color-verde: #476b2f;
   --color-verde-marca: #629641;
   --color-verde-claro: #a9c697;
+  /* O verde escurecido a um quarto com o carvão: o fundo da chamada, onde o
+     texto pequeno ainda lê a mais de 4,5:1. */
+  --color-musgo: #3b5629;
 
   --font-sans: var(--fonte-archivo), "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--fonte-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;

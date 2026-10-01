@@ -15,16 +15,25 @@ import { useProgresso } from "@/lib/movimento/progresso";
  *
  * Sem trilho (telemóvel, menos movimento, sem JavaScript) é uma lista vertical
  * e o browser trata do foco como sempre.
+ *
+ * Serve também as obras seguintes no fim de cada projeto, com outra
+ * estrutura: `prefixo` é o das classes do palco, da fila e dos cartões, e
+ * `sobCabecalho` diz se o palco é escuro (o cabeçalho fica transparente e
+ * claro por cima) ou não.
  */
 export function Trilho({
   className,
   style,
   children,
+  prefixo = "trilho",
+  sobCabecalho = true,
   "aria-labelledby": rotulo,
 }: {
   className?: string;
   style?: CSSProperties;
   children: ReactNode;
+  prefixo?: string;
+  sobCabecalho?: boolean;
   "aria-labelledby"?: string;
 }) {
   const ref = useRef<HTMLElement>(null);
@@ -32,9 +41,9 @@ export function Trilho({
 
   function aoFocar(evento: FocusEvent<HTMLElement>) {
     const seccao = ref.current;
-    const palco = seccao?.querySelector<HTMLElement>(".trilho__palco");
-    const fila = seccao?.querySelector<HTMLElement>(".trilho__fila");
-    const cartao = (evento.target as HTMLElement).closest<HTMLElement>(".trilho__cartao");
+    const palco = seccao?.querySelector<HTMLElement>(`.${prefixo}__palco`);
+    const fila = seccao?.querySelector<HTMLElement>(`.${prefixo}__fila`);
+    const cartao = (evento.target as HTMLElement).closest<HTMLElement>(`.${prefixo}__cartao`);
     if (!seccao || !palco || !fila || !cartao) return;
     if (getComputedStyle(palco).position !== "sticky") return;
 
@@ -56,9 +65,9 @@ export function Trilho({
       className={className}
       style={style}
       aria-labelledby={rotulo}
-      /* O palco é carvão: o cabeçalho fica transparente e claro por cima,
-         como sobre a abertura, em vez de uma faixa de calcário. */
-      data-sob-cabecalho=""
+      /* O palco do portefólio é carvão: o cabeçalho fica transparente e claro
+         por cima, como sobre a abertura, em vez de uma faixa de calcário. */
+      data-sob-cabecalho={sobCabecalho ? "" : undefined}
       onFocus={aoFocar}
     >
       {children}

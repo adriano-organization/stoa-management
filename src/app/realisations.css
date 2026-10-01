@@ -463,8 +463,11 @@ html[data-cortina="entrar"] .abertura :is(img, video, .abertura__letras span, .a
    `100cqw - 100%` é quanto a fila é mais larga do que o palco (o `%` de um
    `translate` mede o próprio elemento). */
 @media (min-width: 900px) and (orientation: landscape) and (height > 600px) {
+  /* Nunca menos de um ecrã: com um só cartão (a página de um projeto quando
+     há só mais um), a fila cabe toda e o trilho fica parado. */
   [data-movimento] .trilho {
-    height: calc(
+    height: max(
+      100svh,
       100svh + var(--n) * var(--carta) + (var(--n) - 1) * var(--folga) + 2 * var(--margem) - 100vw
     );
   }
@@ -1207,59 +1210,265 @@ html[data-cortina="entrar"] .abertura :is(img, video, .abertura__letras span, .a
   }
 }
 
-/* ------------------------------------------------------ projeto seguinte */
+/* ------------------------------------------------------- obras seguintes */
 
-.seguinte__ligacao {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--intervalo);
-  row-gap: 1rem;
-  align-items: end;
-  padding-block: clamp(4rem, 8vw, 7rem);
+/* O fim de cada projeto (`ObrasSeguintes.tsx`): o mecanismo do trilho do
+   portefólio com outra cara. Pedra em vez de carvão, o título num painel e
+   cada cartão encabeçado por uma cota, sem o número gigante. */
+.seguintes {
+  --carta: clamp(30vw, (100svh - 20rem) * 1.4, 40vw);
+  --folga: clamp(2rem, 4vw, 4.5rem);
+  --painel: calc(var(--margem) + clamp(14rem, 24vw, 26rem));
+  position: relative;
+  background: var(--color-pedra);
 }
 
-.seguinte__ligacao > .legenda {
-  grid-column: 1 / -1;
+/* Parado (menos movimento, sem JavaScript, ecrã ao alto ou baixo): o painel
+   é uma linha por cima e as obras ficam lado a lado. */
+.seguintes__palco {
+  padding-block: clamp(4.5rem, 9vw, 8rem);
 }
 
-.seguinte__titulo {
-  grid-column: 1 / span 6;
+.seguintes__painel {
   display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  font-size: var(--t-titulo);
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  max-width: var(--largura-max);
+  margin-inline: auto;
+  padding: 0 var(--margem) clamp(2.5rem, 5vw, 4rem);
+}
+
+.seguintes__titulo-seccao {
+  font-size: clamp(2.1rem, 1rem + 2.4vw, 3.6rem);
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.03em;
+  text-wrap: balance;
+  hyphens: auto;
 }
 
-.seguinte__ligacao:hover .botao__seta {
-  translate: 6px 0;
+.seguintes__progresso {
+  display: none;
 }
 
-.seguinte__imagem {
-  grid-column: 8 / span 5;
+.seguintes__fila {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--intervalo);
+  max-width: var(--largura-max);
+  margin-inline: auto;
+  padding-inline: var(--margem);
 }
 
-.seguinte__moldura {
+.seguintes__ligacao {
+  display: grid;
+  gap: 1rem;
+}
+
+/* A cota: o número em verde, o fio até ao local. Ao apontar, o verde da
+   marca corre pelo fio. */
+.seguintes__cota {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.seguintes__fio {
+  position: relative;
+  flex: 1;
+  min-width: 2rem;
+  height: 1px;
+  margin-right: 0.5rem;
+  background: var(--linha);
+  transform-origin: left;
+}
+
+.seguintes__fio::after {
+  content: "";
+  position: absolute;
+  inset: -1px 0;
+  background: var(--color-verde-marca);
+  scale: 0 1;
+  transform-origin: left;
+  transition: scale 700ms var(--curva-saida);
+}
+
+.seguintes__ligacao:is(:hover, :focus-visible) .seguintes__fio::after {
+  scale: 1 1;
+}
+
+.seguintes__meta {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.seguintes__moldura {
   display: block;
   overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--color-molassa);
 }
 
-.seguinte__moldura img {
+.seguintes__moldura img {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  height: 100%;
   object-fit: cover;
   transition: scale 900ms var(--curva-saida);
 }
 
-.seguinte__ligacao:hover .seguinte__moldura img {
+.seguintes__ligacao:is(:hover, :focus-visible) .seguintes__moldura img {
   scale: 1.04;
 }
 
+.seguintes__titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: clamp(1.35rem, 1rem + 1vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.seguintes__titulo .botao__seta {
+  transition: translate 260ms var(--curva-saida);
+}
+
+.seguintes__ligacao:is(:hover, :focus-visible) .seguintes__titulo .botao__seta {
+  translate: 6px 0;
+}
+
+.seguintes__selo {
+  margin-top: 0.75rem;
+}
+
+/* No telemóvel, uma fila que se desliza com o dedo, com o cartão seguinte a
+   espreitar à direita. */
 @media (max-width: 899px) {
-  .seguinte__titulo,
-  .seguinte__imagem {
-    grid-column: 1 / -1;
+  .seguintes__fila {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--margem);
+    scrollbar-width: none;
+  }
+
+  .seguintes__fila::-webkit-scrollbar {
+    display: none;
+  }
+
+  .seguintes__cartao {
+    flex: 0 0 min(80vw, 26rem);
+    scroll-snap-align: start;
+  }
+}
+
+/* O trilho a sério, nas mesmas condições do portefólio: o palco fica preso
+   um ecrã, o painel fica à esquerda (por cima, com o fundo de pedra) e a
+   fila passa por baixo dele, para a esquerda, à medida que a página desce.
+   A secção tem a altura do caminho que a fila percorre. */
+@media (min-width: 900px) and (orientation: landscape) and (height > 600px) {
+  [data-movimento] .seguintes {
+    height: max(
+      100svh,
+      100svh + var(--painel) + var(--n) * (var(--carta) + var(--folga)) + var(--margem) - 100vw
+    );
+  }
+
+  [data-movimento] .seguintes__palco {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-block: calc(var(--altura-cabecalho) + 1rem) 2rem;
+    overflow: clip;
+    container-type: inline-size;
+  }
+
+  [data-movimento] .seguintes__painel {
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 2;
+    width: var(--painel);
+    max-width: none;
+    margin: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: clamp(1.5rem, 4svh, 2.75rem);
+    padding: calc(var(--altura-cabecalho) + 1rem) clamp(1.5rem, 3vw, 3rem) 2rem var(--margem);
+    background: var(--color-pedra);
+    border-right: 1px solid var(--linha);
+  }
+
+  [data-movimento] .seguintes__progresso {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .seguintes__barra {
+    position: relative;
+    width: clamp(5rem, 8vw, 9rem);
+    height: 1px;
+    background: var(--linha);
+  }
+
+  .seguintes__barra::after {
+    content: "";
+    position: absolute;
+    inset: -1px 0;
+    background: var(--color-verde-marca);
+    scale: var(--p, 0) 1;
+    transform-origin: left;
+  }
+
+  [data-movimento] .seguintes__fila {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--folga);
+    width: max-content;
+    max-width: none;
+    margin: 0;
+    padding-inline: calc(var(--painel) + var(--folga)) var(--margem);
+    translate: calc(var(--p, 0) * (100cqw - 100%)) 0;
+    will-change: translate;
+  }
+
+  [data-movimento] .seguintes__cartao {
+    flex: 0 0 var(--carta);
+    width: var(--carta);
+  }
+
+  /* Cada cartão com a sua chegada (`lateral`): o fio da cota desenha-se e a
+     fotografia desliza dentro da moldura mais devagar do que o cartão. */
+  [data-movimento] .seguintes__fio {
+    scale: clamp(0, var(--p, 1) * 2.4, 1) 1;
+  }
+
+  [data-movimento] .seguintes__moldura img {
+    scale: 1.12;
+    translate: calc((var(--p, 0.5) - 0.5) * -10%) 0;
+  }
+
+  [data-movimento] .seguintes__ligacao:is(:hover, :focus-visible) .seguintes__moldura img {
+    scale: 1.16;
+  }
+
+  /* No trilho quem entra é a fila: o fade de `data-revelar` seria uma
+     segunda entrada por cima desta. */
+  [data-movimento] .seguintes__cartao[data-revelar]:not([data-visivel]) {
+    opacity: 1;
+    translate: none;
   }
 }
